@@ -1,8 +1,6 @@
-import { site, socials } from '../data/site'
+import { site } from '../data/site'
 import { Photo, Reveal } from './Primitives'
-import { CrownIcon, TikTokIcon } from './Icons'
-
-const mainTikTok = socials.find((s) => s.featured)?.url ?? 'https://www.tiktok.com/@lis_iv'
+import { CrownIcon } from './Icons'
 
 export function Hero() {
   return (
@@ -50,14 +48,8 @@ export function Hero() {
 
       <Reveal delay={220}>
         <div className="hero__actions">
-          <a
-            className="btn btn--primary"
-            href={mainTikTok}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <TikTokIcon />
-            Seguirme en TikTok
+          <a className="btn btn--primary" href="#fotos">
+            Ver mis fotos
           </a>
           <a className="btn btn--ghost" href="#redes">
             Ver todas mis redes

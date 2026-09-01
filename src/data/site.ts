@@ -82,11 +82,24 @@ export const stats = [
 ]
 
 export const gallery = [
-  // 'wide' ocupa las dos columnas: una ancha + un par cierra la retícula
-  // sin huecos. Al añadir fotos, mantén ese ritmo (wide, par, wide, par...).
-  { id: 'cute', src: 'liz-cute', caption: 'Estilo único', ratio: 'wide' },
-  { id: 'smile', src: 'liz-smile', caption: 'Sonrisa radiante', ratio: 'tall' },
-  { id: 'elegant', src: 'liz-elegant', caption: 'Elegancia natural', ratio: 'tall' },
+  // Carrusel horizontal. El orden es el de aparicion: las mas
+  // llamativas primero, porque casi nadie desliza hasta el final.
+  { id: 'gala', src: 'liz-gala', caption: 'Noche de gala' },
+  { id: 'corazon', src: 'liz-corazon', caption: 'Todo a su tiempo' },
+  { id: 'caballo', src: 'liz-caballo', caption: 'Mi caballo y yo' },
+  { id: 'jardin', src: 'liz-jardin', caption: 'Mañana en el jardín' },
+  { id: 'plaza', src: 'liz-plaza', caption: 'Paz y buena vibra' },
+  { id: 'lima', src: 'liz-lima', caption: 'Paseo por Lima' },
+  { id: 'cute', src: 'liz-cute', caption: 'Estilo único' },
+  { id: 'paseo', src: 'liz-paseo', caption: 'De paseo' },
+  { id: 'sombrero', src: 'liz-sombrero', caption: 'Entre amigos' },
+  { id: 'rancho', src: 'liz-rancho', caption: 'Día de campo' },
+  { id: 'hamaca', src: 'liz-hamaca', caption: 'Descanso merecido' },
+  { id: 'amigas', src: 'liz-amigas', caption: 'Con las mías' },
+  { id: 'smile', src: 'liz-smile', caption: 'Sonrisa radiante' },
+  { id: 'patrias', src: 'liz-patrias', caption: 'Fiestas patrias' },
+  { id: 'elegant', src: 'liz-elegant', caption: 'Elegancia natural' },
+  { id: 'selfie', src: 'liz-selfie', caption: 'Sin filtros' },
 ] as const
 
 export const highlights = [

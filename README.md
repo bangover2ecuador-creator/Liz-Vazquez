@@ -56,18 +56,27 @@ El botón pasa solo de "Muy pronto" a un enlace real. Nada más que tocar.
 ### Añadir o cambiar redes
 
 Edita el array `socials`. El orden del array es el orden en pantalla, y
-`featured: true` marca la cuenta principal (también es la que usan los botones
-"Seguirme en TikTok" y la barra fija inferior).
+`featured: true` marca la cuenta principal — la que abre el botón de la barra
+fija inferior.
 
 ### Añadir fotos
 
 1. Deja el JPG original en `assets-src/` (cualquier resolución, cuanto mayor mejor).
-2. Ejecuta `npm run images` — genera WebP de 320/480/640/960 px y un JPEG de respaldo.
-3. Añádela al array `gallery` en `src/data/site.ts`.
+2. Ejecuta `npm run images` — genera WebP de 320/480/640 px y un JPEG de respaldo.
+3. Añádela al array `gallery` en `src/data/site.ts`, con su `caption`.
 
-La retícula es de dos columnas: `ratio: 'wide'` ocupa las dos, `'tall'` una.
-Para que no queden huecos, mantén el ritmo **una ancha + un par**
-(wide, tall, tall, wide, tall, tall…).
+La galería es un **carrusel horizontal**: el orden del array es el orden de
+aparición. Las primeras son las que más se ven, así que pon ahí las mejores.
+Al tocar una foto se centra y se enmarca en dorado.
+
+Solo las dos primeras se cargan de entrada; el resto espera a que el carrusel
+se acerque a la pantalla. Por eso puedes añadir muchas sin penalizar la carga
+inicial.
+
+### Cambiar el orden de las secciones
+
+En [`src/App.tsx`](src/App.tsx). Hoy es: hero → sorteos → cifras → fotos →
+sobre mí → momentos → cierre → redes → pie.
 
 ---
 
@@ -100,10 +109,12 @@ Después, para actualizar la vista previa en las plataformas:
 
 ## Notas de rendimiento
 
-Primera carga en móvil: **~149 KB en 8 peticiones**.
+Primera carga en móvil: **~150 KB en 10 peticiones**, con 16 fotos en la galería.
 
 - Fotos en WebP con `srcset` (la del retrato usa un único candidato para que
   el `preload` del `<head>` y el `<img>` nunca resuelvan a archivos distintos).
+- Las fotos del carrusel se montan solo cuando la galería se acerca a pantalla:
+  sin eso el navegador se adelanta y descarga media galería en la carga inicial.
 - Tipografías autoalojadas, solo subset `latin` y solo los pesos que se usan.
 - Sin librería de animación: todo es CSS + `IntersectionObserver`.
 - Los originales pesados viven en `assets-src/` y **no** se publican.
@@ -125,4 +136,8 @@ y mira la pestaña Red del navegador: debe haber **una sola versión por foto**.
 - Áreas táctiles de 44 px o más en todos los enlaces y botones.
 - `prefers-reduced-motion` desactiva grano, giros y transiciones.
 - El botón de sorteos inactivo se anuncia con `aria-disabled`.
+- El carrusel se maneja con flechas izquierda/derecha del teclado y anuncia la
+  posición con `aria-live`.
+- Todo lo tocable se hunde al presionar: sin esa respuesta, el dedo tapa el
+  elemento y no hay confirmación de que el toque entró.
 - `lang="es"` y enlace de salto al contenido.

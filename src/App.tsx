@@ -1,7 +1,8 @@
 import { Hero } from './components/Hero'
-import { Socials } from './components/Socials'
 import { Giveaway } from './components/Giveaway'
-import { About, Finale, Gallery, Highlights, Stats } from './components/Sections'
+import { Gallery } from './components/Gallery'
+import { Socials } from './components/Socials'
+import { About, Finale, Highlights, Stats } from './components/Sections'
 import { Footer } from './components/Footer'
 import { Dock } from './components/Dock'
 
@@ -11,15 +12,14 @@ export default function App() {
       <div className="atmosphere" aria-hidden="true" />
       <div className="grain" aria-hidden="true" />
 
-      <a className="skip" href="#redes">
-        Saltar a mis redes
+      <a className="skip" href="#fotos">
+        Saltar al contenido
       </a>
 
       <Hero />
 
       <main>
-        {/* Lo que la gente vino a buscar, primero. */}
-        <Socials />
+        {/* Sorteos justo debajo de los dos botones del hero. */}
         <Giveaway />
 
         <hr className="rule" />
@@ -29,6 +29,9 @@ export default function App() {
         <About />
         <Highlights />
         <Finale />
+
+        {/* Las redes cierran la página. */}
+        <Socials />
       </main>
 
       <Footer />

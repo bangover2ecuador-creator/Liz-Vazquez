@@ -1,8 +1,6 @@
-import { about, gallery, highlights, site, socials, stats } from '../data/site'
-import { CountUp, Photo, Reveal } from './Primitives'
-import { CheckIcon, TikTokIcon } from './Icons'
-
-const mainTikTok = socials.find((s) => s.featured)?.url ?? 'https://www.tiktok.com/@lis_iv'
+import { about, highlights, site, stats } from '../data/site'
+import { CountUp, Reveal } from './Primitives'
+import { ArrowIcon, CheckIcon } from './Icons'
 
 // ── Cifras ───────────────────────────────────────────────────
 
@@ -18,39 +16,6 @@ export function Stats() {
               </p>
               <p className="stat__label">{s.label}</p>
             </div>
-          </Reveal>
-        ))}
-      </div>
-    </section>
-  )
-}
-
-// ── Galería ──────────────────────────────────────────────────
-
-export function Gallery() {
-  return (
-    <section className="section shell" id="fotos">
-      <Reveal className="section-head section-head--center">
-        <span className="eyebrow">Galería</span>
-        <h2 className="section-title">
-          Momentos <em>favoritos</em>
-        </h2>
-        <p className="section-sub">Capturados para ti.</p>
-      </Reveal>
-
-      <div className="gallery">
-        {gallery.map((shot, i) => (
-          <Reveal
-            key={shot.id}
-            delay={i * 90}
-            className={shot.ratio === 'wide' ? 'shot shot--wide' : 'shot'}
-          >
-            <Photo
-              name={shot.src}
-              alt={`${site.name} — ${shot.caption}`}
-              sizes={shot.ratio === 'wide' ? '(min-width: 48rem) 640px, 92vw' : '(min-width: 48rem) 320px, 46vw'}
-            />
-            <p className="shot__caption">{shot.caption}</p>
           </Reveal>
         ))}
       </div>
@@ -117,7 +82,10 @@ export function Highlights() {
   )
 }
 
-// ── CTA final ────────────────────────────────────────────────
+// ── Cierre ───────────────────────────────────────────────────
+// Antesala de las redes. Sin boton propio: las tarjetas de abajo
+// ya son el llamado a la accion, y repetir "Seguirme en TikTok"
+// aqui lo dejaria tres veces en la misma pantalla.
 
 export function Finale() {
   return (
@@ -129,15 +97,10 @@ export function Finale() {
           <p className="finale__body">
             No te pierdas ningún live ni momento especial. Estoy todos los días.
           </p>
-          <a
-            className="btn btn--primary btn--block"
-            href={mainTikTok}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <TikTokIcon />
-            Seguirme en TikTok
-          </a>
+          <p className="finale__cue" aria-hidden="true">
+            Elige por dónde seguirme
+            <ArrowIcon />
+          </p>
         </div>
       </Reveal>
     </section>

@@ -849,71 +849,133 @@ button {
   line-height: 1.4;
 }
 
-/* ── Galería ──────────────────────────────────────────────── */
+/* ── Galería (carrusel) ───────────────────────────────────── */
 
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.7rem;
+.carousel {
+  position: relative;
+}
+
+.carousel__track {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gap);
+  /* Sangra hasta el borde para que la foto activa pueda centrarse */
+  margin-inline: calc(var(--gap) * -1);
+  padding: 0.5rem var(--gap) 1rem;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+.carousel__track::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel__track:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+  border-radius: var(--radius-lg);
 }
 
 .shot {
   position: relative;
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid var(--hairline);
-  background: var(--ink-2);
+  flex: 0 0 72%;
+  max-width: 20rem;
   aspect-ratio: 3 / 4;
-}
-
-.shot--wide {
-  grid-column: span 2;
-  aspect-ratio: 5 / 4;
-}
-
-/* Encuadre alto: prioriza la cara al recortar en apaisado */
-.shot--wide img {
-  object-position: center 30%;
+  scroll-snap-align: center;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  padding: 0;
+  background: linear-gradient(150deg, var(--surface-hi), var(--ink-2));
+  border: 1px solid var(--hairline);
+  cursor: pointer;
+  /* El borde dorado vive en un pseudo-elemento para poder animarlo
+     sin que el borde real desplace el contenido. */
+  transition:
+    transform 0.4s var(--ease),
+    border-color 0.4s var(--ease),
+    box-shadow 0.4s var(--ease);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .shot img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: saturate(0.9) contrast(1.03) brightness(0.82);
   transition:
-    transform 0.8s var(--ease),
-    filter 0.8s var(--ease);
-  filter: saturate(0.94) contrast(1.04);
-}
-
-.shot:hover img {
-  transform: scale(1.05);
-  filter: saturate(1.05) contrast(1.06);
+    transform 0.6s var(--ease),
+    filter 0.5s var(--ease);
 }
 
 .shot::after {
   content: '';
   position: absolute;
   inset: 0;
+  border-radius: inherit;
   background: linear-gradient(
     to top,
-    rgba(7, 3, 16, 0.88) 0%,
-    rgba(7, 3, 16, 0.25) 42%,
-    transparent 68%
+    rgba(7, 3, 16, 0.9) 0%,
+    rgba(7, 3, 16, 0.22) 44%,
+    transparent 70%
   );
   pointer-events: none;
 }
 
+/* Marco dorado: aparece al tocar la foto */
+.shot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(140deg, var(--gold-hi), var(--gold) 40%, var(--gold-deep));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+  pointer-events: none;
+}
+
+.shot.is-active {
+  border-color: transparent;
+  box-shadow:
+    0 22px 50px -26px rgba(228, 196, 128, 0.75),
+    0 0 0 1px rgba(228, 196, 128, 0.2);
+}
+
+.shot.is-active::before {
+  opacity: 1;
+}
+
+.shot.is-active img {
+  filter: saturate(1.02) contrast(1.05) brightness(1);
+  transform: scale(1.02);
+}
+
+/* Respuesta inmediata al dedo */
+.shot:active {
+  transform: scale(0.975);
+}
+
 .shot__caption {
   position: absolute;
-  left: 0.9rem;
-  right: 0.9rem;
-  bottom: 0.85rem;
-  z-index: 1;
-  font-size: 0.8125rem;
+  left: 1rem;
+  right: 1rem;
+  bottom: 0.95rem;
+  z-index: 3;
+  text-align: left;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--cream);
   text-shadow: 0 1px 12px rgba(0, 0, 0, 0.9);
+  transition: color 0.4s var(--ease);
 }
 
 .shot__caption::before {
@@ -921,8 +983,87 @@ button {
   display: block;
   width: 1.6rem;
   height: 1px;
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.5rem;
+  background: rgba(246, 240, 231, 0.5);
+  transition:
+    width 0.4s var(--ease),
+    background 0.4s var(--ease);
+}
+
+.shot.is-active .shot__caption::before {
+  width: 2.75rem;
   background: var(--gold);
+}
+
+.shot.is-active .shot__caption {
+  color: #fff;
+}
+
+/* Controles */
+.carousel__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.carousel__arrow {
+  display: grid;
+  place-items: center;
+  width: 2.9rem;
+  height: 2.9rem;
+  border-radius: 50%;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  color: var(--gold);
+  cursor: pointer;
+  transition:
+    transform 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    background 0.3s var(--ease),
+    opacity 0.3s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.carousel__arrow svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  transform: rotate(180deg);
+}
+
+.carousel__arrow--next svg {
+  transform: none;
+}
+
+.carousel__arrow:hover:not(:disabled) {
+  border-color: var(--hairline-hi);
+  background: rgba(228, 196, 128, 0.12);
+}
+
+.carousel__arrow:active:not(:disabled) {
+  transform: scale(0.9);
+  background: rgba(228, 196, 128, 0.2);
+}
+
+.carousel__arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.carousel__count {
+  margin: 0;
+  min-width: 4rem;
+  text-align: center;
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  color: var(--muted-2);
+}
+
+.carousel__count span {
+  color: var(--gold);
+  font-weight: 700;
 }
 
 /* ── Sobre Liz ────────────────────────────────────────────── */
@@ -1043,10 +1184,39 @@ button {
 }
 
 .finale__body {
-  margin: 0.75rem auto 1.75rem;
+  margin: 0.75rem auto 1.5rem;
   max-width: 30ch;
   color: var(--muted);
   font-size: 0.9375rem;
+}
+
+.finale__cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.finale__cue svg {
+  width: 1rem;
+  height: 1rem;
+  transform: rotate(90deg);
+  animation: nudge 2.2s var(--ease) infinite;
+}
+
+@keyframes nudge {
+  0%,
+  100% {
+    transform: rotate(90deg) translateX(0);
+  }
+  50% {
+    transform: rotate(90deg) translateX(4px);
+  }
 }
 
 /* ── Pie ──────────────────────────────────────────────────── */
@@ -1093,6 +1263,7 @@ button {
   font-weight: 600;
   color: rgba(246, 240, 231, 0.82);
   transition:
+    transform 0.3s var(--ease),
     border-color 0.3s var(--ease),
     color 0.3s var(--ease);
 }
@@ -1128,7 +1299,9 @@ button {
   color: var(--gold);
   font-size: 0.8125rem;
   font-weight: 700;
-  transition: background 0.3s var(--ease);
+  transition:
+    transform 0.3s var(--ease),
+    background 0.3s var(--ease);
 }
 
 .footer__contact-link:hover {
@@ -1228,6 +1401,95 @@ button {
   left: 0;
 }
 
+
+/* ── Respuesta tactil ─────────────────────────────────────────
+   Todo lo que se puede tocar responde al instante: el dedo tapa
+   el elemento, asi que sin hundido no hay confirmacion visual.
+   Se hunde al presionar y vuelve con la curva de siempre.       */
+
+.btn,
+.social,
+.shot,
+.stat,
+.highlight,
+.pillars li,
+.footer__links a,
+.footer__contact-link,
+.carousel__arrow,
+.dock__btn,
+.dock__gold {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Presionadas: hundido rapido de entrada, salida suave */
+.social:active,
+.stat:active,
+.highlight:active,
+.pillars li:active,
+.footer__links a:active,
+.footer__contact-link:active,
+.dock__btn:active,
+.dock__gold:active {
+  transform: scale(0.97);
+  transition-duration: 0.09s;
+}
+
+.btn:active,
+.shot:active,
+.carousel__arrow:active:not(:disabled) {
+  transition-duration: 0.09s;
+}
+
+/* Las tarjetas que no eran pulsables ahora tambien reaccionan */
+.stat,
+.highlight,
+.pillars li {
+  transition:
+    transform 0.35s var(--ease),
+    border-color 0.35s var(--ease),
+    background 0.35s var(--ease),
+    box-shadow 0.35s var(--ease);
+}
+
+.stat:active {
+  border-color: var(--hairline-hi);
+  background: linear-gradient(150deg, rgba(228, 196, 128, 0.12), var(--surface));
+}
+
+.highlight:active {
+  border-color: var(--hairline-hi);
+}
+
+.pillars li:active {
+  border-color: var(--hairline-hi);
+  background: rgba(228, 196, 128, 0.09);
+}
+
+/* Con raton, ademas, se levantan */
+@media (hover: hover) and (pointer: fine) {
+  .stat:hover,
+  .highlight:hover {
+    transform: translateY(-2px);
+    border-color: var(--hairline-hi);
+  }
+
+  .pillars li:hover {
+    border-color: var(--hairline-hi);
+  }
+
+  .shot:hover img {
+    transform: scale(1.04);
+    filter: saturate(1) contrast(1.05) brightness(0.94);
+  }
+}
+
+/* El brillo del boton dorado se detiene al presionarlo:
+   la animacion competiria con la respuesta al toque. */
+.btn--gold:active::after {
+  animation-play-state: paused;
+}
+
 /* ── Escritorio ───────────────────────────────────────────── */
 
 @media (min-width: 48rem) {
@@ -1246,6 +1508,10 @@ button {
 
   .socials {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .shot {
+    flex-basis: 38%;
   }
 
   .stats {

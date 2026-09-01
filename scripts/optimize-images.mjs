@@ -1,12 +1,15 @@
 // Genera versiones WebP responsive + la imagen de vista previa social.
 // Uso: npm run images
 import sharp from 'sharp'
-import { readdir, mkdir } from 'node:fs/promises'
+import { readdir, mkdir, readFile } from 'node:fs/promises'
 import path from 'node:path'
+
+const FAVICON_SVG = await readFile('public/favicon.svg')
 
 const SRC_DIR = 'assets-src'
 const SRC = 'public/images'
-const WIDTHS = [320, 480, 640, 960]
+// Nadie pide mas de 640: el retrato usa 480 y el carrusel hasta 640.
+const WIDTHS = [320, 480, 640]
 
 const sources = (await readdir(SRC_DIR)).filter(
   (f) => f.endsWith('.jpg') && !f.startsWith('og-'),
@@ -41,6 +44,14 @@ await sharp(path.join(SRC_DIR, 'liz-hero.jpg'))
   .jpeg({ quality: 82, mozjpeg: true })
   .toFile(path.join(SRC, 'og-liz.jpg'))
 console.log('✓ og-liz.jpg')
+
+// Icono PNG de respaldo: sin el, los navegadores piden /favicon.ico
+// y se llevan un 404 en cada visita.
+await sharp(Buffer.from(FAVICON_SVG))
+  .resize(48, 48)
+  .png()
+  .toFile('public/favicon-48.png')
+console.log('✓ favicon-48.png')
 
 // Icono para pantalla de inicio en iOS
 await sharp(path.join(SRC_DIR, 'liz-hero.jpg'))
