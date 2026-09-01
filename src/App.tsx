@@ -5,8 +5,12 @@ import { Socials } from './components/Socials'
 import { About, Finale, Highlights, Stats } from './components/Sections'
 import { Footer } from './components/Footer'
 import { Dock } from './components/Dock'
+import { usePressFeedback } from './usePressFeedback'
 
 export default function App() {
+  // Marca lo que el dedo toca; ver el hook para por que no basta :active.
+  usePressFeedback()
+
   return (
     <>
       <div className="atmosphere" aria-hidden="true" />
