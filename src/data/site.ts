@@ -125,14 +125,25 @@ export const gallery = [
 ] as const
 
 // ── Marcas y colaboraciones ───────────────────────────────────
-// Cada grupo se llena a medida que llegan. Para añadir una marca,
-// mete su nombre en `items` del grupo que toque; la tarjeta aparece
-// sola y el contador de "espacios libres" se ajusta.
+// Cada colaboración lleva la cuenta de la marca y el vídeo que Liz
+// hizo para ella: el vídeo es la prueba, la cuenta es la cortesía.
 //
-// Si algún día tienes el logo de la marca, añade `logo: 'archivo'`
-// (sin extensión) tras dejar el JPG/PNG en assets-src/.
+// Para añadir una nueva, mete su ficha en el grupo que le toque. Si
+// aún no hay vídeo, deja `video` fuera y la tarjeta se ve igual, solo
+// que sin el botón de reproducir.
 
-export type Colaborador = { name: string; logo?: string; url?: string }
+export type Colaborador = {
+  /** Como se llama el negocio, no su usuario. */
+  name: string
+  /** Su cuenta de TikTok, con arroba. */
+  handle: string
+  url: string
+  /** Que venden, en tres o cuatro palabras. */
+  que: string
+  /** El video que Liz publico con ellos. */
+  video?: string
+  logo?: string
+}
 
 export const partners: {
   id: string
@@ -143,14 +154,99 @@ export const partners: {
   {
     id: 'marcas',
     title: 'Marcas',
-    blurb: 'Campañas y contenido patrocinado.',
-    items: [],
+    blurb: 'Fabrican lo que venden y llegan a todo el Perú.',
+    items: [
+      {
+        name: 'Coralí Clothing',
+        handle: '@coraliclothing',
+        url: 'https://www.tiktok.com/@coraliclothing',
+        que: 'Ropa de fábrica, envíos a todo el Perú',
+      },
+      {
+        name: 'Free Sport',
+        handle: '@freelsport',
+        url: 'https://www.tiktok.com/@freelsport',
+        que: 'Ropa deportiva',
+        video: 'https://www.tiktok.com/@lis_iv/video/7649859781179493652',
+      },
+      {
+        name: 'Confecciones JN Stilo',
+        handle: '@confecciones_jnstilo',
+        url: 'https://www.tiktok.com/@confecciones_jnstilo',
+        que: 'Ropa deportiva hecha a medida',
+        video: 'https://www.tiktok.com/@lis_iv/video/7673611505241246996',
+      },
+      {
+        name: 'Punto Original Huánuco',
+        handle: '@huanuco_puntooriginal',
+        url: 'https://www.tiktok.com/@huanuco_puntooriginal',
+        que: 'Zapatillas para caminar',
+        video: 'https://www.tiktok.com/@lis_iv/video/7674035301374790932',
+      },
+    ],
   },
   {
     id: 'emprendedores',
     title: 'Emprendedores',
     blurb: 'Negocios de Cajamarca y del Perú.',
-    items: [],
+    items: [
+      {
+        name: "Siray Tejidos",
+        handle: '@siray.pee',
+        url: 'https://www.tiktok.com/@siray.pee',
+        que: 'Chompas tejidas a mano',
+        video: 'https://www.tiktok.com/@lis_iv/video/7682143005985361172',
+      },
+      {
+        name: 'Elikutiara Cacao',
+        handle: '@elikutiaracacao',
+        url: 'https://www.tiktok.com/@elikutiaracacao',
+        que: 'Chocolate artesanal de cacao',
+        video: 'https://www.tiktok.com/@lis_iv/video/7650588363006676244',
+      },
+      {
+        name: "Linar's",
+        handle: '@creaciones.linars_chota',
+        url: 'https://www.tiktok.com/@creaciones.linars_chota',
+        que: 'Vestidos y ropa, en Chota',
+        video: 'https://www.tiktok.com/@lis_iv/video/7678490083594341653',
+      },
+      {
+        name: 'Mayari',
+        handle: '@mayari_chota',
+        url: 'https://www.tiktok.com/@mayari_chota',
+        que: 'Ropa de Shein y Temu, en Chota',
+        video: 'https://www.tiktok.com/@lis_iv/video/7680344789367213333',
+      },
+      {
+        name: 'Store Khalessi',
+        handle: '@daaeimdustria',
+        url: 'https://www.tiktok.com/@daaeimdustria',
+        que: 'Zapatillas originales',
+        video: 'https://www.tiktok.com/@lis_iv/video/7651347492767829269',
+      },
+      {
+        name: 'Modas Yahil',
+        handle: '@yahil457',
+        url: 'https://www.tiktok.com/@yahil457',
+        que: 'Tienda de ropa de invierno',
+        video: 'https://www.tiktok.com/@lis_iv/video/7663195905725648148',
+      },
+      {
+        name: 'La Casa del 10',
+        handle: '@lacasadel10',
+        url: 'https://www.tiktok.com/@lacasadel10',
+        que: 'Artículos deportivos',
+        video: 'https://www.tiktok.com/@lis_iv/video/7656593638075534613',
+      },
+      {
+        name: 'Ivi Vega',
+        handle: '@vianel60',
+        url: 'https://www.tiktok.com/@vianel60',
+        que: 'Zapatillas Punto Original',
+        video: 'https://www.tiktok.com/@lis_iv/video/7678388058839862548',
+      },
+    ],
   },
   {
     id: 'empresas',
@@ -160,16 +256,31 @@ export const partners: {
   },
   {
     id: 'creadores',
-    title: 'Creadores',
-    blurb: 'Colaboraciones con otros influencers.',
-    items: [],
+    title: 'Artistas y creadores',
+    blurb: 'Música y colaboraciones con otros creadores.',
+    items: [
+      {
+        name: 'Agrupación Los Fénix',
+        handle: '@agrupacionlosfenix',
+        url: 'https://www.tiktok.com/@agrupacionlosfenix',
+        que: 'Cumbia en vivo',
+      },
+      {
+        name: 'La Nueva Juventud',
+        handle: '@bandalanuevajuventud',
+        url: 'https://www.tiktok.com/@bandalanuevajuventud',
+        que: 'Cumbia peruana',
+        video: 'https://www.tiktok.com/@lis_iv/video/7675443705544740116',
+      },
+    ],
   },
 ]
 
 export const partnersIntro = {
   heading: 'Marcas que han trabajado conmigo',
-  sub: 'Espacios que se van llenando con cada colaboración.',
+  sub: 'Cada una con el vídeo que hicimos juntos.',
   emptyLabel: 'Espacio libre',
+  videoLabel: 'Vídeo',
   ctaTitle: '¿Quieres trabajar conmigo?',
   ctaBody: 'Escríbeme por Instagram y armamos algo juntos.',
   ctaLabel: 'Escribirme',

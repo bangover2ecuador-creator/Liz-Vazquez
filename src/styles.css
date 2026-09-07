@@ -28,7 +28,7 @@
   /* ── Texto ─────────────────────────────────────────────────  */
   --cream: #fdf8f4;
   --muted: rgba(253, 248, 244, 0.66);
-  --muted-2: rgba(253, 248, 244, 0.46);
+  --muted-2: rgba(253, 248, 244, 0.5);
 
   /* ── Superficies ───────────────────────────────────────────
      Con tinte violeta, no gris: un blanco al 4 % sobre morado se
@@ -1490,47 +1490,91 @@ button {
   color: var(--muted-2);
 }
 
-.partner-slots {
-  display: flex;
-  flex-wrap: wrap;
+.colabs {
+  display: grid;
   gap: 0.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.partner-slot {
-  display: inline-flex;
+/* Ficha con dos destinos: el cuerpo va a la marca, el boton al
+   video. Por eso no es un solo enlace envolviendolo todo. */
+.colab {
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 0.75rem 0.7rem 0.9rem;
+  border-radius: 0.95rem;
+  border: 1px solid var(--hairline);
+  background: rgba(228, 196, 128, 0.06);
+  box-shadow: inset 0 1px 0 var(--filo);
+}
+
+.colab__marca {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+  /* Area tactil comoda aunque el texto sea corto. */
   min-height: 2.75rem;
-  padding: 0 0.95rem;
-  border-radius: 0.85rem;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  /* Hueco: discontinuo y apagado, se lee como espacio reservado */
-  border: 1px dashed rgba(228, 196, 128, 0.28);
-  color: rgba(246, 240, 231, 0.3);
-  background: transparent;
+  align-content: center;
 }
 
-.partner-slot--filled {
-  border: 1px solid var(--hairline-hi);
-  background: rgba(228, 196, 128, 0.1);
+.colab__nombre {
+  font-size: 0.9375rem;
+  font-weight: 700;
   color: var(--cream);
-  transition:
-    transform 0.3s var(--ease),
-    background 0.3s var(--ease);
+  letter-spacing: -0.01em;
 }
 
-.partner-slot--filled a {
+.colab__que {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.colab__handle {
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  /* 0.52 es el minimo que pasa 4,5:1 sobre el fondo de la ficha. */
+  color: rgba(246, 240, 231, 0.52);
+}
+
+/* El video es la prueba del trabajo: se ve antes que el resto. */
+.colab__video {
   display: inline-flex;
   align-items: center;
+  gap: 0.35rem;
+  min-height: 2.75rem;
+  padding: 0 0.85rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--gold) 34%, transparent);
+  background: rgba(228, 196, 128, 0.13);
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
 }
 
-.partner-slot--filled[data-pressed] {
-  transform: scale(0.96);
-  background: rgba(228, 196, 128, 0.2);
-  transition-duration: 0.1s;
+.colab__video svg {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+/* El boton de video se enciende aparte, para que se note cual de
+   los dos destinos de la ficha se esta tocando. */
+.colab__video[data-pressed] {
+  background: rgba(228, 196, 128, 0.26);
+  border-color: color-mix(in srgb, var(--gold) 62%, transparent);
+}
+
+.partners__cta-nota {
+  margin: 0.9rem 0 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: rgba(246, 240, 231, 0.55);
 }
 
 .partners__cta {
@@ -1734,7 +1778,9 @@ button {
 .stat,
 .highlight,
 .pillars li,
-.partner-slot--filled,
+.colab,
+.colab__marca,
+.colab__video,
 .footer__contact-link,
 .menu__boton,
 .topbar__brand,
@@ -1754,7 +1800,7 @@ button {
 .stat[data-pressed],
 .highlight[data-pressed],
 .pillars li[data-pressed],
-.partner-slot--filled[data-pressed],
+.colab:has([data-pressed]),
 .footer__contact-link[data-pressed],
 .menu__boton[data-pressed],
 .giveaway__waiting[data-pressed] {
@@ -1802,7 +1848,7 @@ button {
 .stat[data-pressed],
 .highlight[data-pressed],
 .pillars li[data-pressed],
-.partner-slot--filled[data-pressed],
+.colab:has([data-pressed]),
 .footer__contact-link[data-pressed] {
   border-color: var(--hairline-hi);
   background: linear-gradient(150deg, rgba(232, 202, 164, 0.2), var(--surface));
@@ -1899,7 +1945,7 @@ button {
 .stat,
 .highlight,
 .pillars li,
-.partner-slot--filled,
+.colab,
 .giveaway__badge,
 .about__quote,
 .finale,
@@ -1922,7 +1968,7 @@ button {
   }
 
   .pillars li:hover,
-  .partner-slot--filled:hover {
+  .colab:hover {
     border-color: var(--hairline-hi);
   }
 

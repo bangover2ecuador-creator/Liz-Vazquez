@@ -112,3 +112,9 @@ export const SparkIcon = ({ className }: P) => (
     <path d="M19 15.5c.15 1.7.75 2.85 1.7 3.45.5.35 1.15.55 1.8.65-1.8.15-2.95.75-3.5 1.7-.35.5-.55 1.15-.65 1.8-.15-1.8-.75-2.95-1.7-3.5-.5-.35-1.15-.55-1.8-.65 1.8-.15 2.95-.75 3.5-1.7.35-.5.55-1.15.65-1.75Z" />
   </svg>
 )
+
+export const PlayIcon = ({ className }: P) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M8.4 5.6a1 1 0 0 1 1.53-.85l7.2 4.5a1 1 0 0 1 0 1.7l-7.2 4.5a1 1 0 0 1-1.53-.85V5.6Z" />
+  </svg>
+)

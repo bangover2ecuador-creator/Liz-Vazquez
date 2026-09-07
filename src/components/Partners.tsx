@@ -1,21 +1,22 @@
 import { partners, partnersIntro, site } from '../data/site'
 import { Reveal } from './Primitives'
-import { ArrowIcon } from './Icons'
-
-// Espacios que se muestran vacíos por grupo mientras no hay marcas.
-// Suficientes para que se lea como "aquí caben", sin parecer abandono.
-const HUECOS = 2
+import { ArrowIcon, PlayIcon } from './Icons'
 
 /**
  * Marcas y colaboraciones.
  *
- * Nace vacía a propósito: hoy no hay ninguna marca cargada, así que en
- * vez de esconder la sección se muestran los espacios libres. Un hueco
- * con forma dice "aquí va una marca" y funciona como invitación; una
- * sección ausente no dice nada. Al añadir marcas en site.ts, las
- * tarjetas reales van sustituyendo a los huecos.
+ * Cada ficha tiene dos destinos, y por eso no es un solo enlace: el
+ * cuerpo lleva a la cuenta de la marca y el botón de al lado al vídeo
+ * que Liz publicó con ella. El vídeo es la prueba del trabajo, así que
+ * es lo que se ve primero al mirar la tarjeta de reojo.
+ *
+ * Los grupos sin ninguna marca no se pintan. Una sección llena
+ * convence; un hueco vacío al lado de tres llenas, no.
  */
 export function Partners() {
+  const grupos = partners.filter((g) => g.items.length > 0)
+  const total = grupos.reduce((n, g) => n + g.items.length, 0)
+
   return (
     <section className="section shell" id="marcas">
       <Reveal className="section-head section-head--center">
@@ -24,7 +25,7 @@ export function Partners() {
       </Reveal>
 
       <div className="partners">
-        {partners.map((grupo, g) => (
+        {grupos.map((grupo, g) => (
           <Reveal key={grupo.id} delay={g * 80}>
             <article className="partner-group">
               <header className="partner-group__head">
@@ -32,24 +33,32 @@ export function Partners() {
                 <p className="partner-group__blurb">{grupo.blurb}</p>
               </header>
 
-              <ul className="partner-slots">
+              <ul className="colabs">
                 {grupo.items.map((item) => (
-                  <li key={item.name} className="partner-slot partner-slot--filled">
-                    {item.url ? (
-                      <a href={item.url} target="_blank" rel="noopener noreferrer">
-                        {item.name}
-                      </a>
-                    ) : (
-                      <span>{item.name}</span>
-                    )}
-                  </li>
-                ))}
+                  <li className="colab" key={item.handle}>
+                    <a
+                      className="colab__marca"
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span className="colab__nombre">{item.name}</span>
+                      <span className="colab__que">{item.que}</span>
+                      <span className="colab__handle">{item.handle}</span>
+                    </a>
 
-                {Array.from({
-                  length: Math.max(HUECOS - grupo.items.length, 0),
-                }).map((_, i) => (
-                  <li key={`hueco-${i}`} className="partner-slot" aria-hidden="true">
-                    <span>{partnersIntro.emptyLabel}</span>
+                    {item.video && (
+                      <a
+                        className="colab__video"
+                        href={item.video}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Ver el vídeo que hice con ${item.name}`}
+                      >
+                        <PlayIcon />
+                        <span>{partnersIntro.videoLabel}</span>
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -71,6 +80,9 @@ export function Partners() {
             {partnersIntro.ctaLabel}
             <ArrowIcon />
           </a>
+          <p className="partners__cta-nota">
+            {total} colaboraciones hasta hoy, y contando.
+          </p>
         </div>
       </Reveal>
     </section>
