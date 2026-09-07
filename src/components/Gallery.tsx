@@ -8,7 +8,11 @@ import { ArrowIcon } from './Icons'
 // mientras el usuario se desplaza hacia la galeria.
 
 /**
- * Carrusel de fotos con desplazamiento nativo y scroll-snap.
+ * Tira de fotos de la portada.
+ *
+ * Va pegada al retrato, sin encabezado propio: es la entrada, no una
+ * sección aparte. Por eso no lleva título ni subtítulo — el carrusel
+ * se explica solo en cuanto se ve media foto asomando por el lado.
  *
  * Sin librerías: el navegador ya hace el desplazamiento con inercia y
  * el snap, que en móvil se siente mejor que cualquier reimplementación
@@ -17,7 +21,7 @@ import { ArrowIcon } from './Icons'
  */
 export function Gallery() {
   const trackRef = useRef<HTMLDivElement>(null)
-  const sectionRef = useRef<HTMLElement>(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState(0)
   const [warm, setWarm] = useState(false)
 
@@ -117,12 +121,7 @@ export function Gallery() {
   }
 
   return (
-    <section className="section shell" id="fotos" ref={sectionRef}>
-      <Reveal className="section-head section-head--center">
-        <h2 className="section-title">Momentos favoritos</h2>
-        <p className="section-sub">Desliza para verlas todas.</p>
-      </Reveal>
-
+    <div className="shell gallery-strip" id="fotos" ref={sectionRef}>
       <Reveal className="carousel">
         <div
           className="carousel__track"
@@ -195,6 +194,6 @@ export function Gallery() {
           </button>
         </div>
       </Reveal>
-    </section>
+    </div>
   )
 }
