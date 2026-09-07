@@ -1,46 +1,33 @@
 import { site } from '../data/site'
-import { Photo, Reveal } from './Primitives'
-import { CrownIcon } from './Icons'
+import { Reveal } from './Primitives'
+import { PortraitCarousel } from './PortraitCarousel'
 
 /**
- * Portada: la foto manda.
+ * Portada.
  *
- * El nombre se fue a la barra superior, y los dos botones de antes
- * ("Ver mis fotos", "Ver todas mis redes") desaparecieron: el carrusel
- * va justo debajo y la barra fija inferior ya lleva a las redes, así
- * que eran atajos hacia cosas que ya están a la vista.
+ * La foto principal es la primera del carrusel: se desliza dentro del
+ * marco, así que no hay tira de fotos aparte más abajo.
  */
 export function Hero() {
+  const enVivo = site.liveNow
+
   return (
     <section className="hero shell" id="inicio">
       <Reveal>
-        <a className="live-pill" href={site.liveUrl} target="_blank" rel="noopener noreferrer">
+        <a
+          className={`live-pill${enVivo ? ' is-live' : ''}`}
+          href={site.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <span className="live-pill__dot" aria-hidden="true" />
-          {site.intro}
+          {enVivo ? site.liveNowLabel : site.liveOffLabel}
+          {enVivo && <span className="live-pill__go" aria-hidden="true">Entrar</span>}
         </a>
       </Reveal>
 
       <Reveal delay={80}>
-        <div className="portrait">
-          <span className="portrait__ring portrait__ring--outer" aria-hidden="true" />
-          <span className="portrait__ring" aria-hidden="true" />
-          <span className="portrait__halo" aria-hidden="true" />
-          <div className="portrait__frame">
-            <Photo
-              name="liz-hero"
-              alt={`${site.name}, creadora de contenido de ${site.location}`}
-              sizes="288px"
-              widths={[640]}
-              priority
-              width={640}
-              height={640}
-            />
-          </div>
-          <span className="portrait__badge" title={site.award}>
-            <CrownIcon />
-            <span className="sr-only">{site.award}</span>
-          </span>
-        </div>
+        <PortraitCarousel />
       </Reveal>
 
       <Reveal delay={140}>

@@ -480,9 +480,9 @@ button {
   display: block;
   position: relative;
   cursor: default;
-  width: clamp(13rem, 58vw, 18rem);
+  width: clamp(15rem, 72vw, 20rem);
   aspect-ratio: 1;
-  margin: 0 auto 1.75rem;
+  margin: 0 auto 5rem;
 }
 
 .portrait__frame {
@@ -502,6 +502,112 @@ button {
   height: 100%;
   object-fit: cover;
   object-position: center 28%;
+}
+
+/* ── Carrusel dentro del retrato ──────────────────────────────
+   El marco redondo, los anillos y la corona no se mueven: lo unico
+   que se desliza es la foto de dentro.                            */
+
+.portrait__track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x pan-y;
+}
+
+.portrait__track::-webkit-scrollbar {
+  display: none;
+}
+
+.portrait__track:focus-visible {
+  outline: none;
+}
+
+.portrait:has(.portrait__track:focus-visible) .portrait__frame {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+
+.portrait__slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  background: var(--ink-2);
+}
+
+.portrait__slide picture,
+.portrait__slide img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Puntos bajo el retrato */
+.portrait__dots {
+  position: absolute;
+  left: 50%;
+  bottom: -1.6rem;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(7, 3, 16, 0.72);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--hairline);
+  max-width: 88vw;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.portrait__dots::-webkit-scrollbar {
+  display: none;
+}
+
+.portrait__dot {
+  flex: 0 0 auto;
+  width: 0.4rem;
+  height: 0.4rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(246, 240, 231, 0.28);
+  cursor: pointer;
+  transition:
+    background 0.3s var(--ease),
+    width 0.3s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.portrait__dot.is-active {
+  width: 1.25rem;
+  border-radius: 999px;
+  background: var(--gold);
+}
+
+.portrait__caption {
+  position: absolute;
+  left: 50%;
+  bottom: -3.9rem;
+  transform: translateX(-50%);
+  margin: 0;
+  width: max-content;
+  max-width: 90vw;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Halo dorado giratorio */
@@ -979,215 +1085,6 @@ button {
   text-transform: uppercase;
   color: var(--muted-2);
   line-height: 1.4;
-}
-
-.gallery-strip {
-  /* Pegada al retrato: forma parte de la portada */
-  padding-bottom: clamp(1.5rem, 6vw, 2.25rem);
-}
-
-/* ── Galería (carrusel) ───────────────────────────────────────
-   La tarjeta del centro va a tamaño completo y las vecinas se
-   retiran en escala y luz segun --d, que el JS actualiza en cada
-   fotograma del desplazamiento. Es lo que da la sensacion de
-   profundidad continua en vez de un salto entre activa e inactiva. */
-
-.carousel {
-  position: relative;
-}
-
-.carousel__track {
-  display: flex;
-  gap: 0.7rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  margin-inline: calc(var(--gap) * -1);
-  padding: 1rem var(--gap) 1.25rem;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
-  /* La perspectiva hace que el retroceso de las vecinas se lea como
-     profundidad y no como un simple encogimiento. */
-  perspective: 1400px;
-}
-
-.carousel__track::-webkit-scrollbar {
-  display: none;
-}
-
-.carousel__track:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 6px;
-  border-radius: 2rem;
-}
-
-.shot {
-  --d: 1;
-  position: relative;
-  flex: 0 0 54%;
-  max-width: 13rem;
-  aspect-ratio: 3 / 4;
-  scroll-snap-align: center;
-  border-radius: 1.4rem;
-  overflow: hidden;
-  padding: 0;
-  border: 0;
-  background: linear-gradient(150deg, var(--surface-hi), var(--ink-2));
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  /* Escala y retroceso proporcionales a la distancia al centro */
-  transform: scale(calc(1 - var(--d) * 0.09)) translateZ(calc(var(--d) * -40px));
-  box-shadow:
-    0 calc(28px - var(--d) * 14px) calc(60px - var(--d) * 26px) calc(-24px + var(--d) * 8px)
-      rgba(0, 0, 0, 0.85),
-    0 0 0 1px rgba(228, 196, 128, calc(0.34 - var(--d) * 0.28));
-  transition:
-    transform 0.5s var(--ease),
-    box-shadow 0.5s var(--ease);
-}
-
-.shot img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* La luz también retrocede con la distancia */
-  filter: brightness(calc(1 - var(--d) * 0.3)) saturate(calc(1 - var(--d) * 0.25));
-  transform: scale(calc(1 + var(--d) * 0.04));
-  transition:
-    filter 0.5s var(--ease),
-    transform 0.6s var(--ease);
-}
-
-.shot::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(
-    to top,
-    rgba(7, 3, 16, 0.92) 0%,
-    rgba(7, 3, 16, 0.2) 46%,
-    transparent 72%
-  );
-  pointer-events: none;
-}
-
-/* Marco dorado de la foto elegida */
-.shot::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  border-radius: inherit;
-  padding: 2px;
-  background: linear-gradient(140deg, var(--gold-hi), var(--gold) 42%, var(--gold-deep));
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.45s var(--ease);
-  pointer-events: none;
-}
-
-.shot.is-active::before {
-  opacity: 1;
-}
-
-.shot__caption {
-  position: absolute;
-  left: 0.85rem;
-  right: 0.85rem;
-  bottom: 0.85rem;
-  z-index: 3;
-  text-align: left;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: -0.005em;
-  color: var(--cream);
-  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.95);
-  opacity: calc(1 - var(--d) * 0.55);
-  transition: opacity 0.45s var(--ease);
-}
-
-.shot__caption::before {
-  content: '';
-  display: block;
-  width: 1.5rem;
-  height: 1px;
-  margin-bottom: 0.55rem;
-  background: rgba(246, 240, 231, 0.45);
-  transition:
-    width 0.45s var(--ease),
-    background 0.45s var(--ease);
-}
-
-.shot.is-active .shot__caption::before {
-  width: 2.9rem;
-  background: var(--gold);
-}
-
-/* Controles */
-.carousel__nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.1rem;
-  margin-top: 0.25rem;
-}
-
-.carousel__arrow {
-  display: grid;
-  place-items: center;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  border: 1px solid var(--hairline);
-  background: var(--surface);
-  color: var(--gold);
-  cursor: pointer;
-  transition:
-    transform 0.3s var(--ease),
-    border-color 0.3s var(--ease),
-    background 0.3s var(--ease),
-    opacity 0.3s var(--ease);
-  -webkit-tap-highlight-color: transparent;
-}
-
-.carousel__arrow svg {
-  width: 1.1rem;
-  height: 1.1rem;
-  transform: rotate(180deg);
-}
-
-.carousel__arrow--next svg {
-  transform: none;
-}
-
-.carousel__arrow:hover:not(:disabled) {
-  border-color: var(--hairline-hi);
-  background: rgba(228, 196, 128, 0.12);
-}
-
-.carousel__arrow:disabled {
-  opacity: 0.28;
-  cursor: default;
-}
-
-.carousel__count {
-  margin: 0;
-  min-width: 4.25rem;
-  text-align: center;
-  font-size: 0.8125rem;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.08em;
-  color: var(--muted-2);
-}
-
-.carousel__count span {
-  color: var(--gold);
-  font-weight: 700;
 }
 
 /* ── Sobre Liz ────────────────────────────────────────────── */
@@ -1749,6 +1646,49 @@ button {
   background: rgba(255, 61, 139, 0.28);
   border-color: rgba(255, 61, 139, 0.7);
   color: #fff;
+}
+
+.live-pill.is-live {
+  background: rgba(28, 200, 120, 0.16);
+  border-color: rgba(28, 200, 120, 0.6);
+  color: #b6f5d4;
+  animation: latido 2.4s var(--ease) infinite;
+}
+
+.live-pill.is-live .live-pill__dot {
+  background: #21d97e;
+  box-shadow: 0 0 0 0 rgba(33, 217, 126, 0.6);
+  animation: ping-vivo 1.6s ease-out infinite;
+}
+
+.live-pill__go {
+  margin-left: 0.1rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: #21d97e;
+  color: #05231a;
+  font-size: 0.6875rem;
+  font-weight: 800;
+}
+
+@keyframes latido {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(33, 217, 126, 0);
+  }
+  50% {
+    box-shadow: 0 0 22px -4px rgba(33, 217, 126, 0.55);
+  }
+}
+
+@keyframes ping-vivo {
+  0% {
+    box-shadow: 0 0 0 0 rgba(33, 217, 126, 0.65);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 10px rgba(33, 217, 126, 0);
+  }
 }
 
 .live-pill[data-pressed] .live-pill__dot {

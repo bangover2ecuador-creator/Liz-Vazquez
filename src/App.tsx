@@ -1,6 +1,5 @@
 import { Hero } from './components/Hero'
 import { Giveaway } from './components/Giveaway'
-import { Gallery } from './components/Gallery'
 import { Socials } from './components/Socials'
 import { About, Finale, Stats } from './components/Sections'
 import { Partners } from './components/Partners'
@@ -18,7 +17,7 @@ export default function App() {
       <div className="atmosphere" aria-hidden="true" />
       <div className="grain" aria-hidden="true" />
 
-      <a className="skip" href="#fotos">
+      <a className="skip" href="#marcas">
         Saltar al contenido
       </a>
 
@@ -26,8 +25,6 @@ export default function App() {
       <Hero />
 
       <main>
-        {/* Las fotos primero: es lo que mas retiene al llegar. */}
-        <Gallery />
         <Giveaway />
 
         <hr className="rule" />

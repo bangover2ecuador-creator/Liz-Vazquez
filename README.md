@@ -53,6 +53,28 @@ export const giveaway = {
 
 El botón pasa solo de "Muy pronto" a un enlace real. Nada más que tocar.
 
+### Avisar de que está en directo
+
+En [`src/data/site.ts`](src/data/site.ts):
+
+```ts
+liveNow: true,   // ← al empezar el live
+liveNow: false,  // ← al terminarlo
+```
+
+Con `true` la pastilla de arriba se vuelve **verde**, late y dice
+"En vivo ahora · Entrar", y lleva a su TikTok Live. Así quien llegue
+desde Instagram, Facebook o YouTube ve al momento que está emitiendo.
+
+**Por qué es un interruptor y no automático:** TikTok no ofrece una
+forma pública de preguntar "¿está en directo?" desde el navegador. Para
+que se encendiera solo haría falta un pequeño servicio propio que lo
+consultara cada pocos minutos (una función de Netlify, por ejemplo) y
+guardara el estado. Se puede montar; hoy no está.
+
+Mientras tanto, cambiar `true`/`false` y publicar tarda menos de un
+minuto. Si quieres que sea automático, dilo y lo montamos.
+
 ### Añadir o cambiar redes
 
 Edita el array `socials`. El orden del array es el orden en pantalla, y
@@ -65,13 +87,12 @@ fija inferior.
 2. Ejecuta `npm run images` — genera WebP de 320/480/640 px y un JPEG de respaldo.
 3. Añádela al array `gallery` en `src/data/site.ts`, con su `caption`.
 
-La galería es un **carrusel horizontal**: el orden del array es el orden de
-aparición. Las primeras son las que más se ven, así que pon ahí las mejores.
-Al tocar una foto se centra y se enmarca en dorado.
+La galería **es la portada**: la primera foto del array es la que se ve al
+abrir, dentro del marco redondo dorado, y las demás llegan deslizando en ese
+mismo marco. No hay una sección de fotos aparte más abajo.
 
-Solo las dos primeras se cargan de entrada; el resto espera a que el carrusel
-se acerque a la pantalla. Por eso puedes añadir muchas sin penalizar la carga
-inicial.
+Solo las tres primeras se cargan de entrada; el resto espera al primer
+deslizamiento. Por eso puedes añadir muchas sin penalizar la carga inicial.
 
 ### Añadir una marca o colaboración
 
@@ -90,8 +111,8 @@ discontinuo funcionan como invitación.
 
 ### Cambiar el orden de las secciones
 
-En [`src/App.tsx`](src/App.tsx). Hoy es: portada → fotos → sorteos →
-cifras → sobre mí → marcas → cierre → redes → pie.
+En [`src/App.tsx`](src/App.tsx). Hoy es: portada (con el carrusel dentro) →
+sorteos → cifras → sobre mí → marcas → cierre → redes → pie.
 
 ---
 

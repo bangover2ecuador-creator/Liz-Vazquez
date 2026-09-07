@@ -12,6 +12,15 @@ export const site = {
   contactHandle: '@liss_iv',
   contactUrl: 'https://www.instagram.com/liss_iv',
   liveUrl: 'https://www.tiktok.com/@lizvasquezlive',
+
+  // ── Aviso de directo ────────────────────────────────────────
+  // Ponlo en true cuando empiece el live: la pastilla se vuelve
+  // verde, late y dice EN VIVO AHORA. En false vuelve al aviso
+  // normal. Es un interruptor manual — ver el README para por que
+  // no puede detectarse solo desde el navegador.
+  liveNow: false,
+  liveNowLabel: 'En vivo ahora',
+  liveOffLabel: 'Lives diarios en TikTok',
 } as const
 
 export type Social = {
@@ -83,10 +92,11 @@ export const stats = [
 ]
 
 export const gallery = [
-  // Carrusel horizontal. El orden es el de aparicion: las mas
-  // llamativas primero, porque casi nadie desliza hasta el final.
+  // Carrusel de la portada. La primera es la foto principal, la que
+  // se ve al abrir; las demas llegan deslizando en ese mismo marco.
+  { id: 'principal', src: 'liz-hero', caption: 'Desliza para ver más' },
   { id: 'gala', src: 'liz-gala', caption: 'Noche de gala' },
-  { id: 'corazon', src: 'liz-corazon', caption: 'Todo a su tiempo' },
+  { id: 'corazon', src: 'liz-corazon', caption: 'Bajo el arco de flores' },
   { id: 'caballo', src: 'liz-caballo', caption: 'Mi caballo y yo' },
   { id: 'jardin', src: 'liz-jardin', caption: 'Mañana en el jardín' },
   { id: 'plaza', src: 'liz-plaza', caption: 'Paz y buena vibra' },
