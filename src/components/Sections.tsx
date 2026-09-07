@@ -1,4 +1,4 @@
-import { about, highlights, site, stats } from '../data/site'
+import { about, site, stats } from '../data/site'
 import { CountUp, Reveal } from './Primitives'
 import { ArrowIcon, CheckIcon } from './Icons'
 
@@ -49,30 +49,6 @@ export function About() {
           ))}
         </ul>
       </Reveal>
-    </section>
-  )
-}
-
-// ── Momentos destacados ──────────────────────────────────────
-
-export function Highlights() {
-  return (
-    <section className="section shell" aria-label="Momentos destacados">
-      <Reveal className="section-head section-head--center">
-        <h2 className="section-title">Momentos destacados</h2>
-        <p className="section-sub">Mis mejores recuerdos, contigo.</p>
-      </Reveal>
-
-      <div className="highlights">
-        {highlights.map((h, i) => (
-          <Reveal key={h.id} delay={i * 60}>
-            <article className="highlight">
-              <h3 className="highlight__title">{h.title}</h3>
-              <p className="highlight__detail">{h.detail}</p>
-            </article>
-          </Reveal>
-        ))}
-      </div>
     </section>
   )
 }

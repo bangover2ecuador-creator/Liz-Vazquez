@@ -68,3 +68,30 @@ export function Logo({ size, bare = false, className, title = 'Liz Vásquez' }: 
     </svg>
   )
 }
+
+/**
+ * Imagotipo: el monograma junto al nombre.
+ *
+ * Se usa donde hace falta identificar la marca completa (la barra
+ * superior). El monograma solo, sin nombre, se reserva para cuando el
+ * contexto ya dice de quién es: el favicon y el pie.
+ */
+export function Wordmark({
+  className,
+  /** Etiqueta del nombre. La barra lo monta como <h1>: es el título
+   *  de la página, y al salir del hero se llevó el h1 con él. */
+  nameAs: Name = 'span',
+}: {
+  className?: string
+  nameAs?: 'h1' | 'span'
+}) {
+  return (
+    <span className={className}>
+      <Logo className="wordmark__mark" />
+      <span className="wordmark__text">
+        <Name className="wordmark__name">Liz Vásquez</Name>
+        <span className="wordmark__tag">Todo a su tiempo</span>
+      </span>
+    </span>
+  )
+}

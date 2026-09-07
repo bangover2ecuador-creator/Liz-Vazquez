@@ -103,14 +103,56 @@ export const gallery = [
   { id: 'selfie', src: 'liz-selfie', caption: 'Sin filtros' },
 ] as const
 
-export const highlights = [
-  { id: 'award', title: 'Mejor Influencer', detail: 'Premio Cajamarca' },
-  { id: 'likes', title: '20M+ Me gusta', detail: 'En TikTok' },
-  { id: 'sanjuan', title: 'Fiesta San Juan', detail: 'Chota 2025' },
-  { id: 'lives', title: 'Lives diarios', detail: 'Conexión real' },
-  { id: 'community', title: '925K+ Familia', detail: 'Mi comunidad' },
-  { id: 'vip', title: 'Contenido exclusivo', detail: 'Solo para ti' },
+// ── Marcas y colaboraciones ───────────────────────────────────
+// Cada grupo se llena a medida que llegan. Para añadir una marca,
+// mete su nombre en `items` del grupo que toque; la tarjeta aparece
+// sola y el contador de "espacios libres" se ajusta.
+//
+// Si algún día tienes el logo de la marca, añade `logo: 'archivo'`
+// (sin extensión) tras dejar el JPG/PNG en assets-src/.
+
+export type Colaborador = { name: string; logo?: string; url?: string }
+
+export const partners: {
+  id: string
+  title: string
+  blurb: string
+  items: Colaborador[]
+}[] = [
+  {
+    id: 'marcas',
+    title: 'Marcas',
+    blurb: 'Campañas y contenido patrocinado.',
+    items: [],
+  },
+  {
+    id: 'emprendedores',
+    title: 'Emprendedores',
+    blurb: 'Negocios de Cajamarca y del Perú.',
+    items: [],
+  },
+  {
+    id: 'empresas',
+    title: 'Empresas',
+    blurb: 'Eventos, presencia y activaciones.',
+    items: [],
+  },
+  {
+    id: 'creadores',
+    title: 'Creadores',
+    blurb: 'Colaboraciones con otros influencers.',
+    items: [],
+  },
 ]
+
+export const partnersIntro = {
+  heading: 'Marcas que han trabajado conmigo',
+  sub: 'Espacios que se van llenando con cada colaboración.',
+  emptyLabel: 'Espacio libre',
+  ctaTitle: '¿Quieres trabajar conmigo?',
+  ctaBody: 'Escríbeme por Instagram y armamos algo juntos.',
+  ctaLabel: 'Escribirme',
+}
 
 export const about = {
   heading: '¿Quién es Liz?',

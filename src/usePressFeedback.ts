@@ -18,7 +18,7 @@ const PRESSABLE = [
   '.stat',
   '.highlight',
   '.pillars li',
-  '.footer__links a',
+  '.partner-slot--filled',
   '.footer__contact-link',
   '.carousel__arrow',
   '.dock__btn',

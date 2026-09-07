@@ -319,6 +319,15 @@ button {
   width: 100%;
 }
 
+/* El boton de sorteos no necesita ocupar todo el ancho */
+.giveaway__cta .btn--gold {
+  width: auto;
+  min-width: 13rem;
+  min-height: 3rem;
+  padding-inline: 1.6rem;
+  font-size: 0.9rem;
+}
+
 /* ── Botón dorado (sorteos) ───────────────────────────────── */
 
 .btn--gold {
@@ -366,18 +375,93 @@ button {
   transform: none;
 }
 
+
+/* ── Barra superior ───────────────────────────────────────────
+   Lleva el imagotipo. Empieza transparente para no competir con
+   el retrato y gana fondo al hacer scroll, porque debajo pasan
+   fotos claras y el texto tiene que seguir legible.             */
+
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem var(--gap) calc(0.6rem + 1px);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition:
+    background 0.4s var(--ease),
+    border-color 0.4s var(--ease),
+    backdrop-filter 0.4s var(--ease);
+}
+
+.topbar.is-scrolled {
+  background: rgba(7, 3, 16, 0.82);
+  backdrop-filter: blur(16px) saturate(1.3);
+  border-bottom-color: var(--hairline);
+}
+
+.topbar__brand {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  padding-inline: 0.5rem;
+  border-radius: 999px;
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.wordmark__mark {
+  width: 2.6rem;
+  height: 2.6rem;
+  flex-shrink: 0;
+}
+
+.wordmark__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.wordmark__name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+}
+
+.wordmark__tag {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.7rem;
+  letter-spacing: 0.01em;
+  color: var(--gold);
+}
+
 /* ── Hero ─────────────────────────────────────────────────── */
 
 .hero {
   position: relative;
-  padding-block: clamp(3rem, 12vw, 5rem) clamp(2.5rem, 8vw, 3.5rem);
+  /* El primer valor deja pasar la barra superior */
+  padding-block: clamp(5rem, 17vw, 7rem) clamp(1.5rem, 5vw, 2rem);
   text-align: center;
 }
 
 .portrait {
   display: block;
   position: relative;
-  width: clamp(11rem, 46vw, 14rem);
+  cursor: default;
+  width: clamp(13rem, 58vw, 18rem);
   aspect-ratio: 1;
   margin: 0 auto 1.75rem;
 }
@@ -484,21 +568,12 @@ button {
   height: 1.15rem;
 }
 
-.hero__name {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(2.6rem, 13vw, 4rem);
-  line-height: 1;
-  letter-spacing: -0.02em;
-  margin: 0;
-  color: var(--cream);
-  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.5);
-}
 
 .hero__tagline {
+  margin-top: 1.5rem;
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(1.1rem, 5vw, 1.4rem);
+  font-size: clamp(1.35rem, 6.5vw, 1.75rem);
   color: var(--gold);
   margin: 0.85rem 0 0;
 }
@@ -685,7 +760,7 @@ button {
 
 .giveaway {
   position: relative;
-  padding: clamp(1.75rem, 7vw, 2.5rem) clamp(1.25rem, 5vw, 2rem);
+  padding: clamp(1.25rem, 5vw, 1.75rem) clamp(1rem, 4vw, 1.5rem);
   border-radius: var(--radius-lg);
   text-align: center;
   background:
@@ -751,9 +826,9 @@ button {
 .giveaway__title {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(1.9rem, 8vw, 2.5rem);
-  line-height: 1.1;
-  margin: 1rem 0 0;
+  font-size: clamp(1.4rem, 6vw, 1.8rem);
+  line-height: 1.15;
+  margin: 0.7rem 0 0;
   background: linear-gradient(120deg, var(--gold-hi), var(--gold) 45%, #fff6df);
   -webkit-background-clip: text;
   background-clip: text;
@@ -761,16 +836,16 @@ button {
 }
 
 .giveaway__body {
-  margin: 0.85rem auto 0;
-  max-width: 34ch;
+  margin: 0.6rem auto 0;
+  max-width: 36ch;
   color: var(--muted);
-  font-size: 0.9375rem;
-  line-height: 1.7;
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
 
 .giveaway__perks {
   list-style: none;
-  margin: 1.5rem 0 0;
+  margin: 1.1rem 0 0;
   padding: 0;
   display: grid;
   gap: 0.6rem;
@@ -803,7 +878,7 @@ button {
 }
 
 .giveaway__cta {
-  margin-top: 1.75rem;
+  margin-top: 1.25rem;
 }
 
 .giveaway__waiting {
@@ -887,6 +962,10 @@ button {
   line-height: 1.4;
 }
 
+#fotos {
+  padding-top: 0;
+}
+
 /* ── Galería (carrusel) ───────────────────────────────────────
    La tarjeta del centro va a tamaño completo y las vecinas se
    retiran en escala y luz segun --d, que el JS actualiza en cada
@@ -899,11 +978,11 @@ button {
 
 .carousel__track {
   display: flex;
-  gap: 0.9rem;
+  gap: 0.7rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   margin-inline: calc(var(--gap) * -1);
-  padding: 1.5rem var(--gap) 1.75rem;
+  padding: 1rem var(--gap) 1.25rem;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
@@ -925,11 +1004,11 @@ button {
 .shot {
   --d: 1;
   position: relative;
-  flex: 0 0 78%;
-  max-width: 21rem;
+  flex: 0 0 54%;
+  max-width: 13rem;
   aspect-ratio: 3 / 4;
   scroll-snap-align: center;
-  border-radius: 1.9rem;
+  border-radius: 1.4rem;
   overflow: hidden;
   padding: 0;
   border: 0;
@@ -998,12 +1077,12 @@ button {
 
 .shot__caption {
   position: absolute;
-  left: 1.15rem;
-  right: 1.15rem;
-  bottom: 1.1rem;
+  left: 0.85rem;
+  right: 0.85rem;
+  bottom: 0.85rem;
   z-index: 3;
   text-align: left;
-  font-size: 0.9375rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: -0.005em;
   color: var(--cream);
@@ -1142,44 +1221,106 @@ button {
   flex-shrink: 0;
 }
 
-/* ── Momentos destacados ──────────────────────────────────── */
+/* ── Marcas y colaboraciones ──────────────────────────────────
+   Nace vacía: los huecos con borde discontinuo dicen "aquí cabe una
+   marca". Al cargar marcas en site.ts, las tarjetas llenas van
+   sustituyendo a los huecos sin tocar el CSS.                      */
 
-.highlights {
+.partners {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   gap: 0.7rem;
 }
 
-.highlight {
-  position: relative;
-  padding: 1.15rem 0.95rem 1.15rem 1.15rem;
+.partner-group {
+  padding: 1.1rem 1rem 1.15rem;
   border-radius: var(--radius);
   background: linear-gradient(150deg, var(--surface-hi), var(--surface));
   border: 1px solid var(--hairline);
-  overflow: hidden;
 }
 
-.highlight::before {
-  content: '';
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 2px;
-  background: linear-gradient(to bottom, var(--gold), transparent);
-  opacity: 0.7;
+.partner-group__head {
+  margin-bottom: 0.85rem;
 }
 
-
-.highlight__title {
-  margin: 0.4rem 0 0.2rem;
-  font-size: 0.9375rem;
-  font-weight: 700;
+.partner-group__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
   color: var(--cream);
-  line-height: 1.25;
 }
 
-.highlight__detail {
-  font-size: 0.75rem;
+.partner-group__blurb {
+  margin: 0.2rem 0 0;
+  font-size: 0.8125rem;
   color: var(--muted-2);
+}
+
+.partner-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.partner-slot {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 0.95rem;
+  border-radius: 0.85rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  /* Hueco: discontinuo y apagado, se lee como espacio reservado */
+  border: 1px dashed rgba(228, 196, 128, 0.28);
+  color: rgba(246, 240, 231, 0.3);
+  background: transparent;
+}
+
+.partner-slot--filled {
+  border: 1px solid var(--hairline-hi);
+  background: rgba(228, 196, 128, 0.1);
+  color: var(--cream);
+  transition:
+    transform 0.3s var(--ease),
+    background 0.3s var(--ease);
+}
+
+.partner-slot--filled a {
+  display: inline-flex;
+  align-items: center;
+}
+
+.partner-slot--filled[data-pressed] {
+  transform: scale(0.96);
+  background: rgba(228, 196, 128, 0.2);
+  transition-duration: 0.1s;
+}
+
+.partners__cta {
+  margin-top: 1.25rem;
+  padding: 1.35rem 1.15rem;
+  border-radius: var(--radius);
+  text-align: center;
+  background: radial-gradient(90% 80% at 50% 0%, rgba(228, 196, 128, 0.12), transparent 70%),
+    linear-gradient(160deg, rgba(53, 16, 42, 0.55), rgba(14, 6, 25, 0.8));
+  border: 1px solid var(--hairline);
+}
+
+.partners__cta-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--cream);
+}
+
+.partners__cta-body {
+  margin: 0.4rem 0 1rem;
+  font-size: 0.875rem;
+  color: var(--muted);
 }
 
 /* ── CTA final ────────────────────────────────────────────── */
@@ -1267,37 +1408,8 @@ button {
   font-size: 0.95rem;
 }
 
-.footer__links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
-  margin: 1.75rem 0 0;
-  padding: 0;
-  list-style: none;
-}
 
-.footer__links a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 3rem;
-  padding: 0 1rem;
-  border-radius: 999px;
-  border: 1px solid var(--hairline);
-  background: var(--surface);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: rgba(246, 240, 231, 0.82);
-  transition:
-    transform 0.3s var(--ease),
-    border-color 0.3s var(--ease),
-    color 0.3s var(--ease);
-}
 
-.footer__links a:hover {
-  border-color: var(--hairline-hi);
-  color: var(--cream);
-}
 
 .footer__contact {
   display: grid;
@@ -1709,15 +1821,15 @@ button {
   }
 
   .shot {
-    flex-basis: 30%;
+    flex-basis: 22%;
   }
 
   .stats {
     grid-template-columns: repeat(4, 1fr);
   }
 
-  .highlights {
-    grid-template-columns: repeat(3, 1fr);
+  .partners {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .giveaway__perks {
