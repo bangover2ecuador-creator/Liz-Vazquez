@@ -50,10 +50,11 @@ export const socials: Social[] = [
   },
   {
     id: 'tiktok-live',
-    platform: 'TikTok Live',
+    platform: 'TikTok',
     handle: '@lizvasquezlive',
     url: 'https://www.tiktok.com/@lizvasquezlive',
-    accent: '#FE2C55',
+    accent: '#25F4EE',
+    note: 'Cuenta de respaldo',
   },
   {
     id: 'tiktok-2',
@@ -61,7 +62,7 @@ export const socials: Social[] = [
     handle: '@lizvasquez2.0',
     url: 'https://www.tiktok.com/@lizvasquez2.0',
     accent: '#25F4EE',
-    note: 'Segunda cuenta',
+    note: 'Cuenta de respaldo',
   },
   {
     id: 'instagram',
