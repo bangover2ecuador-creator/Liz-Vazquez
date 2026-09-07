@@ -22,6 +22,7 @@ const PRESSABLE = [
   '.footer__contact-link',
   '.carousel__arrow',
   '.menu__boton',
+  '.topbar__brand',
   '.vista__atras',
   '.live-pill',
   '.giveaway__badge',
