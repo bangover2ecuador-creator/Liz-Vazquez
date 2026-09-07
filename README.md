@@ -73,10 +73,25 @@ Solo las dos primeras se cargan de entrada; el resto espera a que el carrusel
 se acerque a la pantalla. Por eso puedes añadir muchas sin penalizar la carga
 inicial.
 
+### Añadir una marca o colaboración
+
+En el array `partners` de [`src/data/site.ts`](src/data/site.ts), mete el
+nombre en el grupo que toque:
+
+```ts
+{ id: 'marcas', title: 'Marcas', blurb: '...', items: [
+  { name: 'Nombre de la marca', url: 'https://...' },
+]},
+```
+
+La tarjeta aparece sola y va sustituyendo a los huecos de "Espacio libre".
+La sección está pensada para verse bien vacía: los huecos con borde
+discontinuo funcionan como invitación.
+
 ### Cambiar el orden de las secciones
 
-En [`src/App.tsx`](src/App.tsx). Hoy es: hero → sorteos → cifras → fotos →
-sobre mí → momentos → cierre → redes → pie.
+En [`src/App.tsx`](src/App.tsx). Hoy es: portada → fotos → sorteos →
+cifras → sobre mí → marcas → cierre → redes → pie.
 
 ---
 

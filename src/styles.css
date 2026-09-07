@@ -1552,7 +1552,6 @@ button {
 .stat,
 .highlight,
 .pillars li,
-.footer__links a,
 .footer__contact-link,
 .carousel__arrow,
 .dock__btn,
@@ -1572,7 +1571,6 @@ button {
 .stat[data-pressed],
 .highlight[data-pressed],
 .pillars li[data-pressed],
-.footer__links a[data-pressed],
 .footer__contact-link[data-pressed],
 .dock__btn[data-pressed],
 .dock__gold[data-pressed],
@@ -1608,7 +1606,6 @@ button {
 .stat[data-pressed],
 .highlight[data-pressed],
 .pillars li[data-pressed],
-.footer__links a[data-pressed],
 .footer__contact-link[data-pressed],
 .dock__btn[data-pressed],
 .dock__gold[data-pressed] {
@@ -1632,7 +1629,6 @@ button {
 .stat[data-pressed],
 .highlight[data-pressed],
 .pillars li[data-pressed],
-.footer__links a[data-pressed],
 .footer__contact-link[data-pressed] {
   border-color: var(--hairline-hi);
   background: linear-gradient(150deg, rgba(228, 196, 128, 0.16), var(--surface));
