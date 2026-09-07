@@ -19,6 +19,8 @@
   "devDependencies": {
     "@fontsource-variable/manrope": "^5.1.1",
     "@fontsource/playfair-display": "^5.1.1",
+    "@netlify/blobs": "^11.0.3",
+    "@netlify/functions": "^6.0.0",
     "@types/react": "^18.3.17",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",

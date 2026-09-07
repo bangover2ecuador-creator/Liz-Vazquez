@@ -14,10 +14,12 @@ export const site = {
   liveUrl: 'https://www.tiktok.com/@lizvasquezlive',
 
   // ── Aviso de directo ────────────────────────────────────────
-  // Ponlo en true cuando empiece el live: la pastilla se vuelve
-  // verde, late y dice EN VIVO AHORA. En false vuelve al aviso
-  // normal. Es un interruptor manual — ver el README para por que
-  // no puede detectarse solo desde el navegador.
+  // Normalmente NO hay que tocar esto: una funcion de Netlify
+  // comprueba TikTok cada cinco minutos en su horario y enciende el
+  // aviso sola (ver netlify/functions/revisar-live.mts).
+  //
+  // Este valor es solo el respaldo: lo que se ve mientras llega la
+  // respuesta, o si la comprobacion falla. Dejalo en false.
   liveNow: false,
   liveNowLabel: 'En vivo ahora',
   liveOffLabel: 'Lives diarios en TikTok',

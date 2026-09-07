@@ -1,6 +1,7 @@
 import { site } from '../data/site'
 import { Reveal } from './Primitives'
 import { PortraitCarousel } from './PortraitCarousel'
+import { useEnVivo } from '../useEnVivo'
 
 /**
  * Portada.
@@ -9,7 +10,9 @@ import { PortraitCarousel } from './PortraitCarousel'
  * marco, así que no hay tira de fotos aparte más abajo.
  */
 export function Hero() {
-  const enVivo = site.liveNow
+  // Lo decide la comprobación automática; si falla, manda el
+  // interruptor manual de site.ts.
+  const { enVivo, espectadores } = useEnVivo()
 
   return (
     <section className="hero shell" id="inicio">
@@ -22,6 +25,9 @@ export function Hero() {
         >
           <span className="live-pill__dot" aria-hidden="true" />
           {enVivo ? site.liveNowLabel : site.liveOffLabel}
+          {enVivo && espectadores ? (
+            <span className="live-pill__gente">{espectadores.toLocaleString('es-PE')} viendo</span>
+          ) : null}
           {enVivo && (
             <span className="live-pill__go" aria-hidden="true">
               Entrar

@@ -53,27 +53,44 @@ export const giveaway = {
 
 El botón pasa solo de "Muy pronto" a un enlace real. Nada más que tocar.
 
-### Avisar de que está en directo
+### El aviso de directo (automático)
 
-En [`src/data/site.ts`](src/data/site.ts):
+**No hay que tocar nada.** Una función de Netlify comprueba TikTok cada
+cinco minutos y enciende sola el aviso verde de arriba cuando Liz está
+emitiendo, con el número de gente viendo y un botón que lleva a su live.
+
+**Horario.** Solo comprueba en su franja: de **8:00 a 2:00 de la
+madrugada, hora de Perú**. Fuera de ahí ni siquiera llama a TikTok.
+Para cambiarla, en [`netlify/functions/revisar-live.mts`](netlify/functions/revisar-live.mts):
 
 ```ts
-liveNow: true,   // ← al empezar el live
-liveNow: false,  // ← al terminarlo
+const HORA_INICIO = 8   // empieza
+const HORA_FIN = 2      // termina (de la madrugada)
 ```
 
-Con `true` la pastilla de arriba se vuelve **verde**, late y dice
-"En vivo ahora · Entrar", y lleva a su TikTok Live. Así quien llegue
-desde Instagram, Facebook o YouTube ve al momento que está emitiendo.
+Si mueves mucho la franja, ajusta también el `schedule` del final del
+archivo, que está en horario UTC (Perú es UTC−5).
 
-**Por qué es un interruptor y no automático:** TikTok no ofrece una
-forma pública de preguntar "¿está en directo?" desde el navegador. Para
-que se encendiera solo haría falta un pequeño servicio propio que lo
-consultara cada pocos minutos (una función de Netlify, por ejemplo) y
-guardara el estado. Se puede montar; hoy no está.
+**Cómo lo sabe.** Consulta el mismo endpoint que usa la web de TikTok,
+que devuelve `status: 2` mientras se emite y `4` cuando terminó. No
+necesita contraseña ni cuenta.
 
-Mientras tanto, cambiar `true`/`false` y publicar tarda menos de un
-minuto. Si quieres que sea automático, dilo y lo montamos.
+**Ver cómo queda sin esperar a un directo:** añade `?live=1` a la URL.
+
+**Piezas:**
+
+| Archivo | Qué hace |
+| --- | --- |
+| `netlify/functions/revisar-live.mts` | Comprueba TikTok cada 5 min y guarda el estado |
+| `netlify/functions/estado-live.mts` | Sirve ese estado en `/api/live` |
+| `src/useEnVivo.ts` | Lo consulta desde la landing cada 2 min |
+
+Quien visita la página **no** toca TikTok: solo lee el dato ya guardado,
+así que mil visitas no son mil peticiones.
+
+**Si la comprobación fallara**, la landing usa `liveNow` de
+[`src/data/site.ts`](src/data/site.ts) como respaldo manual. Déjalo en
+`false`; solo ponlo en `true` si algún día hay que forzarlo a mano.
 
 ### Añadir o cambiar redes
 
