@@ -3,29 +3,54 @@ import { gallery, site } from '../data/site'
 import { Photo } from './Primitives'
 import { CrownIcon } from './Icons'
 
-// Cuántas fotos se cargan de entrada. Las demás esperan a que el dedo
-// se acerque, para no descargar 17 imágenes al abrir.
+// Cuántas fotos se montan de entrada. Las demás esperan al primer
+// contacto, para no descargar diecisiete imágenes al abrir.
 const INICIALES = 3
 
 /**
- * La portada es el carrusel.
+ * Carrusel de la portada.
  *
- * Tarjeta vertical con esquinas muy redondeadas, no el círculo de
- * antes: aquel venía de cuando esto era un avatar, y recortaba un
- * tercio de cada foto vertical. El marco lleva un bisel de luz arriba
- * y sombra profunda debajo, para que se lea como un objeto con
- * grosor y no como una imagen pegada al fondo.
+ * Compacto a propósito: deja sitio al menú de abajo, que es por donde
+ * se navega. Las fotos vecinas asoman por los lados — sin ese borde
+ * visible nadie sabe que hay más y el carrusel no se desliza.
+ *
+ * El pie va dentro de la foto, sobre el degradado inferior, no debajo:
+ * así el bloque termina en el canto de la tarjeta y no arrastra texto.
  */
 export function PortraitCarousel() {
   const trackRef = useRef<HTMLDivElement>(null)
   const [activa, setActiva] = useState(0)
   const [cargarTodas, setCargarTodas] = useState(false)
 
+  // Publica en cada tarjeta su distancia al centro: el CSS la usa para
+  // escalar y atenuar de forma continua mientras el dedo arrastra.
   const sincronizar = useCallback(() => {
     const track = trackRef.current
     if (!track) return
-    const i = Math.round(track.scrollLeft / track.clientWidth)
-    setActiva(Math.min(Math.max(i, 0), gallery.length - 1))
+
+    const centro = track.scrollLeft + track.clientWidth / 2
+    let cerca = 0
+    let min = Infinity
+
+    Array.from(track.children).forEach((hijo, i) => {
+      const el = hijo as HTMLElement
+      const medio = el.offsetLeft + el.offsetWidth / 2
+      const dist = Math.abs(medio - centro)
+      if (dist < min) {
+        min = dist
+        cerca = i
+      }
+      el.style.setProperty('--d', Math.min(dist / (el.offsetWidth || 1), 1).toFixed(3))
+    })
+
+    // En los extremos manda la posicion, no la geometria: con el
+    // scroll a cero la primera no puede centrarse y se marcaria la
+    // segunda.
+    if (track.scrollLeft <= 2) cerca = 0
+    else if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 2)
+      cerca = track.children.length - 1
+
+    setActiva(cerca)
   }, [])
 
   useEffect(() => {
@@ -40,12 +65,10 @@ export function PortraitCarousel() {
 
     track.scrollLeft = 0
     track.addEventListener('scroll', alDesplazar, { passive: true })
-    // Al primer contacto se montan todas: ya está claro que va a deslizar.
+    sincronizar()
+
     const alTocar = () => setCargarTodas(true)
-    track.addEventListener('pointerdown', alTocar, {
-      passive: true,
-      once: true,
-    })
+    track.addEventListener('pointerdown', alTocar, { passive: true, once: true })
 
     return () => {
       track.removeEventListener('scroll', alDesplazar)
@@ -58,70 +81,82 @@ export function PortraitCarousel() {
     const track = trackRef.current
     if (!track) return
     setCargarTodas(true)
-    track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' })
+
+    const el = track.children[i] as HTMLElement | undefined
+    if (!el) return
+    track.scrollTo({
+      left: el.offsetLeft - (track.clientWidth - el.offsetWidth) / 2,
+      behavior: 'smooth',
+    })
   }, [])
 
   return (
-    <div className="portrait">
-      <div className="portrait__frame">
-        <div
-          className="portrait__track"
-          ref={trackRef}
-          role="group"
-          aria-roledescription="carrusel"
-          aria-label={`Fotos de ${site.name}`}
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'ArrowRight') {
-              e.preventDefault()
-              irA(Math.min(activa + 1, gallery.length - 1))
-            }
-            if (e.key === 'ArrowLeft') {
-              e.preventDefault()
-              irA(Math.max(activa - 1, 0))
-            }
-          }}
-        >
-          {gallery.map((foto, i) => (
-            <div className="portrait__slide" key={foto.id} aria-hidden={i !== activa}>
-              {(cargarTodas || i < INICIALES) && (
-                <Photo
-                  name={foto.src}
-                  alt={`${site.name} — ${foto.caption}`}
-                  sizes="320px"
-                  widths={[320, 480, 640]}
-                  priority={i === 0}
-                />
-              )}
-            </div>
-          ))}
-        </div>
-        {/* Bisel: brillo arriba y sombra abajo, como el canto de un cristal */}
-        <span className="portrait__bevel" aria-hidden="true" />
+    <div className="portada">
+      <div
+        className="portada__track"
+        ref={trackRef}
+        role="group"
+        aria-roledescription="carrusel"
+        aria-label={`Fotos de ${site.name}`}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'ArrowRight') {
+            e.preventDefault()
+            irA(Math.min(activa + 1, gallery.length - 1))
+          }
+          if (e.key === 'ArrowLeft') {
+            e.preventDefault()
+            irA(Math.max(activa - 1, 0))
+          }
+        }}
+      >
+        {gallery.map((foto, i) => (
+          <button
+            type="button"
+            className={`toma${i === activa ? ' is-active' : ''}`}
+            key={foto.id}
+            aria-label={`Foto ${i + 1} de ${gallery.length}: ${foto.caption}`}
+            aria-current={i === activa}
+            onClick={() => irA(i)}
+          >
+            {(cargarTodas || i < INICIALES) && (
+              <Photo
+                name={foto.src}
+                alt={`${site.name} — ${foto.caption}`}
+                sizes="(min-width: 48rem) 260px, 62vw"
+                widths={[320, 480, 640]}
+                priority={i === 0}
+              />
+            )}
+
+            {/* El pie vive dentro de la foto */}
+            <span className="toma__pie">{foto.caption}</span>
+
+            {/* Contorno que late al tocar */}
+            <span className="toma__aro" aria-hidden="true" />
+
+            {i === 0 && (
+              <span className="toma__premio" title={site.award}>
+                <CrownIcon />
+                <span className="sr-only">{site.award}</span>
+              </span>
+            )}
+          </button>
+        ))}
       </div>
 
-      <span className="portrait__badge" title={site.award}>
-        <CrownIcon />
-        <span className="sr-only">{site.award}</span>
-      </span>
-
-      {/* Puntos: dicen cuántas fotos hay y permiten saltar */}
-      <div className="portrait__dots">
+      <div className="portada__puntos">
         {gallery.map((foto, i) => (
           <button
             key={foto.id}
             type="button"
-            className={`portrait__dot${i === activa ? ' is-active' : ''}`}
-            aria-label={`Foto ${i + 1} de ${gallery.length}: ${foto.caption}`}
+            className={`portada__punto${i === activa ? ' is-active' : ''}`}
+            aria-label={`Ir a la foto ${i + 1}: ${foto.caption}`}
             aria-current={i === activa}
             onClick={() => irA(i)}
           />
         ))}
       </div>
-
-      <p className="portrait__caption" aria-live="polite">
-        {gallery[activa]?.caption}
-      </p>
     </div>
   )
 }

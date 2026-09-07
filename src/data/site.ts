@@ -94,8 +94,8 @@ export const stats = [
 export const gallery = [
   // Carrusel de la portada. La primera es la foto principal, la que
   // se ve al abrir; las demas llegan deslizando en ese mismo marco.
-  { id: 'principal', src: 'liz-hero', caption: 'Desliza para ver más' },
   { id: 'gala', src: 'liz-gala', caption: 'Noche de gala' },
+  { id: 'principal', src: 'liz-hero', caption: 'Todo a su tiempo' },
   { id: 'corazon', src: 'liz-corazon', caption: 'Bajo el arco de flores' },
   { id: 'caballo', src: 'liz-caballo', caption: 'Mi caballo y yo' },
   { id: 'jardin', src: 'liz-jardin', caption: 'Mañana en el jardín' },

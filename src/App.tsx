@@ -1,45 +1,65 @@
+import { useCallback, useState } from 'react'
 import { Hero } from './components/Hero'
-import { Giveaway } from './components/Giveaway'
-import { Socials } from './components/Socials'
-import { About, Finale, Stats } from './components/Sections'
-import { Partners } from './components/Partners'
 import { TopBar } from './components/TopBar'
+import { Menu, type Destino } from './components/Menu'
+import { Vista } from './components/Vista'
+import { Giveaway } from './components/Giveaway'
+import { Partners } from './components/Partners'
+import { Socials } from './components/Socials'
+import { About, Stats } from './components/Sections'
 import { Footer } from './components/Footer'
-import { Dock } from './components/Dock'
 import { usePressFeedback } from './usePressFeedback'
 
+const titulos: Record<Destino, string> = {
+  beneficios: 'Beneficios',
+  marcas: 'Colaboraciones',
+  'sobre-mi': 'Conoce más de mí',
+  redes: 'Mis redes',
+}
+
+/**
+ * La portada es una pantalla, no una página larga.
+ *
+ * Todo lo que antes se recorría haciendo scroll (sorteos, marcas,
+ * sobre mí, redes) vive ahora detrás del menú: se entra en cada
+ * sección a pantalla completa y se vuelve con atrás. Por eso ya no
+ * hace falta la barra fija de abajo.
+ */
 export default function App() {
-  // Marca lo que el dedo toca; ver el hook para por que no basta :active.
   usePressFeedback()
+  const [vista, setVista] = useState<Destino | null>(null)
+  const cerrar = useCallback(() => setVista(null), [])
 
   return (
     <>
       <div className="atmosphere" aria-hidden="true" />
       <div className="grain" aria-hidden="true" />
 
-      <a className="skip" href="#marcas">
-        Saltar al contenido
-      </a>
-
       <TopBar />
-      <Hero />
 
-      <main>
-        <Giveaway />
-
-        <hr className="rule" />
-
+      <main className="pantalla">
+        <Hero />
+        <Menu onAbrir={setVista} />
         <Stats />
-        <About />
-        <Partners />
-        <Finale />
-
-        {/* Las redes cierran la página. */}
-        <Socials />
       </main>
 
       <Footer />
-      <Dock />
+
+      <Vista abierta={vista === 'beneficios'} titulo={titulos.beneficios} onCerrar={cerrar}>
+        <Giveaway />
+      </Vista>
+
+      <Vista abierta={vista === 'marcas'} titulo={titulos.marcas} onCerrar={cerrar}>
+        <Partners />
+      </Vista>
+
+      <Vista abierta={vista === 'sobre-mi'} titulo={titulos['sobre-mi']} onCerrar={cerrar}>
+        <About />
+      </Vista>
+
+      <Vista abierta={vista === 'redes'} titulo={titulos.redes} onCerrar={cerrar}>
+        <Socials />
+      </Vista>
     </>
   )
 }

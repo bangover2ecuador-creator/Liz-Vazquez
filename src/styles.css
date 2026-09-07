@@ -462,139 +462,181 @@ button {
   text-align: center;
 }
 
-.portrait {
-  display: block;
+/* ── Portada: carrusel ────────────────────────────────────────
+   Compacto para dejar sitio al menu. Las vecinas asoman por los
+   lados: sin ese borde visible nadie sabe que hay mas fotos.       */
+
+.portada {
   position: relative;
-  width: min(19rem, 82vw);
-  margin: 0 auto 4.75rem;
+  margin-bottom: 1.5rem;
 }
 
-/* ── Tarjeta de la portada ────────────────────────────────────
-   Rectangular y muy redondeada. El circulo anterior venia de cuando
-   esto era un avatar y recortaba un tercio de cada foto vertical.   */
-
-.portrait__frame {
-  position: relative;
-  aspect-ratio: 4 / 5;
-  border-radius: 2.25rem;
-  overflow: hidden;
-  background: var(--ink-2);
-  /* Sombra profunda + halo tenue: la tarjeta flota sobre el fondo */
-  box-shadow:
-    0 2px 1px rgba(255, 255, 255, 0.06),
-    0 32px 70px -28px rgba(0, 0, 0, 0.95),
-    0 0 60px -20px rgba(228, 196, 128, 0.22);
-}
-
-/* Bisel: filo de luz arriba, sombra interior abajo. Es lo que hace
-   que se lea como objeto con grosor y no como imagen pegada. */
-.portrait__bevel {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  border-radius: inherit;
-  pointer-events: none;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.28),
-    inset 0 0 0 1px rgba(228, 196, 128, 0.22),
-    inset 0 -40px 60px -40px rgba(0, 0, 0, 0.8);
-}
-
-.portrait__track {
+.portada__track {
   display: flex;
-  width: 100%;
-  height: 100%;
+  gap: 0.7rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  /* Centra la tarjeta activa: el hueco de cada lado es lo que sobra
+     del ancho del propio track. Sin margenes negativos, que hacian
+     que el porcentaje se calculara sobre otro ancho. */
+  padding: 0.9rem calc((100% - 62vw) / 2) 1rem;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
-  touch-action: pan-x pan-y;
+  perspective: 1200px;
 }
 
-.portrait__track::-webkit-scrollbar {
+.portada__track::-webkit-scrollbar {
   display: none;
 }
 
-.portrait:has(.portrait__track:focus-visible) .portrait__frame {
+.portada__track:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 4px;
+  border-radius: 1.9rem;
 }
 
-.portrait__slide {
-  flex: 0 0 100%;
-  width: 100%;
-  height: 100%;
+.toma {
+  --d: 1;
+  position: relative;
+  flex: 0 0 62vw;
+  max-width: 16rem;
+  aspect-ratio: 4 / 5;
   scroll-snap-align: center;
   scroll-snap-stop: always;
+  border: 0;
+  padding: 0;
+  border-radius: 1.75rem;
+  overflow: hidden;
   background: var(--ink-2);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transform: scale(calc(1 - var(--d) * 0.11)) translateZ(calc(var(--d) * -50px));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 calc(26px - var(--d) * 12px) calc(56px - var(--d) * 22px) -22px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(228, 196, 128, calc(0.3 - var(--d) * 0.24));
+  transition:
+    transform 0.5s var(--ease),
+    box-shadow 0.5s var(--ease);
 }
 
-.portrait__slide picture,
-.portrait__slide img {
+.toma img {
   width: 100%;
   height: 100%;
-  display: block;
   object-fit: cover;
+  filter: brightness(calc(1 - var(--d) * 0.34)) saturate(calc(1 - var(--d) * 0.3));
+  transition: filter 0.5s var(--ease);
 }
 
-/* Insignia del premio, apoyada en el canto de la tarjeta */
-.portrait__badge {
+.toma::after {
+  content: '';
   position: absolute;
-  right: -0.6rem;
-  top: -0.6rem;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(to top, rgba(7, 3, 16, 0.9) 0%, transparent 52%);
+  pointer-events: none;
+}
+
+/* Pie dentro de la foto */
+.toma__pie {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 0.95rem;
+  z-index: 3;
+  text-align: left;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cream);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.95);
+  opacity: calc(1 - var(--d) * 0.7);
+  transition: opacity 0.45s var(--ease);
+}
+
+/* Contorno que late al tocar */
+.toma__aro {
+  position: absolute;
+  inset: 0;
   z-index: 4;
-  width: 2.6rem;
-  height: 2.6rem;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 0 var(--gold);
+  opacity: 0;
+  transition:
+    opacity 0.35s var(--ease),
+    box-shadow 0.35s var(--ease);
+}
+
+.toma[data-pressed] .toma__aro {
+  opacity: 1;
+  box-shadow:
+    inset 0 0 0 3px var(--gold),
+    0 0 26px -4px rgba(228, 196, 128, 0.75);
+  animation: latir-aro 1.1s var(--ease) infinite;
+}
+
+@keyframes latir-aro {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 0 0 3px var(--gold),
+      0 0 26px -4px rgba(228, 196, 128, 0.75);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 0 3px var(--gold-hi),
+      0 0 38px -2px rgba(228, 196, 128, 0.95);
+  }
+}
+
+.toma__premio {
+  position: absolute;
+  right: 0.7rem;
+  top: 0.7rem;
+  z-index: 4;
+  width: 2.1rem;
+  height: 2.1rem;
   display: grid;
   place-items: center;
   border-radius: 50%;
   background: linear-gradient(140deg, var(--gold-hi), var(--gold-deep));
   color: #2a1c05;
-  box-shadow:
-    0 8px 20px -6px rgba(0, 0, 0, 0.85),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
   border: 1px solid rgba(255, 240, 205, 0.5);
-  transition: transform 0.35s var(--ease);
+  box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.85);
+  opacity: calc(1 - var(--d));
+  transition: opacity 0.4s var(--ease);
 }
 
-.portrait__badge svg {
-  width: 1.25rem;
-  height: 1.25rem;
+.toma__premio svg {
+  width: 1rem;
+  height: 1rem;
 }
 
-/* Puntos y pie */
-.portrait__dots {
-  position: absolute;
-  left: 50%;
-  bottom: -1.9rem;
-  transform: translateX(-50%);
-  z-index: 4;
+.portada__puntos {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 0.3rem;
-  padding: 0.4rem 0.65rem;
-  border-radius: 999px;
-  background: rgba(7, 3, 16, 0.7);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--hairline);
+  margin-top: 0.2rem;
   max-width: 84vw;
+  margin-inline: auto;
   overflow-x: auto;
   scrollbar-width: none;
 }
 
-.portrait__dots::-webkit-scrollbar {
+.portada__puntos::-webkit-scrollbar {
   display: none;
 }
 
-.portrait__dot {
+.portada__punto {
   flex: 0 0 auto;
-  width: 0.4rem;
-  height: 0.4rem;
+  width: 0.35rem;
+  height: 0.35rem;
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: rgba(246, 240, 231, 0.28);
+  background: rgba(246, 240, 231, 0.26);
   cursor: pointer;
   transition:
     background 0.35s var(--ease),
@@ -602,26 +644,10 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
-.portrait__dot.is-active {
-  width: 1.3rem;
+.portada__punto.is-active {
+  width: 1.15rem;
   border-radius: 999px;
   background: var(--gold);
-}
-
-.portrait__caption {
-  position: absolute;
-  left: 50%;
-  bottom: -4.1rem;
-  transform: translateX(-50%);
-  margin: 0;
-  width: max-content;
-  max-width: 88vw;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .hero__tagline {
@@ -809,6 +835,201 @@ button {
 .social:hover .social__arrow {
   color: var(--accent);
   transform: translateX(4px);
+}
+
+/* ── Menu de la portada ───────────────────────────────────────
+   Tira horizontal de tarjetas. Cada una entra en su vista.        */
+
+.menu {
+  margin-block: clamp(1.25rem, 5vw, 1.75rem) 0;
+}
+
+.menu__tira {
+  display: flex;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0.25rem var(--gap) 0.75rem;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.menu__tira::-webkit-scrollbar {
+  display: none;
+}
+
+.menu__boton {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 3.5rem;
+  padding: 0.55rem 1.1rem 0.55rem 0.6rem;
+  border-radius: 999px;
+  scroll-snap-align: start;
+  white-space: nowrap;
+  cursor: pointer;
+  /* Pildora translucida al estilo de la navegacion de Apple */
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px) saturate(1.4);
+  color: var(--cream);
+  transition:
+    transform 0.3s var(--ease),
+    background 0.3s var(--ease),
+    border-color 0.3s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu__boton[data-pressed] {
+  transform: scale(0.95);
+  background: rgba(228, 196, 128, 0.18);
+  border-color: var(--hairline-hi);
+  transition-duration: 0.1s;
+}
+
+.menu__icono {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: rgba(228, 196, 128, 0.14);
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.menu__icono svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.menu__texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.2;
+}
+
+.menu__titulo {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.menu__pista {
+  font-size: 0.7rem;
+  color: var(--muted-2);
+}
+
+/* ── Vistas ───────────────────────────────────────────────────
+   Entran desde la derecha y tapan la portada, como una pantalla
+   de app. No se despliegan: se entra en ellas.                   */
+
+.vista {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(80% 50% at 50% 0%, rgba(139, 69, 245, 0.2), transparent 70%), var(--ink);
+  animation: entrar-vista 0.42s var(--ease);
+}
+
+@keyframes entrar-vista {
+  from {
+    transform: translateX(14%);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.vista__barra {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem var(--gap);
+  background: rgba(7, 3, 16, 0.92);
+  backdrop-filter: blur(18px) saturate(1.35);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.vista__atras {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 3rem;
+  padding-inline: 0.5rem 0.9rem;
+  border: 0;
+  background: none;
+  border-radius: 999px;
+  color: var(--gold);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.25s var(--ease),
+    background 0.25s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.vista__atras svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  transform: rotate(180deg);
+}
+
+.vista__atras[data-pressed] {
+  transform: scale(0.94);
+  background: rgba(228, 196, 128, 0.14);
+}
+
+.vista__titulo {
+  margin: 0;
+  grid-column: 2;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--cream);
+}
+
+/* Reserva a la derecha para que el titulo quede centrado de verdad */
+.vista__barra::after {
+  content: '';
+  display: block;
+  width: 5.5rem;
+}
+
+.vista__cuerpo {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding-bottom: 3rem;
+}
+
+.vista__cuerpo:focus {
+  outline: none;
+}
+
+/* Dentro de una vista, su seccion ya no necesita aire de pagina */
+.vista__cuerpo .section {
+  padding-block: clamp(1.5rem, 6vw, 2.25rem);
+}
+
+/* La pantalla de portada no necesita el alto de una pagina larga */
+.pantalla {
+  padding-bottom: 1rem;
 }
 
 /* ── Sorteos ──────────────────────────────────────────────── */
@@ -1230,7 +1451,7 @@ button {
 /* ── Pie ──────────────────────────────────────────────────── */
 
 .footer {
-  padding-block: clamp(2.5rem, 8vw, 3.5rem) 7rem;
+  padding-block: clamp(2rem, 7vw, 3rem);
   text-align: center;
 }
 
@@ -1299,73 +1520,6 @@ button {
   line-height: 1.8;
 }
 
-/* ── Barra fija móvil ─────────────────────────────────────── */
-
-.dock {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 40;
-  padding: 0.6rem var(--gap) calc(0.6rem + env(safe-area-inset-bottom));
-  background: linear-gradient(to top, rgba(7, 3, 16, 0.97), rgba(7, 3, 16, 0.82) 70%, transparent);
-  backdrop-filter: blur(14px);
-  transform: translateY(120%);
-  transition: transform 0.5s var(--ease);
-  pointer-events: none;
-}
-
-.dock.is-shown {
-  transform: none;
-  pointer-events: auto;
-}
-
-.dock__inner {
-  max-width: var(--shell);
-  margin-inline: auto;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 0.55rem;
-  align-items: center;
-}
-
-.dock__btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.55rem;
-  min-height: 3rem;
-  padding: 0 1.1rem;
-  border-radius: 999px;
-  font-weight: 700;
-  font-size: 0.9375rem;
-  background: linear-gradient(135deg, var(--magenta), var(--violet) 92%);
-  color: #fff;
-  box-shadow: 0 10px 26px -12px rgba(255, 61, 139, 0.85);
-}
-
-.dock__btn svg {
-  width: 1.1rem;
-  height: 1.1rem;
-}
-
-.dock__gold {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 3rem;
-  min-height: 3rem;
-  border-radius: 999px;
-  border: 1px solid rgba(228, 196, 128, 0.42);
-  background: rgba(228, 196, 128, 0.12);
-  color: var(--gold);
-}
-
-.dock__gold svg {
-  width: 1.15rem;
-  height: 1.15rem;
-}
-
 /* ── Saltar al contenido ──────────────────────────────────── */
 
 .skip {
@@ -1392,14 +1546,11 @@ button {
 
 .btn,
 .social,
-.shot,
 .stat,
 .highlight,
 .pillars li,
 .footer__contact-link,
 .carousel__arrow,
-.dock__btn,
-.dock__gold,
 .portrait,
 .live-pill,
 .giveaway__badge,
@@ -1416,10 +1567,7 @@ button {
 .highlight[data-pressed],
 .pillars li[data-pressed],
 .footer__contact-link[data-pressed],
-.dock__btn[data-pressed],
-.dock__gold[data-pressed],
 .giveaway__badge[data-pressed],
-.shot[data-pressed],
 .carousel__arrow[data-pressed]:not(:disabled) {
   transition-duration: 0.1s;
 }
@@ -1451,11 +1599,6 @@ button {
 .highlight[data-pressed],
 .pillars li[data-pressed],
 .footer__contact-link[data-pressed],
-.dock__btn[data-pressed],
-.dock__gold[data-pressed] {
-  transform: scale(0.965);
-}
-
 .social[data-pressed] {
   border-color: color-mix(in srgb, var(--accent) 65%, transparent);
   background: linear-gradient(
@@ -1478,14 +1621,7 @@ button {
   background: linear-gradient(150deg, rgba(228, 196, 128, 0.16), var(--surface));
 }
 
-.dock__gold[data-pressed] {
-  background: rgba(228, 196, 128, 0.28);
-}
-
 /* Fotos del carrusel */
-.shot[data-pressed] {
-  transform: scale(calc(1 - var(--d) * 0.09 - 0.035)) translateZ(calc(var(--d) * -40px));
-}
 
 /* Flechas del carrusel */
 .carousel__arrow[data-pressed]:not(:disabled) {
@@ -1676,13 +1812,17 @@ button {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .toma {
+    flex-basis: 15rem;
+  }
+
+  .portada__track {
+    padding-inline: calc((100% - 15rem) / 2);
+  }
+
   .giveaway__perks {
     max-width: 26rem;
     margin-inline: auto;
-  }
-
-  .dock {
-    display: none;
   }
 
   .footer {
