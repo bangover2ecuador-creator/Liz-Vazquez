@@ -2,7 +2,7 @@ import { getStore } from '@netlify/blobs'
 import type { Config } from '@netlify/functions'
 
 /**
- * Comprueba cada cinco minutos si Liz está emitiendo en TikTok y
+ * Comprueba cada minuto si Liz está emitiendo en TikTok y
  * guarda el resultado. La landing lo lee de `/api/live`, así que quien
  * entra no toca TikTok: solo lee el dato ya guardado.
  *
@@ -157,9 +157,13 @@ export default async () => {
   }
 }
 
-// Cada 5 minutos, solo en las horas UTC que cubren su horario de Perú
-// (13:00–07:00 UTC = 08:00–02:00 en Perú). El corte fino lo hace
-// `estaEnHorario` dentro de la función.
+// Cada minuto, solo en las horas UTC que cubren su horario de Perú:
+// 13–23 UTC son las 08:00–18:59 allí, y 0–6 UTC las 19:00–01:59. La
+// hora 7 UTC (02:00 en Perú) queda fuera a propósito, porque ahí ya
+// termina su horario y la función saldría sin hacer nada.
+//
+// Son 1.080 ejecuciones al día. Si algún día hay que abaratarlo, el
+// número de aquí es el que manda: '*/2' lo deja en la mitad.
 export const config: Config = {
-  schedule: '*/5 13-23,0-7 * * *',
+  schedule: '* 13-23,0-6 * * *',
 }

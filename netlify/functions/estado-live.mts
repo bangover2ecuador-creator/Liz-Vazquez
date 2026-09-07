@@ -6,11 +6,14 @@ import type { Config } from '@netlify/functions'
  * `revisar-live`. No llama a TikTok, así que responde al instante y
  * mil visitas no se convierten en mil peticiones a TikTok.
  *
- * Si el dato es viejo (más de 20 minutos) se devuelve apagado: es
- * preferible no anunciar un directo a anunciar uno que ya terminó.
+ * Si el dato es viejo se devuelve apagado: es preferible no anunciar
+ * un directo a anunciar uno que ya terminó.
  */
 
-const CADUCA_MS = 20 * 60_000
+// La comprobación corre cada minuto, así que diez minutos sin noticias
+// significan que algo falla. Es también lo que apaga el aviso cuando
+// acaba su horario y la comprobación se va a dormir.
+const CADUCA_MS = 10 * 60_000
 
 type Estado = {
   enVivo: boolean
@@ -42,9 +45,18 @@ export default async () => {
   return new Response(JSON.stringify(cuerpo), {
     headers: {
       'content-type': 'application/json',
-      // Un minuto de caché en el borde: el estado se refresca cada
-      // cinco, así que nadie ve un dato con más de un minuto de mas.
-      'cache-control': 'public, max-age=60',
+      // El navegador no guarda nada: si guardase, alguien que recarga
+      // seguiría viendo el aviso apagado con ella ya emitiendo.
+      'cache-control': 'public, max-age=0, must-revalidate',
+      // Netlify sí guarda, 30 segundos, y `durable` hace que ese dato
+      // valga para todo el mundo en vez de uno por cada servidor suyo.
+      // Eso es lo que mantiene barata la factura aunque entren miles:
+      // como mucho dos lecturas por minuto en total, no por visita.
+      //
+      // `stale-while-revalidate` sirve el dato de hace un momento sin
+      // hacer esperar a nadie mientras busca el nuevo por detrás.
+      'netlify-cdn-cache-control':
+        'public, durable, max-age=30, stale-while-revalidate=60',
     },
   })
 }

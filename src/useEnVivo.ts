@@ -9,13 +9,14 @@ import { site } from './data/site'
  * TikTok no lo permitiría desde otro dominio, y además así mil
  * visitas no son mil peticiones.
  *
- * Vuelve a preguntar cada dos minutos y al volver a la pestaña, para
- * que alguien que deja la página abierta vea empezar el directo.
+ * Vuelve a preguntar cada minuto y al volver a la pestaña, para que
+ * alguien que deja la página abierta vea empezar el directo sin tener
+ * que recargar: la pildora cambia sola.
  *
  * Si la comprobación no responde, manda `site.liveNow`, el
  * interruptor manual: la landing nunca se queda peor de como estaba.
  */
-const CADA_MS = 2 * 60_000
+const CADA_MS = 60_000
 
 export type Directo = {
   enVivo: boolean
