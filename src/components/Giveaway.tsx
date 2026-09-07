@@ -62,7 +62,15 @@ export function Giveaway() {
               )}
 
               {!isActive && (
-                <p className="giveaway__hint">Se activa muy pronto — no te lo pierdas</p>
+                <a
+                  className="giveaway__waiting"
+                  href={giveaway.waitingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {giveaway.waitingLabel}
+                  <ArrowIcon />
+                </a>
               )}
             </div>
           </div>

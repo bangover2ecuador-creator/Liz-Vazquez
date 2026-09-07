@@ -90,6 +90,22 @@ export const GiftIcon = ({ className }: P) => (
   </svg>
 )
 
+export const LinkIcon = ({ className }: P) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.9"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M10 13.5a3.6 3.6 0 0 0 5.4.4l2.6-2.6a3.6 3.6 0 0 0-5.1-5.1l-1.5 1.5" />
+    <path d="M14 10.5a3.6 3.6 0 0 0-5.4-.4L6 12.7a3.6 3.6 0 0 0 5.1 5.1l1.5-1.5" />
+  </svg>
+)
+
 export const SparkIcon = ({ className }: P) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path d="M12 2.5c.3 3.9 1.6 6.4 3.6 7.7 1.1.7 2.4 1.2 3.9 1.4-3.9.3-6.4 1.6-7.7 3.6-.7 1.1-1.2 2.4-1.4 3.9-.3-3.9-1.6-6.4-3.6-7.7-1.1-.7-2.4-1.2-3.9-1.4 3.9-.3 6.4-1.6 7.7-3.6.7-1.1 1.2-2.4 1.4-3.9Z" />

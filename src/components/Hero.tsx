@@ -6,14 +6,19 @@ export function Hero() {
   return (
     <header className="hero shell">
       <Reveal>
-        <span className="live-pill">
+        <a
+          className="live-pill"
+          href={site.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <span className="live-pill__dot" aria-hidden="true" />
           {site.intro}
-        </span>
+        </a>
       </Reveal>
 
       <Reveal delay={80}>
-        <div className="portrait">
+        <a className="portrait" href="#fotos" aria-label="Ver mis fotos">
           <span className="portrait__ring portrait__ring--outer" aria-hidden="true" />
           <span className="portrait__ring" aria-hidden="true" />
           <span className="portrait__halo" aria-hidden="true" />
@@ -32,7 +37,7 @@ export function Hero() {
             <CrownIcon />
             <span className="sr-only">{site.award}</span>
           </span>
-        </div>
+        </a>
       </Reveal>
 
       <Reveal delay={140}>

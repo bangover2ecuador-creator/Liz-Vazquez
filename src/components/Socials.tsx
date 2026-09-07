@@ -45,9 +45,7 @@ export function Socials() {
     <section className="section section--tight shell" id="redes">
       <Reveal className="section-head section-head--center">
         <span className="eyebrow">Conéctate conmigo</span>
-        <h2 className="section-title">
-          Todas mis <em>redes</em>
-        </h2>
+        <h2 className="section-title">Todas mis redes</h2>
         <p className="section-sub">Un toque y estás dentro. Te espero en los lives.</p>
       </Reveal>
 

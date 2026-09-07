@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react'
-import { socials } from '../data/site'
-import { GiftIcon, TikTokIcon } from './Icons'
-
-const mainTikTok = socials.find((s) => s.featured)?.url ?? 'https://www.tiktok.com/@lis_iv'
+import { GiftIcon, LinkIcon } from './Icons'
 
 /**
  * Barra fija inferior (solo móvil). Aparece cuando el hero sale de
- * pantalla, para que seguir en TikTok esté siempre a un toque.
+ * pantalla y deja las redes siempre a un toque, sin obligar a bajar
+ * hasta el final.
  */
 export function Dock() {
   const [shown, setShown] = useState(false)
@@ -21,9 +19,10 @@ export function Dock() {
   return (
     <div className={`dock${shown ? ' is-shown' : ''}`}>
       <div className="dock__inner">
-        <a className="dock__btn" href={mainTikTok} target="_blank" rel="noopener noreferrer">
-          <TikTokIcon />
-          Seguirme en TikTok
+        {/* Apunta a las redes, no a TikTok: quien llega ya viene de ahi. */}
+        <a className="dock__btn" href="#redes">
+          <LinkIcon />
+          Ver todas mis redes
         </a>
         <a className="dock__gold" href="#sorteos" aria-label="Ir a sorteos y promociones">
           <GiftIcon />

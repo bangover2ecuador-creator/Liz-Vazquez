@@ -23,13 +23,13 @@ export default function App() {
       <Hero />
 
       <main>
-        {/* Sorteos justo debajo de los dos botones del hero. */}
+        {/* Las fotos primero: es lo que mas retiene al llegar. */}
+        <Gallery />
         <Giveaway />
 
         <hr className="rule" />
 
         <Stats />
-        <Gallery />
         <About />
         <Highlights />
         <Finale />

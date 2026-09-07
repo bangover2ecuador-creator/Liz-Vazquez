@@ -26,6 +26,7 @@ const PRESSABLE = [
   '.portrait',
   '.live-pill',
   '.giveaway__badge',
+  '.giveaway__waiting',
   '.about__quote',
   '.finale',
 ].join(',')

@@ -38,6 +38,10 @@ export function Gallery() {
         min = dist
         closest = i
       }
+      // 0 en el centro, 1 a una tarjeta de distancia. El CSS lo usa
+      // para escalar y atenuar de forma continua mientras se desliza,
+      // en vez de saltar de golpe entre activa e inactiva.
+      el.style.setProperty('--d', Math.min(dist / (el.offsetWidth || 1), 1).toFixed(3))
     })
 
     // En los extremos manda la posicion, no la geometria: con el
@@ -115,10 +119,7 @@ export function Gallery() {
   return (
     <section className="section shell" id="fotos" ref={sectionRef}>
       <Reveal className="section-head section-head--center">
-        <span className="eyebrow">Galería</span>
-        <h2 className="section-title">
-          Momentos <em>favoritos</em>
-        </h2>
+        <h2 className="section-title">Momentos favoritos</h2>
         <p className="section-sub">Desliza para verlas todas.</p>
       </Reveal>
 

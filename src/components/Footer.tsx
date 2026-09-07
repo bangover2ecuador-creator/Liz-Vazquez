@@ -1,5 +1,6 @@
 import { site, socials } from '../data/site'
 import { Reveal } from './Primitives'
+import { Logo } from './Logo'
 
 export function Footer() {
   const year = new Date().getFullYear()
@@ -7,6 +8,7 @@ export function Footer() {
   return (
     <footer className="footer shell">
       <Reveal>
+        <Logo className="footer__logo" title={`Logotipo de ${site.name}`} />
         <p className="footer__name">{site.name}</p>
         <p className="footer__tagline">{site.tagline}</p>
 

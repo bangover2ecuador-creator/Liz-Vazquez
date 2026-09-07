@@ -11,6 +11,7 @@ export const site = {
   intro: 'Lives diarios en TikTok',
   contactHandle: '@liss_iv',
   contactUrl: 'https://www.instagram.com/liss_iv',
+  liveUrl: 'https://www.tiktok.com/@lizvasquezlive',
 } as const
 
 export type Social = {
@@ -77,8 +78,8 @@ export const socials: Social[] = [
 export const stats = [
   { id: 'followers', value: 925.7, suffix: 'K', decimals: 1, label: 'Seguidores en TikTok' },
   { id: 'likes', value: 20.9, suffix: 'M', decimals: 1, label: 'Me gusta acumulados' },
-  { id: 'posts', value: 294, suffix: '', decimals: 0, label: 'Publicaciones' },
-  { id: 'platforms', value: 4, suffix: '', decimals: 0, label: 'Plataformas activas' },
+  { id: 'instagram', value: 89, suffix: 'K', decimals: 0, label: 'Seguidores en Instagram' },
+  { id: 'posts', value: 300, suffix: '', decimals: 0, label: 'Publicaciones' },
 ]
 
 export const gallery = [
@@ -133,10 +134,14 @@ export const giveaway = {
   active: false,
   eyebrow: 'Muy pronto',
   heading: 'Sorteos y promociones',
-  body: 'Estoy preparando sorteos exclusivos y promociones especiales solo para mi comunidad. Sigue mis lives para no quedarte fuera cuando se active.',
+  body: 'Estoy preparando sorteos exclusivos y promociones especiales solo para mi comunidad. Los anuncio primero en mis lives.',
   buttonSoon: 'Muy pronto',
   buttonActive: 'Participar ahora',
   url: '',
+  // Mientras el sorteo no esta activo, la seccion no puede ser un
+  // callejon sin salida: quien llega con ganas necesita donde ir.
+  waitingLabel: 'Avísame en el live',
+  waitingUrl: 'https://www.tiktok.com/@lizvasquezlive',
   perks: [
     'Sorteos exclusivos para seguidores',
     'Promociones con marcas aliadas',

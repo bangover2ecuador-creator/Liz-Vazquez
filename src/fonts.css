@@ -1,0 +1,27 @@
+/* Playfair Display recortada al español (ver scripts/subset-fonts.mjs).
+   Los .woff2 están versionados en src/fonts/, así que el despliegue no
+   necesita Python: solo hace falta al regenerarlas con `npm run fonts`. */
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./fonts/playfair-display-latin-500-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./fonts/playfair-display-latin-600-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./fonts/playfair-display-latin-500-italic.woff2') format('woff2');
+}

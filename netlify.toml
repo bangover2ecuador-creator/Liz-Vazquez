@@ -15,7 +15,5 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# Una sola pagina: sin reescritura comodin, para que las URL que no
+# existen devuelvan 404 de verdad y no la landing con codigo 200.

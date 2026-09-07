@@ -29,7 +29,6 @@ export function About() {
   return (
     <section className="section shell" id="sobre-mi">
       <Reveal className="section-head">
-        <span className="eyebrow">Sobre mí</span>
         <h2 className="section-title">{about.heading}</h2>
       </Reveal>
 
@@ -60,10 +59,7 @@ export function Highlights() {
   return (
     <section className="section shell" aria-label="Momentos destacados">
       <Reveal className="section-head section-head--center">
-        <span className="eyebrow">Trayectoria</span>
-        <h2 className="section-title">
-          Momentos <em>destacados</em>
-        </h2>
+        <h2 className="section-title">Momentos destacados</h2>
         <p className="section-sub">Mis mejores recuerdos, contigo.</p>
       </Reveal>
 
@@ -71,7 +67,6 @@ export function Highlights() {
         {highlights.map((h, i) => (
           <Reveal key={h.id} delay={i * 60}>
             <article className="highlight">
-              <span className="highlight__num">{String(i + 1).padStart(2, '0')}</span>
               <h3 className="highlight__title">{h.title}</h3>
               <p className="highlight__detail">{h.detail}</p>
             </article>

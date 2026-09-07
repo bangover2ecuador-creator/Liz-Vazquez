@@ -1,13 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
-// Solo los subsets y pesos que usa una landing en espanol:
-// el subset 'latin' ya cubre acentos y signos de apertura.
-// Manrope variable trae sus subsets con unicode-range: el navegador
-// descarga unicamente el que necesita.
-import '@fontsource/playfair-display/latin-500.css'
-import '@fontsource/playfair-display/latin-600.css'
-import '@fontsource/playfair-display/latin-500-italic.css'
+// Playfair va recortada al espanol (src/fonts.css). Manrope variable
+// trae sus subsets con unicode-range: el navegador baja solo el latino.
+import './fonts.css'
 import '@fontsource-variable/manrope'
 
 import './styles.css'
