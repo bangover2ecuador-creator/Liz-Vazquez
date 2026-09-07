@@ -118,3 +118,53 @@ export const PlayIcon = ({ className }: P) => (
     <path d="M8.4 5.6a1 1 0 0 1 1.53-.85l7.2 4.5a1 1 0 0 1 0 1.7l-7.2 4.5a1 1 0 0 1-1.53-.85V5.6Z" />
   </svg>
 )
+
+export const ShopIcon = ({ className }: P) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M4 8h16l-1 11.2a1.6 1.6 0 0 1-1.6 1.4H6.6A1.6 1.6 0 0 1 5 19.2Z" />
+    <path d="M8.6 10.4V6.6a3.4 3.4 0 0 1 6.8 0v3.8" />
+  </svg>
+)
+
+export const BuildingIcon = ({ className }: P) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M4 21V5.4A1.4 1.4 0 0 1 5.4 4h7.2A1.4 1.4 0 0 1 14 5.4V21" />
+    <path d="M14 10h4.6A1.4 1.4 0 0 1 20 11.4V21M3 21h18" />
+    <path d="M7.4 8h3.2M7.4 12h3.2M7.4 16h3.2M17 14v.01M17 17.6v.01" />
+  </svg>
+)
+
+export const MusicIcon = ({ className }: P) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M9 18V6.2l10-2v11.4" />
+    <circle cx="6.6" cy="18" r="2.4" />
+    <circle cx="16.6" cy="15.6" r="2.4" />
+  </svg>
+)

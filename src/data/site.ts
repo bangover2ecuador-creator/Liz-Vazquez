@@ -125,24 +125,23 @@ export const gallery = [
 ] as const
 
 // ── Marcas y colaboraciones ───────────────────────────────────
-// Cada colaboración lleva la cuenta de la marca y el vídeo que Liz
-// hizo para ella: el vídeo es la prueba, la cuenta es la cortesía.
+// Cada colaboración lleva a dónde encontrar a la marca y el vídeo que
+// Liz publicó con ella. El vídeo es la prueba del trabajo.
 //
-// Para añadir una nueva, mete su ficha en el grupo que le toque. Si
-// aún no hay vídeo, deja `video` fuera y la tarjeta se ve igual, solo
-// que sin el botón de reproducir.
+// Algunas marcas no nos dieron su cuenta de TikTok: en esas, la ficha
+// entera lleva al vídeo. Cuando aparezca la cuenta, se añade `handle`
+// y `url` y la ficha se parte sola en sus dos destinos.
 
 export type Colaborador = {
-  /** Como se llama el negocio, no su usuario. */
+  /** Cómo se llama el negocio, no su usuario. */
   name: string
-  /** Su cuenta de TikTok, con arroba. */
-  handle: string
-  url: string
-  /** Que venden, en tres o cuatro palabras. */
+  /** Qué venden, en tres o cuatro palabras. */
   que: string
-  /** El video que Liz publico con ellos. */
+  /** Su cuenta de TikTok, si la tenemos. */
+  handle?: string
+  url?: string
+  /** El vídeo que Liz publicó con ellos. */
   video?: string
-  logo?: string
 }
 
 export const partners: {
@@ -158,29 +157,29 @@ export const partners: {
     items: [
       {
         name: 'Coralí Clothing',
+        que: 'Ropa de fábrica, envíos a todo el Perú',
         handle: '@coraliclothing',
         url: 'https://www.tiktok.com/@coraliclothing',
-        que: 'Ropa de fábrica, envíos a todo el Perú',
       },
       {
         name: 'Free Sport',
+        que: 'Ropa deportiva',
         handle: '@freelsport',
         url: 'https://www.tiktok.com/@freelsport',
-        que: 'Ropa deportiva',
         video: 'https://www.tiktok.com/@lis_iv/video/7649859781179493652',
       },
       {
         name: 'Confecciones JN Stilo',
+        que: 'Ropa deportiva hecha a medida',
         handle: '@confecciones_jnstilo',
         url: 'https://www.tiktok.com/@confecciones_jnstilo',
-        que: 'Ropa deportiva hecha a medida',
         video: 'https://www.tiktok.com/@lis_iv/video/7673611505241246996',
       },
       {
         name: 'Punto Original Huánuco',
+        que: 'Zapatillas para caminar',
         handle: '@huanuco_puntooriginal',
         url: 'https://www.tiktok.com/@huanuco_puntooriginal',
-        que: 'Zapatillas para caminar',
         video: 'https://www.tiktok.com/@lis_iv/video/7674035301374790932',
       },
     ],
@@ -188,63 +187,88 @@ export const partners: {
   {
     id: 'emprendedores',
     title: 'Emprendedores',
-    blurb: 'Negocios de Cajamarca y del Perú.',
+    blurb: 'Negocios de Cajamarca y de todo el Perú.',
     items: [
       {
-        name: "Siray Tejidos",
+        name: 'Siray Tejidos',
+        que: 'Chompas tejidas a mano',
         handle: '@siray.pee',
         url: 'https://www.tiktok.com/@siray.pee',
-        que: 'Chompas tejidas a mano',
         video: 'https://www.tiktok.com/@lis_iv/video/7682143005985361172',
       },
       {
         name: 'Elikutiara Cacao',
+        que: 'Chocolate artesanal de cacao',
         handle: '@elikutiaracacao',
         url: 'https://www.tiktok.com/@elikutiaracacao',
-        que: 'Chocolate artesanal de cacao',
         video: 'https://www.tiktok.com/@lis_iv/video/7650588363006676244',
       },
       {
         name: "Linar's",
+        que: 'Vestidos y ropa, en Chota',
         handle: '@creaciones.linars_chota',
         url: 'https://www.tiktok.com/@creaciones.linars_chota',
-        que: 'Vestidos y ropa, en Chota',
         video: 'https://www.tiktok.com/@lis_iv/video/7678490083594341653',
       },
       {
         name: 'Mayari',
+        que: 'Ropa de Shein y Temu, en Chota',
         handle: '@mayari_chota',
         url: 'https://www.tiktok.com/@mayari_chota',
-        que: 'Ropa de Shein y Temu, en Chota',
         video: 'https://www.tiktok.com/@lis_iv/video/7680344789367213333',
       },
       {
         name: 'Store Khalessi',
+        que: 'Zapatillas originales',
         handle: '@daaeimdustria',
         url: 'https://www.tiktok.com/@daaeimdustria',
-        que: 'Zapatillas originales',
         video: 'https://www.tiktok.com/@lis_iv/video/7651347492767829269',
       },
       {
         name: 'Modas Yahil',
+        que: 'Tienda de ropa de invierno',
         handle: '@yahil457',
         url: 'https://www.tiktok.com/@yahil457',
-        que: 'Tienda de ropa de invierno',
         video: 'https://www.tiktok.com/@lis_iv/video/7663195905725648148',
       },
       {
         name: 'La Casa del 10',
+        que: 'Artículos deportivos',
         handle: '@lacasadel10',
         url: 'https://www.tiktok.com/@lacasadel10',
-        que: 'Artículos deportivos',
         video: 'https://www.tiktok.com/@lis_iv/video/7656593638075534613',
       },
       {
         name: 'Ivi Vega',
+        que: 'Zapatillas Punto Original',
         handle: '@vianel60',
         url: 'https://www.tiktok.com/@vianel60',
-        que: 'Zapatillas Punto Original',
         video: 'https://www.tiktok.com/@lis_iv/video/7678388058839862548',
+      },
+      {
+        name: 'Santos Aníbal Cayoto',
+        que: 'Ortodoncia y brackets, en Chota',
+        video: 'https://www.tiktok.com/@lis_iv/video/7663568249828805908',
+      },
+      {
+        name: 'Mary Rodríguez',
+        que: 'Toallas íntimas',
+        video: 'https://www.tiktok.com/@lis_iv/video/7672006498423147796',
+      },
+      {
+        name: "Misk'i Sawu",
+        que: 'Salsas y cremas',
+        video: 'https://www.tiktok.com/@lis_iv/video/7652793803874585876',
+      },
+      {
+        name: 'Cevichería El Timo',
+        que: 'Ceviche y comida marina',
+        video: 'https://www.tiktok.com/@lis_iv/video/7652871962930236693',
+      },
+      {
+        name: 'Matt Store',
+        que: 'Joyas y accesorios, en Lima',
+        video: 'https://www.tiktok.com/@lis_iv/video/7669929684137823509',
       },
     ],
   },
@@ -252,7 +276,13 @@ export const partners: {
     id: 'empresas',
     title: 'Empresas',
     blurb: 'Eventos, presencia y activaciones.',
-    items: [],
+    items: [
+      {
+        name: 'Consorcio Farmacéutico ZQ',
+        que: 'Aniversario de la cadena de farmacias',
+        video: 'https://www.tiktok.com/@lis_iv/video/7662210355342396692',
+      },
+    ],
   },
   {
     id: 'creadores',
@@ -261,15 +291,15 @@ export const partners: {
     items: [
       {
         name: 'Agrupación Los Fénix',
+        que: 'Cumbia en vivo',
         handle: '@agrupacionlosfenix',
         url: 'https://www.tiktok.com/@agrupacionlosfenix',
-        que: 'Cumbia en vivo',
       },
       {
         name: 'La Nueva Juventud',
+        que: 'Cumbia peruana',
         handle: '@bandalanuevajuventud',
         url: 'https://www.tiktok.com/@bandalanuevajuventud',
-        que: 'Cumbia peruana',
         video: 'https://www.tiktok.com/@lis_iv/video/7675443705544740116',
       },
     ],
@@ -278,9 +308,10 @@ export const partners: {
 
 export const partnersIntro = {
   heading: 'Marcas que han trabajado conmigo',
-  sub: 'Cada una con el vídeo que hicimos juntos.',
-  emptyLabel: 'Espacio libre',
+  sub: 'Elige un grupo y entra a verlas.',
   videoLabel: 'Vídeo',
+  soloVideo: 'Ver el vídeo',
+  vacio: 'Aquí todavía no hay ninguna. ¿Quieres ser la primera?',
   ctaTitle: '¿Quieres trabajar conmigo?',
   ctaBody: 'Escríbeme por Instagram y armamos algo juntos.',
   ctaLabel: 'Escribirme',
