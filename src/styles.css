@@ -1028,6 +1028,17 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* El grupo desplegado se queda marcado: sin esto no se sabe cual de
+   los cuatro es el que se esta viendo debajo. */
+.menu__boton.is-abierto {
+  background: rgba(228, 196, 128, 0.16);
+  border-color: var(--hairline-hi);
+}
+
+.menu__boton.is-abierto .menu__icono {
+  background: rgba(228, 196, 128, 0.26);
+}
+
 .menu__boton[data-pressed] {
   transform: scale(0.95);
   background: rgba(228, 196, 128, 0.18);
@@ -1520,21 +1531,51 @@ button {
   color: var(--muted);
 }
 
+/* El grupo se despliega en su sitio. `grid-template-rows` de 0fr a
+   1fr es lo unico que anima una altura desconocida sin medirla. */
+.desglose {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition:
+    grid-template-rows 0.45s var(--ease),
+    opacity 0.3s var(--ease);
+  opacity: 0;
+}
+
+.desglose.is-abierto {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.desglose__caja {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.desglose__blurb {
+  margin: 0.35rem 0 0.8rem;
+  font-size: 0.8125rem;
+  color: var(--muted-2);
+}
+
 .colabs {
   display: grid;
   gap: 0.5rem;
-  margin: 0;
+  margin: 0 0 0.4rem;
   padding: 0;
   list-style: none;
 }
 
-/* Ficha con dos destinos: el cuerpo va a la marca, el boton al
-   video. Por eso no es un solo enlace envolviendolo todo. */
+/* La ficha tiene dos destinos: el cuerpo lleva a la marca y la
+   portada al video. El cuerpo se estira sobre toda la tarjeta con un
+   pseudoelemento, y la portada se pone por encima. Asi ninguno de los
+   dos enlaces vive dentro del otro, que no seria HTML valido. */
 .colab {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.75rem;
   padding: 0.7rem 0.75rem 0.7rem 0.9rem;
   border-radius: 0.95rem;
   border: 1px solid var(--hairline);
@@ -1546,9 +1587,15 @@ button {
   display: grid;
   gap: 0.1rem;
   min-width: 0;
-  /* Area tactil comoda aunque el texto sea corto. */
   min-height: 2.75rem;
   align-content: center;
+}
+
+.colab__marca::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
 }
 
 .colab__nombre {
@@ -1571,44 +1618,40 @@ button {
   color: rgba(246, 240, 231, 0.52);
 }
 
-/* El video es la prueba del trabajo: se ve antes que el resto. */
-.colab__video {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  min-height: 2.75rem;
-  padding: 0 0.85rem;
-  border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--gold) 34%, transparent);
-  background: rgba(228, 196, 128, 0.13);
-  color: var(--gold);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
+/* Portada del video: se ve el fotograma, no un boton que lo describa. */
+.colab__toma {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 4.75rem;
+  aspect-ratio: 9 / 16;
+  border-radius: 0.7rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+  background: rgba(255, 255, 255, 0.04);
+  flex-shrink: 0;
 }
 
-.colab__video svg {
-  width: 0.85rem;
-  height: 0.85rem;
+.colab__toma img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-/* El boton de video se enciende aparte, para que se note cual de
-   los dos destinos de la ficha se esta tocando. */
-.colab__video[data-pressed] {
-  background: rgba(228, 196, 128, 0.26);
-  border-color: color-mix(in srgb, var(--gold) 62%, transparent);
+.colab__play {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--cream);
+  background: linear-gradient(180deg, transparent 40%, rgba(10, 5, 24, 0.55));
 }
 
-.partners__cta-nota {
-  margin: 0.9rem 0 0;
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
-  color: rgba(246, 240, 231, 0.55);
-}
-
-.vista .colabs {
-  margin-top: 0.25rem;
+.colab__play svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  filter: drop-shadow(0 2px 6px rgba(10, 5, 24, 0.8));
 }
 
 .partners__cta {
@@ -1814,7 +1857,7 @@ button {
 .pillars li,
 .colab,
 .colab__marca,
-.colab__video,
+.colab__toma,
 .footer__contact-link,
 .menu__boton,
 .topbar__brand,
@@ -1889,6 +1932,17 @@ button {
   box-shadow:
     inset 0 1px 0 var(--filo),
     0 16px 34px -18px rgba(157, 77, 255, 0.6);
+}
+
+/* El grupo desplegado se queda marcado: sin esto no se sabe cual de
+   los cuatro es el que se esta viendo debajo. */
+.menu__boton.is-abierto {
+  background: rgba(228, 196, 128, 0.16);
+  border-color: var(--hairline-hi);
+}
+
+.menu__boton.is-abierto .menu__icono {
+  background: rgba(228, 196, 128, 0.26);
 }
 
 .menu__boton[data-pressed] {

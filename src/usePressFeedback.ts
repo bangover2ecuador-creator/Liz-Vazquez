@@ -19,7 +19,7 @@ const PRESSABLE = [
   '.highlight',
   '.pillars li',
   '.colab__marca',
-  '.colab__video',
+  '.colab__toma',
   '.footer__contact-link',
   '.menu__boton',
   '.topbar__brand',

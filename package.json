@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "images": "node scripts/optimize-images.mjs",
-    "fonts": "node scripts/subset-fonts.mjs"
+    "fonts": "node scripts/subset-fonts.mjs",
+    "covers": "node scripts/video-covers.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

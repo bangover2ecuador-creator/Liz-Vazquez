@@ -308,7 +308,7 @@ export const partners: {
 
 export const partnersIntro = {
   heading: 'Marcas que han trabajado conmigo',
-  sub: 'Elige un grupo y entra a verlas.',
+  sub: 'Toca un grupo y se despliega.',
   videoLabel: 'Vídeo',
   soloVideo: 'Ver el vídeo',
   vacio: 'Aquí todavía no hay ninguna. ¿Quieres ser la primera?',
