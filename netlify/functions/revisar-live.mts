@@ -13,7 +13,9 @@ import type { Config } from '@netlify/functions'
  * Solo corre en su horario: fuera de él sale sin llamar a TikTok.
  */
 
-const CUENTA_LIVE = 'lizvasquezlive'
+// Su cuenta principal: es donde emite todos los dias. La cuenta
+// @lizvasquezlive no se usa para los directos.
+const CUENTA_LIVE = 'lis_iv'
 
 // Horario de Liz, en hora de Perú: empieza a las 8 de la mañana y
 // puede alargarse hasta las 2 de la madrugada del día siguiente.

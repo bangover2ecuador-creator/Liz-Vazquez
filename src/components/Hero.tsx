@@ -19,7 +19,7 @@ export function Hero() {
       <Reveal>
         <a
           className={`live-pill${enVivo ? ' is-live' : ''}`}
-          href={site.liveUrl}
+          href={enVivo ? site.liveGoUrl : site.liveUrl}
           target="_blank"
           rel="noopener noreferrer"
         >

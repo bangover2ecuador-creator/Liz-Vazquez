@@ -11,7 +11,10 @@ export const site = {
   intro: 'Lives diarios en TikTok',
   contactHandle: '@liss_iv',
   contactUrl: 'https://www.instagram.com/liss_iv',
-  liveUrl: 'https://www.tiktok.com/@lizvasquezlive',
+  // Los lives los hace en su cuenta principal, no en la de respaldo.
+  // Apagada se va al perfil; encendida, directa a la sala del directo.
+  liveUrl: 'https://www.tiktok.com/@lis_iv',
+  liveGoUrl: 'https://www.tiktok.com/@lis_iv/live',
 
   // ── Aviso de directo ────────────────────────────────────────
   // Normalmente NO hay que tocar esto: una funcion de Netlify
@@ -42,7 +45,7 @@ export const socials: Social[] = [
     handle: '@lis_iv',
     url: 'https://www.tiktok.com/@lis_iv',
     accent: '#25F4EE',
-    note: 'Cuenta principal',
+    note: 'Cuenta principal · lives diarios',
     featured: true,
   },
   {
@@ -51,7 +54,6 @@ export const socials: Social[] = [
     handle: '@lizvasquezlive',
     url: 'https://www.tiktok.com/@lizvasquezlive',
     accent: '#FE2C55',
-    note: 'Lives diarios',
   },
   {
     id: 'tiktok-2',
@@ -195,7 +197,7 @@ export const giveaway = {
   // Mientras el sorteo no esta activo, la seccion no puede ser un
   // callejon sin salida: quien llega con ganas necesita donde ir.
   waitingLabel: 'Avísame en el live',
-  waitingUrl: 'https://www.tiktok.com/@lizvasquezlive',
+  waitingUrl: 'https://www.tiktok.com/@lis_iv',
   perks: [
     'Sorteos exclusivos para seguidores',
     'Promociones con marcas aliadas',
