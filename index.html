@@ -79,19 +79,62 @@
         display: grid;
         place-content: center;
         justify-items: center;
-        gap: 1.1rem;
-        background: #0b0709;
-        transition: opacity 0.45s ease, visibility 0.45s ease;
+        gap: 1.25rem;
+        background:
+          radial-gradient(60% 45% at 50% 38%, rgba(157, 77, 255, 0.28), transparent 70%),
+          #0a0518;
       }
+      /* Salida: el quesito se encoge y la pantalla se abre */
       #carga.fuera {
-        opacity: 0;
-        visibility: hidden;
+        animation: carga-sale 0.55s cubic-bezier(0.5, 0, 0.75, 0) forwards;
+      }
+      #carga.fuera svg {
+        animation: queso-encoge 0.5s cubic-bezier(0.5, 0, 0.75, 0) forwards;
+      }
+      #carga.fuera p {
+        animation: texto-sale 0.3s ease forwards;
+      }
+      @keyframes carga-sale {
+        to {
+          opacity: 0;
+          visibility: hidden;
+        }
+      }
+      @keyframes queso-encoge {
+        0% {
+          transform: scale(1) rotate(0deg);
+        }
+        45% {
+          transform: scale(1.12) rotate(6deg);
+        }
+        100% {
+          transform: scale(0.12) rotate(-14deg);
+          opacity: 0;
+        }
+      }
+      @keyframes texto-sale {
+        to {
+          opacity: 0;
+          transform: translateY(8px);
+        }
       }
       #carga svg {
-        width: 108px;
-        height: 108px;
+        width: 148px;
+        height: 148px;
         transform-origin: 50% 80%;
-        animation: saluda 1.5s ease-in-out infinite;
+        animation:
+          queso-entra 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+          saluda 1.3s ease-in-out 0.5s infinite;
+      }
+      @keyframes queso-entra {
+        from {
+          transform: scale(0.3);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
       }
       /* El queso se balancea; la manita va aparte, mas rapida */
       @keyframes saluda {
@@ -114,11 +157,22 @@
       }
       #carga p {
         margin: 0;
+        animation: texto-entra 0.5s ease 0.35s both;
         font-family: Georgia, serif;
         font-style: italic;
         font-size: 0.95rem;
         color: #e4c480;
         letter-spacing: 0.02em;
+      }
+      @keyframes texto-entra {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
       }
       @media (prefers-reduced-motion: reduce) {
         #carga svg, #carga .mano, #carga .chispa { animation: none; }

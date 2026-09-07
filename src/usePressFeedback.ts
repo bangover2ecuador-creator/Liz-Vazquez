@@ -20,7 +20,6 @@ const PRESSABLE = [
   '.pillars li',
   '.partner-slot--filled',
   '.footer__contact-link',
-  '.carousel__arrow',
   '.menu__boton',
   '.topbar__brand',
   '.vista__atras',
@@ -31,14 +30,34 @@ const PRESSABLE = [
   '.finale',
 ].join(',')
 
+// Cuanto se mantiene el destello como minimo. Sobre un contenedor
+// desplazable el navegador emite pointercancel a los ~40 ms para
+// quedarse el gesto, y sin este minimo el toque no llegaba a verse.
+// Tambien hace que un toque rapido siempre de respuesta.
+const MINIMO_MS = 220
+
 export function usePressFeedback() {
   useEffect(() => {
     let pressed: HTMLElement | null = null
+    let desde = 0
+    let pendiente = 0
+
+    const soltar = (el: HTMLElement) => {
+      el.removeAttribute('data-pressed')
+    }
 
     const release = () => {
       if (!pressed) return
-      pressed.removeAttribute('data-pressed')
+      const el = pressed
       pressed = null
+
+      const queda = MINIMO_MS - (performance.now() - desde)
+      if (queda > 0) {
+        window.clearTimeout(pendiente)
+        pendiente = window.setTimeout(() => soltar(el), queda)
+      } else {
+        soltar(el)
+      }
     }
 
     const press = (event: PointerEvent) => {
@@ -46,8 +65,11 @@ export function usePressFeedback() {
       const el = target?.closest?.(PRESSABLE) as HTMLElement | null
       if (!el) return
 
-      release()
+      window.clearTimeout(pendiente)
+      if (pressed && pressed !== el) soltar(pressed)
+
       pressed = el
+      desde = performance.now()
       el.setAttribute('data-pressed', '')
     }
 
@@ -71,10 +93,12 @@ export function usePressFeedback() {
       document.removeEventListener('pointerdown', press)
       document.removeEventListener('pointerup', release)
       document.removeEventListener('pointercancel', release)
-      window.removeEventListener('scroll', release, { capture: true })
+      window.removeEventListener('scroll', release)
       window.removeEventListener('blur', release)
       document.removeEventListener('touchstart', noop)
-      release()
+      window.clearTimeout(pendiente)
+      if (pressed) soltar(pressed)
+      pressed = null
     }
   }, [])
 }

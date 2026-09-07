@@ -5,38 +5,41 @@
 
 :root {
   /* ── Fondos ────────────────────────────────────────────────
-     Negro calido, no violeta: sus fotos son de tierra, piel y
-     atardecer, y el morado anterior peleaba con todas.          */
-  --ink: #0b0709;
-  --ink-2: #170d11;
-  --plum: #2a1418;
-  --wine: #4a2029;
+     Violeta-negro con mas azul que el original: los oscuros que
+     se leen caros tiran a azul, no a marron. Nunca negro puro.  */
+  --ink: #0a0518;
+  --ink-2: #140a2e;
+  --plum: #241046;
+  --wine: #3d0f38;
 
-  /* ── Dorado ────────────────────────────────────────────────
-     Se queda: es el premio, el queso y lo que da el aire caro.  */
-  --gold: #e4c480;
-  --gold-hi: #f6e3b8;
-  --gold-deep: #a87b2a;
+  /* ── Dorado ────────────────────────────────────────────────  */
+  --gold: #e8caa4;
+  --gold-hi: #fdf1d8;
+  --gold-deep: #b3842f;
 
   /* ── Marca ─────────────────────────────────────────────────
-     Rosa empolvado como color de ella, terracota sacada de sus
-     propias fotos, y un vino vivo para lo que debe llamar.      */
-  --rose: #e8a0a8;
-  --rose-soft: #f2c4c8;
-  --terracotta: #e07a5f;
-  --magenta: #c9455f;
-  --violet: #8e4356;
+     Mas saturados que antes, no menos: en un fondo profundo el
+     acento tiene que cantar, y se usa poco.                     */
+  --magenta: #ff2d87;
+  --violet: #9d4dff;
+  --rose: #ff8ab8;
+  --cyan: #3ee0ff;
 
   /* ── Texto ─────────────────────────────────────────────────  */
-  --cream: #f7f0ea;
-  --muted: rgba(247, 240, 234, 0.64);
-  --muted-2: rgba(247, 240, 234, 0.44);
+  --cream: #fdf8f4;
+  --muted: rgba(253, 248, 244, 0.66);
+  --muted-2: rgba(253, 248, 244, 0.46);
 
-  /* ── Superficies ───────────────────────────────────────────  */
-  --surface: rgba(255, 246, 240, 0.04);
-  --surface-hi: rgba(255, 246, 240, 0.07);
-  --hairline: rgba(228, 196, 128, 0.18);
-  --hairline-hi: rgba(228, 196, 128, 0.42);
+  /* ── Superficies ───────────────────────────────────────────
+     Con tinte violeta, no gris: un blanco al 4 % sobre morado se
+     ve sucio, un violeta claro al 6 % se ve vidrio.             */
+  --surface: rgba(180, 150, 255, 0.07);
+  --surface-hi: rgba(190, 165, 255, 0.12);
+  --hairline: rgba(232, 202, 164, 0.2);
+  --hairline-hi: rgba(232, 202, 164, 0.5);
+
+  /* Luz especular: el filo claro que simula material */
+  --filo: rgba(255, 255, 255, 0.22);
 
   /* ── Ritmo ─────────────────────────────────────────────────  */
   --shell: 34rem;
@@ -46,6 +49,8 @@
   --radius-lg: 1.75rem;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Curva con rebote corto para lo que entra */
+  --ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
   --font-body: 'Manrope Variable', 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -107,10 +112,10 @@ button {
   z-index: -2;
   pointer-events: none;
   background:
-    radial-gradient(58% 44% at 18% 8%, rgba(201, 69, 95, 0.26), transparent 68%),
-    radial-gradient(52% 40% at 88% 22%, rgba(232, 160, 168, 0.16), transparent 70%),
-    radial-gradient(46% 36% at 74% 68%, rgba(224, 122, 95, 0.18), transparent 72%),
-    radial-gradient(64% 48% at 24% 92%, rgba(74, 32, 41, 0.8), transparent 70%),
+    radial-gradient(56% 42% at 16% 6%, rgba(157, 77, 255, 0.42), transparent 66%),
+    radial-gradient(50% 38% at 90% 18%, rgba(255, 45, 135, 0.3), transparent 68%),
+    radial-gradient(42% 34% at 78% 64%, rgba(62, 224, 255, 0.12), transparent 70%),
+    radial-gradient(60% 46% at 22% 90%, rgba(61, 15, 56, 0.85), transparent 70%),
     linear-gradient(178deg, var(--ink) 0%, var(--ink-2) 38%, var(--plum) 72%, var(--ink) 100%);
   animation: drift 26s ease-in-out infinite alternate;
 }
@@ -119,7 +124,7 @@ button {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(120% 80% at 50% 42%, transparent 42%, rgba(6, 4, 5, 0.74) 100%);
+  background: radial-gradient(120% 80% at 50% 42%, transparent 42%, rgba(4, 2, 12, 0.76) 100%);
 }
 
 @keyframes drift {
@@ -302,13 +307,13 @@ button {
   background: linear-gradient(135deg, var(--magenta), var(--violet) 92%);
   color: #fff;
   box-shadow:
-    0 10px 30px -12px rgba(232, 160, 168, 0.75),
+    0 10px 30px -12px rgba(255, 45, 135, 0.75),
     inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
 .btn--primary:hover {
   box-shadow:
-    0 16px 40px -14px rgba(232, 160, 168, 0.9),
+    0 16px 40px -14px rgba(255, 45, 135, 0.9),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
 }
@@ -402,7 +407,7 @@ button {
   /* Barra visible desde el primer momento: fondo propio y filete
      dorado abajo que la separa del contenido. Antes nacia
      transparente y no se leia como barra. */
-  background: rgba(13, 8, 10, 0.9);
+  background: rgba(12, 6, 28, 0.9);
   backdrop-filter: blur(18px) saturate(1.35);
   border-bottom: 1px solid var(--hairline);
   box-shadow: 0 1px 0 rgba(228, 196, 128, 0.06);
@@ -413,7 +418,7 @@ button {
 
 /* Al bajar se asienta un poco mas */
 .topbar.is-scrolled {
-  background: rgba(11, 7, 9, 0.96);
+  background: rgba(10, 5, 24, 0.96);
   box-shadow:
     0 1px 0 rgba(228, 196, 128, 0.12),
     0 10px 30px -18px rgba(0, 0, 0, 0.9);
@@ -601,7 +606,7 @@ button {
   position: absolute;
   inset: 0;
   border-radius: var(--radio-toma);
-  background: linear-gradient(to top, rgba(11, 7, 9, 0.9) 0%, transparent 52%);
+  background: linear-gradient(to top, rgba(10, 5, 24, 0.9) 0%, transparent 52%);
   pointer-events: none;
 }
 
@@ -767,8 +772,8 @@ button {
   min-height: 3rem;
   padding: 0 1.1rem 0 0.9rem;
   border-radius: 999px;
-  background: rgba(232, 160, 168, 0.12);
-  border: 1px solid rgba(232, 160, 168, 0.32);
+  background: rgba(255, 45, 135, 0.12);
+  border: 1px solid rgba(255, 45, 135, 0.32);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -792,11 +797,11 @@ button {
 
 @keyframes ping {
   0% {
-    box-shadow: 0 0 0 0 rgba(232, 160, 168, 0.55);
+    box-shadow: 0 0 0 0 rgba(255, 45, 135, 0.55);
   }
   70%,
   100% {
-    box-shadow: 0 0 0 9px rgba(232, 160, 168, 0);
+    box-shadow: 0 0 0 9px rgba(255, 45, 135, 0);
   }
 }
 
@@ -809,6 +814,7 @@ button {
 
 .social {
   --accent: var(--gold);
+  box-shadow: inset 0 1px 0 var(--filo);
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
@@ -938,6 +944,7 @@ button {
 }
 
 .menu__boton {
+  box-shadow: inset 0 1px 0 var(--filo);
   display: flex;
   align-items: center;
   gap: 0.7rem;
@@ -948,9 +955,9 @@ button {
   white-space: nowrap;
   cursor: pointer;
   /* Pildora translucida al estilo de la navegacion de Apple */
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(14px) saturate(1.4);
+  background: linear-gradient(150deg, var(--surface-hi), var(--surface));
+  border: 1px solid rgba(190, 165, 255, 0.18);
+  backdrop-filter: blur(16px) saturate(1.5);
   color: var(--cream);
   transition:
     transform 0.3s var(--ease),
@@ -1011,18 +1018,35 @@ button {
   display: flex;
   flex-direction: column;
   background:
-    radial-gradient(80% 50% at 50% 0%, rgba(201, 69, 95, 0.18), transparent 70%), var(--ink);
-  animation: entrar-vista 0.42s var(--ease);
+    radial-gradient(80% 50% at 50% 0%, rgba(157, 77, 255, 0.22), transparent 70%), var(--ink);
+  animation: entrar-vista 0.44s var(--ease-pop);
 }
 
+/* Entra acercandose, como si la seccion viniera hacia ti */
 @keyframes entrar-vista {
   from {
-    transform: translateX(14%);
+    transform: scale(0.9);
     opacity: 0;
   }
   to {
-    transform: none;
+    transform: scale(1);
     opacity: 1;
+  }
+}
+
+/* Y dentro, el contenido llega un pelo despues */
+.vista__cuerpo > * {
+  animation: contenido-entra 0.5s var(--ease) 0.1s both;
+}
+
+@keyframes contenido-entra {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -1035,7 +1059,7 @@ button {
   align-items: center;
   gap: 0.5rem;
   padding: 0.55rem var(--gap);
-  background: rgba(11, 7, 9, 0.92);
+  background: rgba(10, 5, 24, 0.92);
   backdrop-filter: blur(18px) saturate(1.35);
   border-bottom: 1px solid var(--hairline);
 }
@@ -1182,7 +1206,7 @@ button {
   font-size: clamp(1.4rem, 6vw, 1.8rem);
   line-height: 1.15;
   margin: 0.7rem 0 0;
-  background: linear-gradient(120deg, var(--gold-hi), var(--gold) 45%, #fff6df);
+  background: linear-gradient(118deg, #fff8e6, var(--gold) 42%, var(--gold-hi));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -1291,6 +1315,7 @@ button {
   border-radius: var(--radius);
   background: linear-gradient(150deg, var(--surface-hi), var(--surface));
   border: 1px solid var(--hairline);
+  box-shadow: inset 0 1px 0 var(--filo);
   text-align: center;
 }
 
@@ -1351,8 +1376,9 @@ button {
   gap: 0.55rem;
   padding: 0.8rem 0.85rem;
   border-radius: 0.9rem;
-  background: var(--surface);
+  background: linear-gradient(150deg, var(--surface-hi), var(--surface));
   border: 1px solid var(--hairline);
+  box-shadow: inset 0 1px 0 var(--filo);
   font-size: 0.8125rem;
   font-weight: 600;
   color: rgba(246, 240, 231, 0.85);
@@ -1381,6 +1407,7 @@ button {
   border-radius: var(--radius);
   background: linear-gradient(150deg, var(--surface-hi), var(--surface));
   border: 1px solid var(--hairline);
+  box-shadow: inset 0 1px 0 var(--filo);
 }
 
 .partner-group__head {
@@ -1476,8 +1503,8 @@ button {
   padding: clamp(2rem, 8vw, 3rem) clamp(1.25rem, 5vw, 2rem);
   border-radius: var(--radius-lg);
   background:
-    radial-gradient(80% 70% at 50% 0%, rgba(232, 160, 168, 0.2), transparent 70%),
-    linear-gradient(160deg, rgba(28, 10, 43, 0.85), rgba(11, 7, 9, 0.9));
+    radial-gradient(80% 70% at 50% 0%, rgba(255, 45, 135, 0.2), transparent 70%),
+    linear-gradient(160deg, rgba(28, 10, 43, 0.85), rgba(10, 5, 24, 0.9));
   border: 1px solid var(--hairline);
 }
 
@@ -1616,73 +1643,62 @@ button {
 }
 
 /* ── Respuesta tactil ─────────────────────────────────────────
+   Al presionar, lo tocado se ACERCA en vez de hundirse: crece un
+   poco, gana luz en el filo y se separa del fondo con sombra. Es
+   lo que hace que un toque se sienta como abrir algo y no como
+   pulsar un boton plano.
+
    `data-pressed` lo pone usePressFeedback con eventos de puntero,
-   porque :active no es fiable en movil: iOS no lo aplica fuera de
-   enlaces y botones, y Android lo retira al primer pixel de scroll.
-   Se mantiene :active para raton y teclado.                        */
+   porque :active no es fiable en tactil: iOS no lo aplica fuera de
+   enlaces y botones, y Android lo retira al primer pixel de scroll. */
 
 .btn,
 .social,
+.toma,
 .stat,
 .highlight,
 .pillars li,
+.partner-slot--filled,
 .footer__contact-link,
-.carousel__arrow,
-.portrait,
+.menu__boton,
+.topbar__brand,
+.vista__atras,
 .live-pill,
 .giveaway__badge,
+.giveaway__waiting,
 .about__quote,
 .finale {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
 
-/* Entrada rapida al hundirse, salida con la curva de siempre */
+/* Zoom hacia adelante */
 .btn[data-pressed],
 .social[data-pressed],
 .stat[data-pressed],
 .highlight[data-pressed],
 .pillars li[data-pressed],
+.partner-slot--filled[data-pressed],
 .footer__contact-link[data-pressed],
-.giveaway__badge[data-pressed],
-.carousel__arrow[data-pressed]:not(:disabled) {
-  transition-duration: 0.1s;
+.menu__boton[data-pressed],
+.giveaway__waiting[data-pressed] {
+  transform: scale(1.045);
+  transition-duration: 0.14s;
+  transition-timing-function: var(--ease-pop);
+  z-index: 2;
 }
 
-/* Botones */
-.btn[data-pressed] {
-  transform: scale(0.96);
-}
-
-.btn--primary[data-pressed] {
-  box-shadow: 0 4px 14px -8px rgba(232, 160, 168, 0.9);
-}
-
-.btn--gold[data-pressed] {
-  box-shadow:
-    0 6px 18px -10px rgba(228, 196, 128, 0.8),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  filter: brightness(1.08);
-}
-
-/* El brillo se detiene mientras el dedo esta encima */
-.btn--gold[data-pressed]::after {
-  animation-play-state: paused;
-}
-
-/* Tarjetas y superficies */
-.social[data-pressed],
-.stat[data-pressed],
-.highlight[data-pressed],
-.pillars li[data-pressed],
-.footer__contact-link[data-pressed],
+/* ...y con el acercamiento, luz de material */
 .social[data-pressed] {
-  border-color: color-mix(in srgb, var(--accent) 65%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 72%, transparent);
   background: linear-gradient(
     140deg,
-    color-mix(in srgb, var(--accent) 20%, transparent),
+    color-mix(in srgb, var(--accent) 26%, transparent),
     var(--surface)
   );
+  box-shadow:
+    inset 0 1px 0 var(--filo),
+    0 18px 40px -18px color-mix(in srgb, var(--accent) 60%, transparent);
 }
 
 .social[data-pressed] .social__arrow {
@@ -1690,171 +1706,153 @@ button {
   transform: translateX(5px);
 }
 
+.btn--primary[data-pressed] {
+  box-shadow:
+    inset 0 1px 0 var(--filo),
+    0 22px 44px -18px rgba(255, 45, 135, 0.9);
+}
+
+.btn--gold[data-pressed] {
+  filter: brightness(1.1);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 22px 44px -18px rgba(232, 202, 164, 0.9);
+}
+
+.btn--gold[data-pressed]::after {
+  animation-play-state: paused;
+}
+
 .stat[data-pressed],
 .highlight[data-pressed],
 .pillars li[data-pressed],
+.partner-slot--filled[data-pressed],
 .footer__contact-link[data-pressed] {
   border-color: var(--hairline-hi);
-  background: linear-gradient(150deg, rgba(228, 196, 128, 0.16), var(--surface));
+  background: linear-gradient(150deg, rgba(232, 202, 164, 0.2), var(--surface));
+  box-shadow:
+    inset 0 1px 0 var(--filo),
+    0 16px 34px -18px rgba(157, 77, 255, 0.6);
 }
 
-/* Fotos del carrusel */
-
-/* Flechas del carrusel */
-.carousel__arrow[data-pressed]:not(:disabled) {
-  transform: scale(0.88);
-  background: rgba(228, 196, 128, 0.24);
+.menu__boton[data-pressed] {
+  background: linear-gradient(140deg, rgba(232, 202, 164, 0.24), var(--surface-hi));
   border-color: var(--hairline-hi);
+  box-shadow:
+    inset 0 1px 0 var(--filo),
+    0 18px 38px -16px rgba(157, 77, 255, 0.7);
 }
 
-/* Insignia MUY PRONTO */
-.giveaway__badge[data-pressed] {
-  transform: scale(0.95);
-  background: rgba(228, 196, 128, 0.24);
+.menu__boton[data-pressed] .menu__icono {
+  background: rgba(232, 202, 164, 0.28);
+  color: var(--gold-hi);
 }
 
-.giveaway__badge {
-  transition:
-    transform 0.35s var(--ease),
-    background 0.35s var(--ease);
+/* La foto se acerca y se ilumina, sin borde que delate el recorte */
+.toma[data-pressed] {
+  transform: scale(calc(1 - var(--d) * 0.11 + 0.04));
+  transition-duration: 0.16s;
+  transition-timing-function: var(--ease-pop);
+  z-index: 2;
 }
 
-/* ── Retrato ──────────────────────────────────────────────────
-   Al tocarlo se hunde y el halo dorado se enciende.              */
-
-.portrait__frame {
-  transition: box-shadow 0.45s var(--ease);
+.toma[data-pressed] img {
+  transform: scale(1.04);
 }
 
-.portrait__badge {
-  transition: transform 0.35s var(--ease);
+.toma[data-pressed] .toma__aro {
+  opacity: 1;
+  animation: respirar-velo 1.5s var(--ease) infinite;
 }
 
-/* ── Pildora de lives ─────────────────────────────────────────
-   Al tocarla se ilumina y el punto late mas fuerte.              */
+@keyframes respirar-velo {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+  50% {
+    opacity: 1;
+  }
+}
 
-.live-pill {
-  cursor: pointer;
-  text-decoration: none;
-  transition:
-    transform 0.4s var(--ease),
-    background 0.4s var(--ease),
-    border-color 0.4s var(--ease),
-    color 0.4s var(--ease);
+/* Marca y atras: se acercan menos, son elementos de chrome */
+.topbar__brand[data-pressed] .wordmark__mark {
+  animation: none;
+  transform: scale(1.12);
+  transition: transform 0.14s var(--ease-pop);
+}
+
+.vista__atras[data-pressed] {
+  transform: scale(1.06);
+  background: rgba(232, 202, 164, 0.16);
+  transition-duration: 0.14s;
 }
 
 .live-pill[data-pressed] {
-  transform: scale(0.94);
-  transition-duration: 0.12s;
-  background: rgba(232, 160, 168, 0.28);
-  border-color: rgba(232, 160, 168, 0.7);
+  transform: scale(1.05);
+  transition-duration: 0.14s;
+  transition-timing-function: var(--ease-pop);
+  background: rgba(255, 45, 135, 0.3);
+  border-color: rgba(255, 45, 135, 0.72);
   color: #fff;
-}
-
-.live-pill.is-live {
-  background: rgba(28, 200, 120, 0.16);
-  border-color: rgba(28, 200, 120, 0.6);
-  color: #b6f5d4;
-  animation: latido 2.4s var(--ease) infinite;
-}
-
-.live-pill.is-live .live-pill__dot {
-  background: #21d97e;
-  box-shadow: 0 0 0 0 rgba(33, 217, 126, 0.6);
-  animation: ping-vivo 1.6s ease-out infinite;
-}
-
-.live-pill__go {
-  margin-left: 0.1rem;
-  padding: 0.1rem 0.5rem;
-  border-radius: 999px;
-  background: #21d97e;
-  color: #05231a;
-  font-size: 0.6875rem;
-  font-weight: 800;
-}
-
-@keyframes latido {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(33, 217, 126, 0);
-  }
-  50% {
-    box-shadow: 0 0 22px -4px rgba(33, 217, 126, 0.55);
-  }
-}
-
-@keyframes ping-vivo {
-  0% {
-    box-shadow: 0 0 0 0 rgba(33, 217, 126, 0.65);
-  }
-  70%,
-  100% {
-    box-shadow: 0 0 0 10px rgba(33, 217, 126, 0);
-  }
 }
 
 .live-pill[data-pressed] .live-pill__dot {
   background: #fff;
-  box-shadow: 0 0 12px rgba(232, 160, 168, 0.9);
+  box-shadow: 0 0 12px rgba(255, 45, 135, 0.9);
 }
 
-.live-pill__dot {
-  transition:
-    background 0.3s var(--ease),
-    box-shadow 0.3s var(--ease);
-}
-
-/* ── Cita y bloque de cierre ──────────────────────────────────  */
-
-.about__quote,
-.finale {
-  transition:
-    transform 0.4s var(--ease),
-    border-color 0.4s var(--ease),
-    background 0.4s var(--ease);
+.giveaway__badge[data-pressed] {
+  transform: scale(1.06);
+  background: rgba(232, 202, 164, 0.26);
+  transition-duration: 0.14s;
 }
 
 .about__quote[data-pressed] {
-  transform: scale(0.99);
+  transform: scale(1.01);
   border-left-color: var(--gold);
-  background: linear-gradient(90deg, rgba(228, 196, 128, 0.16), transparent);
+  background: linear-gradient(90deg, rgba(232, 202, 164, 0.18), transparent);
 }
 
 .finale[data-pressed] {
-  transform: scale(0.99);
+  transform: scale(1.01);
   border-color: var(--hairline-hi);
 }
 
-/* Transiciones base de las tarjetas que antes no las tenian */
+/* Transiciones base de lo que antes no las tenia */
 .stat,
 .highlight,
-.pillars li {
+.pillars li,
+.partner-slot--filled,
+.giveaway__badge,
+.about__quote,
+.finale,
+.live-pill,
+.topbar__brand {
   transition:
-    transform 0.35s var(--ease),
-    border-color 0.35s var(--ease),
-    background 0.35s var(--ease),
-    box-shadow 0.35s var(--ease);
+    transform 0.4s var(--ease),
+    border-color 0.4s var(--ease),
+    background 0.4s var(--ease),
+    box-shadow 0.4s var(--ease);
 }
 
-/* Con raton, ademas, se levantan */
+/* Con raton, se levantan en vez de acercarse */
 @media (hover: hover) and (pointer: fine) {
   .stat:hover,
-  .highlight:hover {
-    transform: translateY(-2px);
+  .highlight:hover,
+  .menu__boton:hover {
+    transform: translateY(-3px);
     border-color: var(--hairline-hi);
   }
 
-  .pillars li:hover {
+  .pillars li:hover,
+  .partner-slot--filled:hover {
     border-color: var(--hairline-hi);
   }
 
-  .shot:hover img {
+  .toma:hover img {
     transform: scale(1.04);
-    filter: saturate(1) contrast(1.05) brightness(0.94);
   }
-
-  .portrait: hover;
 }
 
 /* ── Escritorio ───────────────────────────────────────────── */

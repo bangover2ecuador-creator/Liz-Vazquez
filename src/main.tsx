@@ -16,14 +16,17 @@ createRoot(document.getElementById('root')!).render(
 )
 
 // Retira la pantalla de carga en cuanto la app esta montada. El
-// minimo de 600 ms evita que el quesito parpadee medio fotograma en
-// una conexion rapida, que se ve peor que no ponerlo.
+// minimo deja que el quesito termine de entrar y salude una vez: sin
+// el, en conexion rapida se ve medio fotograma y queda peor que no
+// ponerlo. La salida (encoge y desaparece) la lleva el CSS.
 const carga = document.getElementById('carga')
 if (carga) {
   const arranque = performance.now()
   const quitar = () => {
     carga.classList.add('fuera')
-    setTimeout(() => carga.remove(), 500)
+    setTimeout(() => carga.remove(), 600)
   }
-  requestAnimationFrame(() => setTimeout(quitar, Math.max(0, 600 - (performance.now() - arranque))))
+  requestAnimationFrame(() =>
+    setTimeout(quitar, Math.max(0, 1150 - (performance.now() - arranque))),
+  )
 }
