@@ -45,7 +45,7 @@ export const socials: Social[] = [
     handle: '@lis_iv',
     url: 'https://www.tiktok.com/@lis_iv',
     accent: '#25F4EE',
-    note: 'Cuenta principal · lives diarios',
+    note: 'Lives diarios',
     featured: true,
   },
   {
@@ -86,6 +86,12 @@ export const socials: Social[] = [
     accent: '#FF4E45',
   },
 ]
+
+// La cuenta principal no vive en "Mis redes": va al pie de la página,
+// porque además de sus lives es por donde llegan las marcas y quien
+// quiere contratarla. Marcar `featured: true` es lo que la mueve ahí.
+export const cuentaPrincipal = socials.find((s) => s.featured) ?? socials[0]
+export const redesSecundarias = socials.filter((s) => s !== cuentaPrincipal)
 
 // Cifras mostradas en la tira de estadísticas.
 // `value` es el número que anima; `suffix` el texto fijo que lo acompaña.

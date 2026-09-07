@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { socials, type Social } from '../data/site'
+import { redesSecundarias, type Social } from '../data/site'
 import { Reveal } from './Primitives'
 import { ArrowIcon, FacebookIcon, InstagramIcon, TikTokIcon, YouTubeIcon } from './Icons'
 
@@ -12,7 +12,7 @@ const iconFor: Record<string, ReactNode> = {
   youtube: <YouTubeIcon />,
 }
 
-function SocialCard({ item }: { item: Social }) {
+export function SocialCard({ item }: { item: Social }) {
   return (
     <a
       className={`social${item.featured ? ' social--featured' : ''}`}
@@ -46,11 +46,11 @@ export function Socials() {
       <Reveal className="section-head section-head--center">
         <span className="eyebrow">Conéctate conmigo</span>
         <h2 className="section-title">Todas mis redes</h2>
-        <p className="section-sub">Un toque y estás dentro. Te espero en los lives.</p>
+        <p className="section-sub">Un toque y estás dentro. Mi cuenta principal está al final de la portada.</p>
       </Reveal>
 
       <div className="socials">
-        {socials.map((item, i) => (
+        {redesSecundarias.map((item, i) => (
           <Reveal key={item.id} delay={i * 70}>
             <SocialCard item={item} />
           </Reveal>

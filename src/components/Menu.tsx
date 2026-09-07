@@ -5,16 +5,10 @@ export type Destino = 'beneficios' | 'marcas' | 'sobre-mi' | 'redes'
 
 export const entradas: { id: Destino; titulo: string; pista: string; icono: ReactNode }[] = [
   {
-    id: 'beneficios',
-    titulo: 'Beneficios',
-    pista: 'Sorteos y promociones',
-    icono: <GiftIcon />,
-  },
-  {
-    id: 'marcas',
-    titulo: 'Colaboraciones',
-    pista: 'Marcas, empresas y creadores',
-    icono: <SparkIcon />,
+    id: 'redes',
+    titulo: 'Mis redes',
+    pista: 'Instagram, Facebook y YouTube',
+    icono: <LinkIcon />,
   },
   {
     id: 'sobre-mi',
@@ -23,10 +17,16 @@ export const entradas: { id: Destino; titulo: string; pista: string; icono: Reac
     icono: <CrownIcon />,
   },
   {
-    id: 'redes',
-    titulo: 'Mis redes',
-    pista: 'Seis cuentas en un toque',
-    icono: <LinkIcon />,
+    id: 'marcas',
+    titulo: 'Colaboraciones',
+    pista: 'Marcas, empresas y creadores',
+    icono: <SparkIcon />,
+  },
+  {
+    id: 'beneficios',
+    titulo: 'Beneficios',
+    pista: 'Sorteos y promociones',
+    icono: <GiftIcon />,
   },
 ]
 
@@ -36,6 +36,9 @@ export const entradas: { id: Destino; titulo: string; pista: string; icono: Reac
  * Tira horizontal de tarjetas: se desliza hacia la derecha y cada una
  * abre su vista a pantalla completa. Es el único camino de navegación
  * del sitio, así que va inmediatamente debajo de la foto.
+ *
+ * El orden lo eligió Liz: primero sus redes, que es lo que más se
+ * busca, y al final los beneficios, que aún no están activos.
  */
 export function Menu({ onAbrir }: { onAbrir: (d: Destino) => void }) {
   return (

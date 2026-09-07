@@ -933,7 +933,10 @@ button {
 .social__platform {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
+  /* Sin esto una etiqueta larga se sale de su columna y se monta
+     encima de la flecha, en vez de bajar de linea. */
+  flex-wrap: wrap;
+  gap: 0.3rem 0.45rem;
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -1640,11 +1643,25 @@ button {
   font-size: 0.95rem;
 }
 
+/* Su cuenta principal cierra la pagina: la misma tarjeta de "Mis
+   redes", centrada y con su texto alineado a la izquierda como alli. */
+.footer__cuenta {
+  display: grid;
+  gap: 0.6rem;
+  max-width: 22rem;
+  margin: 1.75rem auto 0;
+  text-align: left;
+}
+
+.footer__cuenta .footer__contact-label {
+  text-align: center;
+}
+
 .footer__contact {
   display: grid;
   justify-items: center;
   gap: 0.5rem;
-  margin-top: 1.75rem;
+  margin-top: 1.5rem;
 }
 
 .footer__contact-label {
