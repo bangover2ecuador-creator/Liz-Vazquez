@@ -1,10 +1,4 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-  type ElementType,
-  type ReactNode,
-} from 'react'
+import { useEffect, useRef, useState, type ElementType, type ReactNode } from 'react'
 
 // ── Reveal ───────────────────────────────────────────────────
 // Aparece al entrar en pantalla. Si el navegador no soporta

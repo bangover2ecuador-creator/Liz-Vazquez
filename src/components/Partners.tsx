@@ -45,7 +45,9 @@ export function Partners() {
                   </li>
                 ))}
 
-                {Array.from({ length: Math.max(HUECOS - grupo.items.length, 0) }).map((_, i) => (
+                {Array.from({
+                  length: Math.max(HUECOS - grupo.items.length, 0),
+                }).map((_, i) => (
                   <li key={`hueco-${i}`} className="partner-slot" aria-hidden="true">
                     <span>{partnersIntro.emptyLabel}</span>
                   </li>

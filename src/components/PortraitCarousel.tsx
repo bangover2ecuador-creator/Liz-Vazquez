@@ -10,13 +10,11 @@ const INICIALES = 3
 /**
  * La portada es el carrusel.
  *
- * La foto principal es la primera del carrusel, no una imagen aparte:
- * se desliza dentro del mismo marco circular dorado y las demás llegan
- * detrás. Así no hace falta una tira de fotos más abajo — es todo el
- * mismo elemento.
- *
- * El marco, los anillos y la corona se quedan fijos; lo único que se
- * mueve es la foto de dentro.
+ * Tarjeta vertical con esquinas muy redondeadas, no el círculo de
+ * antes: aquel venía de cuando esto era un avatar, y recortaba un
+ * tercio de cada foto vertical. El marco lleva un bisel de luz arriba
+ * y sombra profunda debajo, para que se lea como un objeto con
+ * grosor y no como una imagen pegada al fondo.
  */
 export function PortraitCarousel() {
   const trackRef = useRef<HTMLDivElement>(null)
@@ -44,7 +42,10 @@ export function PortraitCarousel() {
     track.addEventListener('scroll', alDesplazar, { passive: true })
     // Al primer contacto se montan todas: ya está claro que va a deslizar.
     const alTocar = () => setCargarTodas(true)
-    track.addEventListener('pointerdown', alTocar, { passive: true, once: true })
+    track.addEventListener('pointerdown', alTocar, {
+      passive: true,
+      once: true,
+    })
 
     return () => {
       track.removeEventListener('scroll', alDesplazar)
@@ -62,10 +63,6 @@ export function PortraitCarousel() {
 
   return (
     <div className="portrait">
-      <span className="portrait__ring portrait__ring--outer" aria-hidden="true" />
-      <span className="portrait__ring" aria-hidden="true" />
-      <span className="portrait__halo" aria-hidden="true" />
-
       <div className="portrait__frame">
         <div
           className="portrait__track"
@@ -99,6 +96,8 @@ export function PortraitCarousel() {
             </div>
           ))}
         </div>
+        {/* Bisel: brillo arriba y sombra abajo, como el canto de un cristal */}
+        <span className="portrait__bevel" aria-hidden="true" />
       </div>
 
       <span className="portrait__badge" title={site.award}>

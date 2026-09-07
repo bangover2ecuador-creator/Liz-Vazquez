@@ -22,7 +22,11 @@ export function Hero() {
         >
           <span className="live-pill__dot" aria-hidden="true" />
           {enVivo ? site.liveNowLabel : site.liveOffLabel}
-          {enVivo && <span className="live-pill__go" aria-hidden="true">Entrar</span>}
+          {enVivo && (
+            <span className="live-pill__go" aria-hidden="true">
+              Entrar
+            </span>
+          )}
         </a>
       </Reveal>
 

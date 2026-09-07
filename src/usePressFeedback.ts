@@ -23,7 +23,6 @@ const PRESSABLE = [
   '.carousel__arrow',
   '.dock__btn',
   '.dock__gold',
-  '.portrait',
   '.live-pill',
   '.giveaway__badge',
   '.giveaway__waiting',
@@ -56,7 +55,10 @@ export function usePressFeedback() {
     document.addEventListener('pointercancel', release, { passive: true })
     // Al desplazarse, el navegador se queda el gesto: soltar para que
     // nada quede hundido mientras la página se mueve.
-    window.addEventListener('scroll', release, { passive: true, capture: true })
+    window.addEventListener('scroll', release, {
+      passive: true,
+      capture: true,
+    })
     window.addEventListener('blur', release)
 
     // iOS solo aplica :active si existe algún listener de touch.

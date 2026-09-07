@@ -376,7 +376,6 @@ button {
   transform: none;
 }
 
-
 /* ── Barra superior ───────────────────────────────────────────
    Lleva el imagotipo. Empieza transparente para no competir con
    el retrato y gana fondo al hacer scroll, porque debajo pasan
@@ -439,32 +438,19 @@ button {
 }
 
 .wordmark__mark {
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 2.3rem;
+  height: 2.3rem;
   flex-shrink: 0;
-}
-
-.wordmark__text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.05;
 }
 
 .wordmark__name {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 1.25rem;
-  letter-spacing: -0.01em;
+  font-size: 1.3rem;
+  letter-spacing: -0.005em;
   color: var(--cream);
-}
-
-.wordmark__tag {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 0.7rem;
-  letter-spacing: 0.01em;
-  color: var(--gold);
+  line-height: 1;
 }
 
 /* ── Hero ─────────────────────────────────────────────────── */
@@ -479,34 +465,40 @@ button {
 .portrait {
   display: block;
   position: relative;
-  cursor: default;
-  width: clamp(15rem, 72vw, 20rem);
-  aspect-ratio: 1;
-  margin: 0 auto 5rem;
+  width: min(19rem, 82vw);
+  margin: 0 auto 4.75rem;
 }
+
+/* ── Tarjeta de la portada ────────────────────────────────────
+   Rectangular y muy redondeada. El circulo anterior venia de cuando
+   esto era un avatar y recortaba un tercio de cada foto vertical.   */
 
 .portrait__frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 2.25rem;
+  overflow: hidden;
+  background: var(--ink-2);
+  /* Sombra profunda + halo tenue: la tarjeta flota sobre el fondo */
+  box-shadow:
+    0 2px 1px rgba(255, 255, 255, 0.06),
+    0 32px 70px -28px rgba(0, 0, 0, 0.95),
+    0 0 60px -20px rgba(228, 196, 128, 0.22);
+}
+
+/* Bisel: filo de luz arriba, sombra interior abajo. Es lo que hace
+   que se lea como objeto con grosor y no como imagen pegada. */
+.portrait__bevel {
   position: absolute;
   inset: 0;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 1px solid rgba(228, 196, 128, 0.45);
+  z-index: 3;
+  border-radius: inherit;
+  pointer-events: none;
   box-shadow:
-    0 0 0 6px rgba(7, 3, 16, 0.9),
-    0 26px 60px -22px rgba(0, 0, 0, 0.9);
-  z-index: 2;
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 0 0 1px rgba(228, 196, 128, 0.22),
+    inset 0 -40px 60px -40px rgba(0, 0, 0, 0.8);
 }
-
-.portrait__frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 28%;
-}
-
-/* ── Carrusel dentro del retrato ──────────────────────────────
-   El marco redondo, los anillos y la corona no se mueven: lo unico
-   que se desliza es la foto de dentro.                            */
 
 .portrait__track {
   display: flex;
@@ -522,10 +514,6 @@ button {
 
 .portrait__track::-webkit-scrollbar {
   display: none;
-}
-
-.portrait__track:focus-visible {
-  outline: none;
 }
 
 .portrait:has(.portrait__track:focus-visible) .portrait__frame {
@@ -547,24 +535,50 @@ button {
   width: 100%;
   height: 100%;
   display: block;
+  object-fit: cover;
 }
 
-/* Puntos bajo el retrato */
+/* Insignia del premio, apoyada en el canto de la tarjeta */
+.portrait__badge {
+  position: absolute;
+  right: -0.6rem;
+  top: -0.6rem;
+  z-index: 4;
+  width: 2.6rem;
+  height: 2.6rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(140deg, var(--gold-hi), var(--gold-deep));
+  color: #2a1c05;
+  box-shadow:
+    0 8px 20px -6px rgba(0, 0, 0, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 240, 205, 0.5);
+  transition: transform 0.35s var(--ease);
+}
+
+.portrait__badge svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Puntos y pie */
 .portrait__dots {
   position: absolute;
   left: 50%;
-  bottom: -1.6rem;
+  bottom: -1.9rem;
   transform: translateX(-50%);
   z-index: 4;
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  padding: 0.35rem 0.6rem;
+  padding: 0.4rem 0.65rem;
   border-radius: 999px;
-  background: rgba(7, 3, 16, 0.72);
+  background: rgba(7, 3, 16, 0.7);
   backdrop-filter: blur(10px);
   border: 1px solid var(--hairline);
-  max-width: 88vw;
+  max-width: 84vw;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -583,13 +597,13 @@ button {
   background: rgba(246, 240, 231, 0.28);
   cursor: pointer;
   transition:
-    background 0.3s var(--ease),
-    width 0.3s var(--ease);
+    background 0.35s var(--ease),
+    width 0.35s var(--ease);
   -webkit-tap-highlight-color: transparent;
 }
 
 .portrait__dot.is-active {
-  width: 1.25rem;
+  width: 1.3rem;
   border-radius: 999px;
   background: var(--gold);
 }
@@ -597,11 +611,11 @@ button {
 .portrait__caption {
   position: absolute;
   left: 50%;
-  bottom: -3.9rem;
+  bottom: -4.1rem;
   transform: translateX(-50%);
   margin: 0;
   width: max-content;
-  max-width: 90vw;
+  max-width: 88vw;
   font-size: 0.8125rem;
   font-weight: 600;
   color: var(--muted);
@@ -609,90 +623,6 @@ button {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-/* Halo dorado giratorio */
-.portrait__halo {
-  position: absolute;
-  inset: -13%;
-  border-radius: 50%;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    var(--gold) 42deg,
-    transparent 96deg,
-    transparent 190deg,
-    var(--magenta) 236deg,
-    transparent 290deg,
-    transparent 360deg
-  );
-  opacity: 0.85;
-  animation: spin 14s linear infinite;
-  z-index: 0;
-}
-
-.portrait__halo::after {
-  content: '';
-  position: absolute;
-  inset: 5.5%;
-  border-radius: 50%;
-  background: var(--ink);
-}
-
-.portrait__ring {
-  position: absolute;
-  inset: -24%;
-  border-radius: 50%;
-  border: 1px solid rgba(228, 196, 128, 0.16);
-  animation: pulse 5s var(--ease) infinite;
-}
-
-.portrait__ring--outer {
-  inset: -36%;
-  border-color: rgba(228, 196, 128, 0.09);
-  animation-delay: 1.4s;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.75;
-  }
-  50% {
-    transform: scale(1.045);
-    opacity: 0.3;
-  }
-}
-
-.portrait__badge {
-  position: absolute;
-  right: 4%;
-  bottom: 4%;
-  z-index: 3;
-  width: 2.3rem;
-  height: 2.3rem;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: linear-gradient(140deg, var(--gold-hi), var(--gold-deep));
-  color: #2a1c05;
-  box-shadow:
-    0 6px 18px -6px rgba(0, 0, 0, 0.8),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(255, 240, 205, 0.5);
-}
-
-.portrait__badge svg {
-  width: 1.15rem;
-  height: 1.15rem;
-}
-
 
 .hero__tagline {
   margin-top: 1.5rem;
@@ -1221,7 +1151,8 @@ button {
   padding: 1.35rem 1.15rem;
   border-radius: var(--radius);
   text-align: center;
-  background: radial-gradient(90% 80% at 50% 0%, rgba(228, 196, 128, 0.12), transparent 70%),
+  background:
+    radial-gradient(90% 80% at 50% 0%, rgba(228, 196, 128, 0.12), transparent 70%),
     linear-gradient(160deg, rgba(53, 16, 42, 0.55), rgba(14, 6, 25, 0.8));
   border: 1px solid var(--hairline);
 }
@@ -1324,9 +1255,6 @@ button {
   margin: 0.35rem 0 0;
   font-size: 0.95rem;
 }
-
-
-
 
 .footer__contact {
   display: grid;
@@ -1456,7 +1384,6 @@ button {
   left: 0;
 }
 
-
 /* ── Respuesta tactil ─────────────────────────────────────────
    `data-pressed` lo pone usePressFeedback con eventos de puntero,
    porque :active no es fiable en movil: iOS no lo aplica fuera de
@@ -1582,45 +1509,8 @@ button {
 /* ── Retrato ──────────────────────────────────────────────────
    Al tocarlo se hunde y el halo dorado se enciende.              */
 
-.portrait {
-  cursor: pointer;
-  transition: transform 0.45s var(--ease);
-}
-
-.portrait[data-pressed] {
-  transform: scale(0.955);
-  transition-duration: 0.12s;
-}
-
-.portrait__halo,
-.portrait__ring,
-.portrait__ring--outer,
 .portrait__frame {
-  transition:
-    opacity 0.45s var(--ease),
-    box-shadow 0.45s var(--ease),
-    filter 0.45s var(--ease);
-}
-
-.portrait[data-pressed] .portrait__halo {
-  opacity: 1;
-  filter: brightness(1.5) saturate(1.2);
-}
-
-.portrait[data-pressed] .portrait__ring,
-.portrait[data-pressed] .portrait__ring--outer {
-  border-color: rgba(228, 196, 128, 0.55);
-}
-
-.portrait[data-pressed] .portrait__frame {
-  box-shadow:
-    0 0 0 6px rgba(7, 3, 16, 0.9),
-    0 0 34px rgba(228, 196, 128, 0.55),
-    0 26px 60px -22px rgba(0, 0, 0, 0.9);
-}
-
-.portrait[data-pressed] .portrait__badge {
-  transform: scale(1.12);
+  transition: box-shadow 0.45s var(--ease);
 }
 
 .portrait__badge {
@@ -1751,9 +1641,7 @@ button {
     filter: saturate(1) contrast(1.05) brightness(0.94);
   }
 
-  .portrait:hover .portrait__halo {
-    filter: brightness(1.25);
-  }
+  .portrait: hover;
 }
 
 /* ── Escritorio ───────────────────────────────────────────── */
