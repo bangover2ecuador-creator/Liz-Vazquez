@@ -1,3 +1,5 @@
+import { Quesito } from './Quesito'
+
 /**
  * Isotipo de Liz Vásquez.
  *
@@ -132,13 +134,21 @@ export function Wordmark({
   /** Etiqueta del nombre. La barra lo monta como <h1>: es el título
    *  de la página, y al salir del hero se llevó el h1 con él. */
   nameAs: Name = 'span',
+  /** La barra usa la mascota, que camina; el pie usa el logotipo, que
+   *  es identidad y se queda quieto. */
+  mascota = false,
 }: {
   className?: string
   nameAs?: 'h1' | 'span'
+  mascota?: boolean
 }) {
   return (
     <span className={className}>
-      <Logo className="wordmark__mark" />
+      {mascota ? (
+        <Quesito className="wordmark__mark" />
+      ) : (
+        <Logo className="wordmark__mark" />
+      )}
       <Name className="wordmark__name">Liz Vásquez</Name>
     </span>
   )

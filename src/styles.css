@@ -187,14 +187,6 @@ button {
   padding-block: clamp(2.5rem, 8vw, 4rem);
 }
 
-.rule {
-  height: 1px;
-  border: 0;
-  margin: 0;
-  background: linear-gradient(90deg, transparent, var(--hairline-hi), transparent);
-  opacity: 0.7;
-}
-
 /* ── Tipografía ───────────────────────────────────────────── */
 
 .eyebrow {
@@ -301,21 +293,6 @@ button {
   width: 1.15rem;
   height: 1.15rem;
   flex-shrink: 0;
-}
-
-.btn--primary {
-  background: linear-gradient(135deg, var(--magenta), var(--violet) 92%);
-  color: #fff;
-  box-shadow:
-    0 10px 30px -12px rgba(255, 45, 135, 0.75),
-    inset 0 1px 0 rgba(255, 255, 255, 0.24);
-}
-
-.btn--primary:hover {
-  box-shadow:
-    0 16px 40px -14px rgba(255, 45, 135, 0.9),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
 }
 
 .btn--ghost {
@@ -451,8 +428,11 @@ button {
 }
 
 .wordmark__mark {
-  width: 2.3rem;
-  height: 2.3rem;
+  /* El personaje es mas ancho que alto (brazo a un lado, piernas
+     abajo), asi que la caja deja de ser cuadrada. Y necesita tamano:
+     a 2,3 rem no se le veian ni los pies ni la cara. */
+  width: 3.15rem;
+  height: 2.6rem;
   flex-shrink: 0;
 }
 
@@ -470,10 +450,101 @@ button {
    Muy contenido: es identidad, no un adorno. Un pulso lento y una
    chispa que recorre el dorado de vez en cuando.                 */
 
-.wordmark__mark,
 .footer__logo {
   animation: pulso-logo 4.5s var(--ease) infinite;
   transform-origin: 50% 50%;
+}
+
+/* ── El paseo del quesito por la barra ────────────────────────
+   No es el logotipo moviendose: es un personaje. El logo de identidad
+   es una cuna dentro de un anillo, y un anillo que se desplaza parece
+   una rueda rodando. Este tiene cuerpo, dos piernas con sus pies, un
+   brazo que senala y cara.
+
+   El recorrido: entra corriendo por la izquierda, se planta junto al
+   nombre, se gira sorprendido, senala y toca la L, se agacha, salta
+   por encima, camina sobre "Vasquez" y baja al otro lado.
+
+   Cada parte se anima por separado y todas con la misma duracion y el
+   mismo retardo, que es lo que las mantiene en paso. Las distancias
+   las mide TopBar: --viaje (hasta pasado el nombre), --fuera (hasta
+   salirse por la izquierda) y --salida (lo mismo por la derecha). A
+   mano no se pueden escribir: el nombre cambia de ancho con la
+   pantalla y otra vez cuando carga la tipografia.
+
+   Se usan las propiedades `translate` y `rotate` en vez de
+   `transform`, para que cuerpo, piernas y brazo puedan moverse cada
+   uno por su lado sin pisarse. */
+
+.wordmark__mark {
+  overflow: visible;
+}
+
+/* Los fotogramas del paseo los construye paseoQuesito.ts, porque
+   dependen de donde cae cada letra del nombre. Aqui solo viven los
+   puntos de giro de cada parte y el estado de reposo. */
+.topbar .wordmark__mark {
+  /* Se dibuja en su propia capa: asi el recorrido lo mueve la tarjeta
+     grafica y no obliga a repintar la barra en cada fotograma. */
+  will-change: translate;
+}
+
+/* El giro nace en la cadera, no en el centro del pie. */
+.q__pata--del {
+  /* El giro y el encogido nacen en la cadera, no en el pie. */
+  transform-origin: 39px 67px;
+}
+
+.q__pata--tras {
+  transform-origin: 53px 67px;
+}
+
+.q__brazo--der {
+  transform-origin: 65px 47px;
+  rotate: 14deg;
+}
+
+.q__brazo--izq {
+  transform-origin: 33px 63px;
+  rotate: 0deg;
+}
+
+/* El dedo nace del puno y vuelve a el: solo existe mientras senala. */
+.q__dedo {
+  transform-origin: 81.6px 50.8px;
+  scale: 0;
+  opacity: 0;
+}
+
+.q__cara--sorpresa {
+  opacity: 0;
+}
+
+.q__chispa {
+  animation: brilla-chispa 2.6s ease-in-out infinite;
+}
+
+.q__chispa--dos {
+  animation-delay: 0.9s;
+}
+
+@keyframes brilla-chispa {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Al medir se apaga: con la animacion encima se leerian posiciones
+   desplazadas y el recorrido se iria descuadrando solo. */
+.sin-paseo .wordmark__mark,
+.sin-paseo .q__pata,
+.sin-paseo .q__brazo,
+.sin-paseo .q__dedo {
+  animation: none;
 }
 
 @keyframes pulso-logo {
@@ -757,12 +828,6 @@ button {
   height: 3px;
   border-radius: 50%;
   background: var(--gold-deep);
-}
-
-.hero__actions {
-  display: grid;
-  gap: 0.7rem;
-  margin-top: 2rem;
 }
 
 .live-pill {
@@ -1367,14 +1432,6 @@ button {
   transition-duration: 0.1s;
 }
 
-.giveaway__hint {
-  margin: 0.9rem 0 0;
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted-2);
-}
-
 /* ── Estadísticas ─────────────────────────────────────────── */
 
 .stats {
@@ -1473,32 +1530,6 @@ button {
 .partners {
   display: grid;
   gap: 0.7rem;
-}
-
-.partner-group {
-  padding: 1.1rem 1rem 1.15rem;
-  border-radius: var(--radius);
-  background: linear-gradient(150deg, var(--surface-hi), var(--surface));
-  border: 1px solid var(--hairline);
-  box-shadow: inset 0 1px 0 var(--filo);
-}
-
-.partner-group__head {
-  margin-bottom: 0.85rem;
-}
-
-.partner-group__title {
-  margin: 0;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.15rem;
-  color: var(--cream);
-}
-
-.partner-group__blurb {
-  margin: 0.2rem 0 0;
-  font-size: 0.8125rem;
-  color: var(--muted-2);
 }
 
 /* Tira de grupos: los mismos botones del menu de la portada, pero
@@ -1632,6 +1663,7 @@ button {
   flex-shrink: 0;
 }
 
+.colab__toma picture,
 .colab__toma img {
   width: 100%;
   height: 100%;
@@ -1821,24 +1853,6 @@ button {
   line-height: 1.8;
 }
 
-/* ── Saltar al contenido ──────────────────────────────────── */
-
-.skip {
-  position: absolute;
-  left: -9999px;
-  top: 0;
-  z-index: 100;
-  padding: 0.75rem 1.25rem;
-  background: var(--gold);
-  color: #2a1c05;
-  font-weight: 700;
-  border-radius: 0 0 0.75rem 0;
-}
-
-.skip:focus {
-  left: 0;
-}
-
 /* ── Respuesta tactil ─────────────────────────────────────────
    Al presionar, lo tocado se ACERCA en vez de hundirse: crece un
    poco, gana luz en el filo y se separa del fondo con sombra. Es
@@ -1903,12 +1917,6 @@ button {
 .social[data-pressed] .social__arrow {
   color: var(--accent);
   transform: translateX(5px);
-}
-
-.btn--primary[data-pressed] {
-  box-shadow:
-    inset 0 1px 0 var(--filo),
-    0 22px 44px -18px rgba(255, 45, 135, 0.9);
 }
 
 .btn--gold[data-pressed] {
@@ -2065,6 +2073,50 @@ button {
   }
 }
 
+/* Flechas del carrusel. Nacen ocultas: con el dedo se arrastra y
+   sobran; el bloque de escritorio las enciende. */
+.portada__flecha {
+  display: none;
+  position: absolute;
+  top: calc(50% - 1.5rem);
+  z-index: 3;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  place-items: center;
+  cursor: pointer;
+  border: 1px solid var(--hairline-hi);
+  background: rgba(20, 10, 46, 0.72);
+  backdrop-filter: blur(12px);
+  color: var(--cream);
+  transition:
+    transform 0.3s var(--ease),
+    background 0.3s var(--ease),
+    opacity 0.3s var(--ease);
+}
+
+.portada__flecha svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.portada__flecha--atras {
+  left: 0.35rem;
+}
+
+.portada__flecha--atras svg {
+  transform: scaleX(-1);
+}
+
+.portada__flecha--siguiente {
+  right: 0.35rem;
+}
+
+.portada__flecha:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* ── Escritorio ───────────────────────────────────────────── */
 
 @media (min-width: 48rem) {
@@ -2072,29 +2124,12 @@ button {
     --shell: 40rem;
   }
 
-  .hero__actions {
-    grid-auto-flow: column;
-    justify-content: center;
-  }
-
-  .hero__actions .btn {
-    padding-inline: 2rem;
-  }
-
   .socials {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .shot {
-    flex-basis: 22%;
-  }
-
   .stats {
     grid-template-columns: repeat(4, 1fr);
-  }
-
-  .partners {
-    grid-template-columns: repeat(2, 1fr);
   }
 
   .toma {
@@ -2113,11 +2148,161 @@ button {
   .footer {
     padding-bottom: clamp(2.5rem, 8vw, 3.5rem);
   }
+
+  /* Las tiras que se deslizan con el dedo pasan a rejilla: con raton
+     nadie las arrastra, y sin barra visible ni se sabe que hay mas. */
+  .grupos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-inline: 0;
+    padding-inline: 0;
+    overflow: visible;
+  }
+
+  .colabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (min-width: 64rem) {
   :root {
-    --shell: 46rem;
+    --shell: 62rem;
+  }
+
+  /* La portada se lee de arriba abajo, igual que en el telefono: foto
+     grande, frase, y los botones justo debajo. Lo que cambia es que
+     aqui caben de sobra, asi que ninguna tira necesita arrastrarse. */
+  .pantalla > .hero {
+    padding-block: 4rem 0.5rem;
+  }
+
+  .pantalla > .section {
+    padding-block: 1rem 0;
+  }
+
+  /* Carrusel amplio: se sale de la columna de texto para ocupar casi
+     toda la pantalla, y asi se ven cinco fotos a la vez en vez de
+     tres. El margen negativo lo calcula el propio ancho: si el ancho
+     deseado supera al del padre, se reparte hacia los dos lados. */
+  .portada {
+    --ancho-carrusel: min(100vw - 3rem, 84rem);
+    width: var(--ancho-carrusel);
+    margin-inline: calc((100% - var(--ancho-carrusel)) / 2);
+  }
+
+  /* 15rem es la medida que deja ver dos fotos a cada lado de la
+     activa: el hueco lateral del track es (ancho - tarjeta) / 2, y con
+     tarjetas mas grandes solo cabia una. */
+  .toma {
+    flex-basis: 15rem;
+    max-width: 15rem;
+  }
+
+  .portada__track {
+    gap: 1rem;
+    padding-inline: calc((100% - 15rem) / 2);
+  }
+
+  /* Con raton no hay arrastre: las flechas son el unico modo de pasar
+     de foto. */
+  .portada {
+    position: relative;
+  }
+
+  .portada__flecha {
+    display: grid;
+  }
+
+  .portada__flecha:hover:not(:disabled) {
+    background: rgba(40, 20, 80, 0.9);
+    transform: scale(1.08);
+  }
+
+  /* Los cuatro botones caben en fila: se reparten el ancho y se acaba
+     el arrastre lateral, que con raton nadie descubre. */
+  .menu__tira {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding-inline: 0;
+    overflow: visible;
+  }
+
+  .menu__boton {
+    width: 100%;
+    min-height: 4.25rem;
+  }
+
+  /* El pie deja de ser una columna estrecha con dos vacios a los
+     lados: la identidad a un lado, por donde escribirle al otro. */
+  .footer {
+    text-align: left;
+  }
+
+  .footer > * {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      'logo cuenta'
+      'nombre cuenta'
+      'frase contacto'
+      'legal legal';
+    align-items: center;
+    column-gap: clamp(2rem, 6vw, 4.5rem);
+  }
+
+  .footer__logo {
+    grid-area: logo;
+    margin: 0 0 0.4rem;
+  }
+
+  .footer__name {
+    grid-area: nombre;
+  }
+
+  .footer__tagline {
+    grid-area: frase;
+    align-self: start;
+  }
+
+  .footer__cuenta {
+    grid-area: cuenta;
+    max-width: none;
+    margin: 0;
+    align-self: end;
+  }
+
+  .footer__cuenta .footer__contact-label {
+    text-align: left;
+  }
+
+  .footer__contact {
+    grid-area: contacto;
+    justify-items: start;
+    margin-top: 1rem;
+    align-self: start;
+  }
+
+  .footer__legal {
+    grid-area: legal;
+    margin-top: 2.5rem;
+    text-align: center;
+  }
+
+  /* Dentro de una vista el texto no debe estirarse a lo ancho de un
+     monitor: una linea de cien caracteres no se lee, porque al volver
+     al margen el ojo pierde el renglon. */
+  .vista__cuerpo > * {
+    max-width: 62rem;
+    margin-inline: auto;
+  }
+
+  .vista .about__text,
+  .vista .section-sub,
+  .vista .desglose__blurb,
+  .vista .finale__body,
+  .vista .giveaway__body {
+    max-width: 40rem;
+    margin-inline: auto;
   }
 }
 
@@ -2139,6 +2324,23 @@ button {
   .reveal {
     opacity: 1;
     transform: none;
+  }
+
+  /* El paseo del quesito no se recorta, se quita: se queda quieto
+     junto al nombre, que es donde vive. */
+  .wordmark__mark,
+  .q__pata,
+  .q__brazo,
+  .q__dedo,
+  .q__cara,
+  .q__chispa {
+    animation: none !important;
+    translate: none !important;
+    rotate: none !important;
+  }
+
+  .q__cara--sorpresa {
+    opacity: 0 !important;
   }
 }
 

@@ -60,6 +60,13 @@ for (const id of ids) {
     .webp({ quality: 72, effort: 6 })
     .toFile(path.join(DESTINO, `${id}.webp`))
 
+  // AVIF también: pesa un cuarto menos y se ve igual. El <picture> de
+  // la ficha lo ofrece primero y deja el WebP de respaldo.
+  await sharp(original)
+    .resize({ width: ANCHO, withoutEnlargement: true })
+    .avif({ quality: 48, effort: 5 })
+    .toFile(path.join(DESTINO, `${id}.avif`))
+
   console.log(`✓ ${id}`)
 }
 

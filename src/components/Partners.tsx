@@ -12,7 +12,24 @@ const iconos: Record<string, ReactNode> = {
 
 /** El nombre del archivo de la portada sale del propio enlace. */
 function portadaDe(video: string) {
-  return `/images/covers/${video.split('/').pop()}.webp`
+  return `/images/covers/${video.split('/').pop()}`
+}
+
+/** La portada, en AVIF con WebP de respaldo. */
+function Portada({ base }: { base: string }) {
+  return (
+    <picture>
+      <source type="image/avif" srcSet={base + '.avif'} />
+      <img
+        src={base + '.webp'}
+        alt=""
+        width={240}
+        height={427}
+        loading="eager"
+        decoding="async"
+      />
+    </picture>
+  )
 }
 
 /**
@@ -48,7 +65,7 @@ function Ficha({ item, conPortada }: { item: Colaborador; conPortada: boolean })
           // Sin cuenta de marca no hay segundo destino: la portada es
           // decoración del enlace que ya cubre la ficha entera.
           <span className="colab__toma" aria-hidden="true">
-            <img src={portadaDe(portada)} alt="" width={240} height={427} loading="lazy" />
+            <Portada base={portadaDe(portada)} />
             <span className="colab__play">
               <PlayIcon />
             </span>
@@ -61,13 +78,7 @@ function Ficha({ item, conPortada }: { item: Colaborador; conPortada: boolean })
             rel="noopener noreferrer"
             aria-label={`Ver el vídeo que hice con ${item.name}`}
           >
-            <img
-              src={portadaDe(portada)}
-              alt=""
-              width={240}
-              height={427}
-              loading="lazy"
-            />
+            <Portada base={portadaDe(portada)} />
             <span className="colab__play" aria-hidden="true">
               <PlayIcon />
             </span>
@@ -85,10 +96,14 @@ function Ficha({ item, conPortada }: { item: Colaborador; conPortada: boolean })
  * pantalla: entrar y volver por cada grupo cansaba.
  *
  * Las portadas de un grupo no se piden hasta que ese grupo se abre por
- * primera vez. `loading="lazy"` no basta: dentro de un panel plegado
- * el navegador las descarga igual, y serían dieciocho imágenes por una
- * que se mira. El hueco ya está reservado por el `aspect-ratio`, así
- * que al abrirse no salta nada.
+ * primera vez, porque `loading="lazy"` no basta: dentro de un panel
+ * plegado el navegador las descarga igual, y serían dieciocho imágenes
+ * por una que se mira. El hueco ya está reservado por el
+ * `aspect-ratio`, así que al abrirse no salta nada.
+ *
+ * Ya dentro del grupo abierto se piden todas de golpe: son cinco kilos
+ * cada una, y diferir las de abajo dejaba cajas vacías con borde que
+ * parecían imágenes rotas mientras bajabas.
  */
 export function Partners() {
   const [abierto, setAbierto] = useState<string>(partners[0]?.id ?? '')

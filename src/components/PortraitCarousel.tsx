@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { gallery, site } from '../data/site'
 import { Photo } from './Primitives'
-import { CrownIcon } from './Icons'
+import { ArrowIcon, CrownIcon } from './Icons'
 
 // Cuántas fotos se montan de entrada. Las demás esperan al primer
 // contacto, para no descargar diecisiete imágenes al abrir.
@@ -124,7 +124,13 @@ export function PortraitCarousel() {
                 name={foto.src}
                 alt={`${site.name} — ${foto.caption}`}
                 sizes="(min-width: 48rem) 260px, 62vw"
-                widths={[320, 480, 640]}
+                /* La primera va con un solo ancho a propósito: es la
+                   que precarga el <head>, y con varios candidatos el
+                   precargador y el <img> resuelven a archivos
+                   distintos y la foto se descarga dos veces. 480
+                   cuadra con las pantallas de doble densidad, que son
+                   casi todos los móviles. */
+                widths={i === 0 ? [480] : [320, 480, 640]}
                 priority={i === 0}
               />
             )}
@@ -144,6 +150,26 @@ export function PortraitCarousel() {
           </button>
         ))}
       </div>
+
+      <button
+        type="button"
+        className="portada__flecha portada__flecha--atras"
+        aria-label="Foto anterior"
+        onClick={() => irA(Math.max(activa - 1, 0))}
+        disabled={activa === 0}
+      >
+        <ArrowIcon />
+      </button>
+
+      <button
+        type="button"
+        className="portada__flecha portada__flecha--siguiente"
+        aria-label="Foto siguiente"
+        onClick={() => irA(Math.min(activa + 1, gallery.length - 1))}
+        disabled={activa === gallery.length - 1}
+      >
+        <ArrowIcon />
+      </button>
 
       <div className="portada__puntos">
         {gallery.map((foto, i) => (

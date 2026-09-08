@@ -75,11 +75,15 @@ export function Photo({
   height,
   widths = [320, 480, 640, 960],
 }: PhotoProps) {
-  const srcSet = widths.map((w) => `/images/${name}-${w}.webp ${w}w`).join(', ')
+  const juego = (ext: string) =>
+    widths.map((w) => `/images/${name}-${w}.${ext} ${w}w`).join(', ')
 
   return (
     <picture>
-      <source type="image/webp" srcSet={srcSet} sizes={sizes} />
+      {/* AVIF primero: pesa un cuarto menos con la misma calidad. Quien
+          no lo entienda se lleva el WebP, y quien tampoco, el JPEG. */}
+      <source type="image/avif" srcSet={juego('avif')} sizes={sizes} />
+      <source type="image/webp" srcSet={juego('webp')} sizes={sizes} />
       <img
         src={`/images/${name}-640.jpg`}
         alt={alt}

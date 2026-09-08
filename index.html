@@ -40,7 +40,24 @@
     <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
 
-    <link rel="preload" as="image" type="image/webp" href="/images/liz-hero-480.webp" fetchpriority="high" />
+    <!-- La primera foto del carrusel: lo más grande de la primera
+         pantalla, y lo que decide el tiempo de carga percibido. Sin
+         esto no empieza a bajar hasta que React monta.
+
+         Un solo archivo, sin srcset: con varios candidatos el
+         precargador elige uno y el <img> otro, y la foto se baja dos
+         veces. Por eso PortraitCarousel le pasa `widths={[480]}` a la
+         primera — los dos tienen que apuntar al mismo archivo.
+
+         Si cambia la foto de portada hay que cambiarla aquí también:
+         es gallery[0] en src/data/site.ts. -->
+    <link
+      rel="preload"
+      as="image"
+      type="image/avif"
+      href="/images/liz-gala-480.avif"
+      fetchpriority="high"
+    />
 
     <script type="application/ld+json">
       {
