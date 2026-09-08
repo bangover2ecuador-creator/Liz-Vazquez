@@ -278,6 +278,13 @@ export const partners: {
     blurb: 'Eventos, presencia y activaciones.',
     items: [
       {
+        name: 'Activa el Modo Titán',
+        que: 'Gomitas Bangover, con envío a seis países',
+        handle: '@activatumodotitan',
+        url: 'https://www.tiktok.com/@activatumodotitan',
+        video: 'https://www.tiktok.com/@lis_iv/video/7575766831768603922',
+      },
+      {
         name: 'Consorcio Farmacéutico ZQ',
         que: 'Aniversario de la cadena de farmacias',
         video: 'https://www.tiktok.com/@lis_iv/video/7662210355342396692',
